@@ -12,5 +12,6 @@
  @return The value of the string converted to an integer
 */
 int atoi(const char *s);
+char* itoa(int i, char* buffer);
 
 #endif
