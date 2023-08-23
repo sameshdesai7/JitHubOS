@@ -13,4 +13,5 @@ LIB_OBJECTS=\
 	lib/string.o\
 	lib/stdlib.o\
 	lib/core.o\
-	lib/ctype.o
+	lib/ctype.o\
+	lib/stdio.o
