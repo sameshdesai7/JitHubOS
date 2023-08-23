@@ -72,33 +72,26 @@ int serial_out(device dev, const char *buffer, size_t len)
 int serial_poll(device dev, char *buffer, size_t len)
 {
 	int pos = 0;
-	while (1)
+	while (pos < (int)len - 1)
 	{
-		if ((dev + LSR) & 1)
+		if (inb(dev + LSR) & 1)
 		{
 			char c = inb(dev); // Reads in one byte
 			if (c == 13)
 			{ // If character is return, add terminator character to buffer
-				buffer[pos] = '\0';
 				outb(dev, 10);
-				break;
-			}
-			else if (pos >= (int)len - 2)
-			{ // If buffer will be full after the char is added, add terminator character
-				buffer[pos++] = c;
-				buffer[pos] = '\0';
 				break;
 			}
 			else
 			{
 				buffer[pos++] = c;
-				outb(dev, buffer[pos - 1]);
+				outb(dev, c);
 			}
 		}
 	}
+	buffer[pos] = '\0';
 	// insert your code to gather keyboard input via the technique of polling.
 	// You must validate each key and handle special keys such as delete, back space, and
 	// arrow keys
-	outb(dev, 13);
 	return (int)pos;
 }
