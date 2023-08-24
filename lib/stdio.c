@@ -26,12 +26,15 @@ void printf(const char* format, ...){
                     char buffa[12] = {0};
                     itoa(*argumentPta, buffa);
                     puts(buffa);
+                    break;
                 } case 's':
                 {
-                    puts((char*) argumentPta);
+                    puts((char*) *argumentPta);
+                    break;
                 } case 'c':
                 {
                     putc(*argumentPta);
+                    break;
                 }
             }
             argumentPta++;

@@ -7,25 +7,32 @@
 
 void comhand(void)
 {
-    printf("%s\n", "hello");
-    // for (;;){
-    //     char buf[10] = {0};
-    //     int nread = sys_req(READ, COM1, buf, sizeof(buf));
+    
+    for (;;){
+        char buf[100] = {0};
+        sys_req(READ, COM1, buf, sizeof(buf));
 
-    //     //the following echos the input -- good for testing may need to take out later
-    //     sys_req(WRITE, COM1, buf, nread);
-    //     nread=nread + 1 - 1;
-    //     //if shutdown is selected
-    //     if(strcmp(buf, "shutdown") == 0){
-    //         //if shutdown is confirmed
-    //         nread = sys_req(READ, COM1, buf, sizeof(buf));
-    //         if(strcmp(buf, "yes") == 0){
-    //             return;
-    //         }
-    //     }
 
+        //if shutdown is selected
+        if(strcmp(buf, "shutdown") == 0){
+            printf("Confirm Shutdown? Y/N\n");
+            //if shutdown is confirmed
+            sys_req(READ, COM1, buf, sizeof(buf));
+            if(strcmp(buf, "Y") == 0){
+                return;
+            }
+        }
+
+        //TODO: Version Command
+            //Where to store version info??
+
+        //TODO: Help Command
+
+        //TODO: Get/Set Time
+
+        //TODO: Get/Set Date
         
         
-    // }
+    }
 }
 

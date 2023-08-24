@@ -1,6 +1,7 @@
 #include <mpx/io.h>
 #include <mpx/serial.h>
 #include <sys_req.h>
+#include <stdio.h>
 
 enum uart_registers
 {
@@ -81,6 +82,13 @@ int serial_poll(device dev, char *buffer, size_t len)
 			{ // If character is return, add terminator character to buffer
 				outb(dev, 10);
 				break;
+			}
+			else if(c == '\b'){
+				buffer[--pos] = 0;
+				outb(dev, '\b');
+				outb(dev, ' ');
+				outb(dev, '\b');
+				//printf("backspace");
 			}
 			else
 			{
