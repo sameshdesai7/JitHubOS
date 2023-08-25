@@ -73,6 +73,7 @@ int serial_out(device dev, const char *buffer, size_t len)
 int serial_poll(device dev, char *buffer, size_t len)
 {
 	int pos = 0;
+	int end = 0;
 	while (pos < (int)len - 1)
 	{
 		if (inb(dev + LSR) & 1)
@@ -84,12 +85,33 @@ int serial_poll(device dev, char *buffer, size_t len)
 				break;
 			}
 			else if(c == 127){
+				if (pos > 0) {
+					if (pos < end){
+						int posTemp = pos;
+						while(buffer[pos]){
+							outb(dev, '\b');
+							outb(dev, buffer[pos]);
+							outb(dev, ' ');
+							buffer[pos - 1] = buffer[pos];
+							pos++;
+						}
+						buffer[pos - 1] = '\0';
+						end++;
+						pos = posTemp;
+						for(int i = end; i > pos; i--) 
+							outb(dev, '\b');
+					}
+				else {
 				buffer[--pos] = '\0';
+				end--;
 				outb(dev, '\b');
 				outb(dev, ' ');
 				outb(dev, '\b');
-				//printf("backspace");
+				}
+	
+				}
 			}
+
 			else if(c == 27 ){
 				if (inb(dev + LSR) & 1){
 					char c2 = inb(dev);
@@ -97,7 +119,7 @@ int serial_poll(device dev, char *buffer, size_t len)
 						if (inb(dev + LSR) & 1){
 							char c3 = inb(dev);
 							if (c3 == 68){ //left arrow key
-								pos--;
+								if (pos > 0) pos--;
 								outb(dev, '\b');
 							}
 							if (c3 == 67){ //right arrow key
@@ -106,11 +128,38 @@ int serial_poll(device dev, char *buffer, size_t len)
 						}
 					}
 				}
+				//how to implement the esc key?
 			}
+			
+
+
 			else
 			{
-				buffer[pos++] = c;
-				outb(dev, c);
+				if (pos < end){
+					int posTemp = pos;
+					char temp1 = buffer[pos];
+					char temp2 = buffer[pos + 1];
+					buffer[pos++] = c;
+					outb(dev, c);
+					while(temp2){
+						buffer[pos++] = temp1;
+						outb(dev, temp1);
+						temp1 = temp2;
+						temp2 = buffer[pos];
+					}
+					buffer[pos++] = temp1;
+					outb(dev, temp1);
+					end++;
+					pos = ++posTemp;
+				for(int i = end; i > pos; i--) 
+					outb(dev, '\b');
+				}
+				else{
+					buffer[pos++] = c;
+					end++;
+					outb(dev, c);
+				}
+				
 			}
 		}
 	}
