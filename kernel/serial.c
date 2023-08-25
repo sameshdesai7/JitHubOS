@@ -83,12 +83,29 @@ int serial_poll(device dev, char *buffer, size_t len)
 				outb(dev, 10);
 				break;
 			}
-			else if(c == '\b'){
-				buffer[--pos] = 0;
+			else if(c == 127){
+				buffer[--pos] = '\0';
 				outb(dev, '\b');
 				outb(dev, ' ');
 				outb(dev, '\b');
 				//printf("backspace");
+			}
+			else if(c == 27 ){
+				if (inb(dev + LSR) & 1){
+					char c2 = inb(dev);
+					if (c2 == 91){ //checks to see if an arrow key was hit
+						if (inb(dev + LSR) & 1){
+							char c3 = inb(dev);
+							if (c3 == 68){ //left arrow key
+								pos--;
+								outb(dev, '\b');
+							}
+							if (c3 == 67){ //right arrow key
+								outb(dev, buffer[pos++]);
+							}
+						}
+					}
+				}
 			}
 			else
 			{
