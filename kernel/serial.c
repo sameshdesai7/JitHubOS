@@ -84,10 +84,11 @@ int serial_poll(device dev, char *buffer, size_t len)
 				outb(dev, 10);
 				break;
 			}
-			else if(c == 127){
+			else if(c == 127){ 		//backspace character 
 				if (pos > 0) {
 					if (pos < end){
 						int posTemp = pos;
+
 						while(buffer[pos]){
 							outb(dev, '\b');
 							outb(dev, buffer[pos]);
@@ -96,11 +97,13 @@ int serial_poll(device dev, char *buffer, size_t len)
 							pos++;
 						}
 						buffer[pos - 1] = '\0';
-						end++;
-						pos = posTemp;
-						for(int i = end; i > pos; i--) 
+						end--;
+						pos = posTemp - 1;
+						
+						for(int i = end; i > pos - 1; i--) 
 							outb(dev, '\b');
 					}
+					
 				else {
 				buffer[--pos] = '\0';
 				end--;
