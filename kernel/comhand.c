@@ -20,7 +20,7 @@ void comhand()
 
 
         //if shutdown is selected
-        if(strcmp(buf, "shutdown") == 0){
+        if((strcmp(buf, "shutdown") == 0)|| (strcmp(buf, "7") == 0)){
             printf("Confirm Shutdown? Y/N\n");
             //if shutdown is confirmed
             sys_req(READ, COM1, buf, sizeof(buf));
@@ -30,13 +30,13 @@ void comhand()
         }
 
         //Version Command
-        else if(strcmp(buf, "version") == 0){
+        else if((strcmp(buf, "version") == 0) || (strcmp(buf, "1") == 0)){
             printf("Release Number: %d\n",VERSION);
         }
 
 
         //Get Time Command
-        else if(strcmp(buf, "Get Time") == 0){
+        else if((strcmp(buf, "Get Time") == 0) || (strcmp(buf, "2") == 0)){
 
             printf("\n");
 
@@ -78,7 +78,7 @@ void comhand()
         }
 
         //Get Date Command
-        else if(strcmp(buf, "Get Date") == 0){
+        else if((strcmp(buf, "Get Date") == 0)|| (strcmp(buf, "4") == 0)){
 
             printf("\n");
             //printf("Entered getDate\n");
@@ -106,7 +106,7 @@ void comhand()
         }
 
         //TODO: Set Time
-        else if(strcmp(buf, "Set Time") == 0){
+        else if((strcmp(buf, "Set Time") == 0)|| (strcmp(buf, "3") == 0)){
 
             //Ask for user input
             printf("Enter the time. (hh:mm:ss)\n");
@@ -116,10 +116,31 @@ void comhand()
             if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])){
                 
                 //Set Hours
-                
-                outb(0x12, 0x71);
-                outb(0x70,0x04);
 
+                //int hoursOnes = atoi(&buf[1]);
+                int hours = atoi(&buf[0]);
+
+                int convertedHours = ((hours/10) << 4 ) | (hours %10);
+                
+                outb(0x70, 0x04);
+                outb(0x71, convertedHours);
+
+                int minutes = atoi(&buf[3]);
+                printf("%d\n",minutes);
+
+                //Conversion needed due to BCD (Binary Coded Decimal)
+                int convertedMinutes = ((minutes/10) << 4 ) | (minutes %10);
+
+                outb(0x70, 0x02);
+                outb(0x71, convertedMinutes);
+
+                int seconds = atoi(&buf[6]);
+                printf("%d\n",seconds);
+
+                int convertedSeconds = ((seconds/10) << 4 ) | (seconds %10);
+
+                outb(0x70, 0x00);
+                outb(0x71, convertedSeconds);
             
             }
 
@@ -127,7 +148,7 @@ void comhand()
 
         //TODO: Set Date
 
-         //TODO: Help Command
+        //TODO: Help Command
         
         
     }
