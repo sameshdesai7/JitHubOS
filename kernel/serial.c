@@ -103,7 +103,7 @@ int serial_poll(device dev, char *buffer, size_t len)
 						for(int i = end; i > pos - 1; i--) 
 							outb(dev, '\b');
 					}
-					
+
 				else {
 				buffer[--pos] = '\0';
 				end--;
@@ -166,7 +166,7 @@ int serial_poll(device dev, char *buffer, size_t len)
 			}
 		}
 	}
-	buffer[pos] = '\0';
+	buffer[end] = '\0';
 	// insert your code to gather keyboard input via the technique of polling.
 	// You must validate each key and handle special keys such as delete, back space, and
 	// arrow keys
