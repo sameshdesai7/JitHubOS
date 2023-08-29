@@ -47,4 +47,10 @@ size_t strlen(const char *s);
 */
 char* strtok(char * restrict s1, const char * restrict s2);
 
+//Custom String Copy
+//Copies string from source into dest from index start to index end
+
+void str_copy(char* dest, char* source, int start, size_t length);
+
+
 #endif

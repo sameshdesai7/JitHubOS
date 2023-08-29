@@ -112,17 +112,38 @@ void comhand()
             printf("Enter the time. (hh:mm:ss)\n");
             sys_req(READ, COM1, buf, sizeof(buf));
 
-             
-            if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])){
-                
-                //Set Hours
-                
-                outb(0x12, 0x71);
-                outb(0x70,0x04);
-
-            
+            if (buf[2] != ':' || buf[5] != ':' || sizeof(buf)/sizeof(buf[0]) != 8) {
+                puts("Invalid date format, try again");
+                continue;
             }
 
+            char* output = strtok(buf, ":");
+            int hourResult = atoi(output[0]);
+            int minuteResult = atoi(output[1]);
+            int secondResult = atoi(output[2]);
+
+            if (hourResult < 0 || hourResult > 23 || minuteResult < 0 || minuteResult > 59 || secondResult < 0 || secondResult > 59) {
+                puts("One or more values for hours, minutes, or seconds is invalid. Please try again.");
+                continue;
+            }
+             
+            if (isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])) {
+                
+                //Set Hours
+                str_copy(output, buf, 0, 2);
+                outb(0x70, 0x04);
+                outb(0x71, strtobcd(output));
+
+                //Set Minutes
+                str_copy(output, buf, 3, 2);
+                outb(0x70, 0x02);
+                outb(0x71, strtobcd(output));
+
+                //Set Seconds
+                str_copy(output, buf, 6, 2);
+                outb(0x70, 0x00);
+                outb(0x71, strtobcd(output));
+            }
         }
 
         //TODO: Set Date
