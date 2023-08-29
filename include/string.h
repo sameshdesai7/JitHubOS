@@ -34,6 +34,8 @@ void* memset(void *address, int c, size_t n);
 */
 int strcmp(const char *s1, const char *s2);
 
+int strcmp_ic(const char *s1, const char *s2);
+
 /**
  Returns the length of a string.
  @param s A NUL-terminated string

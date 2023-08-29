@@ -125,7 +125,7 @@ int serial_poll(device dev, char *buffer, size_t len)
 								if (pos > 0) pos--;
 								outb(dev, '\b');
 							}
-							if (c3 == 67){ //right arrow key
+							if (c3 == 67 && pos < end){ //right arrow key
 								outb(dev, buffer[pos++]);
 							}
 						}

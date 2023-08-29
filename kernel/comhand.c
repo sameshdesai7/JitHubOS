@@ -20,23 +20,23 @@ void comhand()
 
 
         //if shutdown is selected
-        if((strcmp(buf, "shutdown") == 0)|| (strcmp(buf, "7") == 0)){
-            printf("Confirm Shutdown? Y/N\n");
+        if((strcmp_ic(buf, "shutdown") == 0)|| (strcmp(buf, "7") == 0)){
+            printf("Confirm Shutdown? (Y/N)\n");
             //if shutdown is confirmed
             sys_req(READ, COM1, buf, sizeof(buf));
-            if((strcmp(buf, "Y") == 0) || (strcmp(buf, "y") == 0)){
+            if((strcmp_ic(buf, "Y") == 0)){
                 return;
             }
         }
 
         //Version Command
-        else if((strcmp(buf, "version") == 0) || (strcmp(buf, "1") == 0)){
+        else if((strcmp_ic(buf, "version") == 0) || (strcmp(buf, "1") == 0)){
             printf("Release Number: %d\n",VERSION);
         }
 
 
         //Get Time Command
-        else if((strcmp(buf, "Get Time") == 0) || (strcmp(buf, "2") == 0)){
+        else if((strcmp_ic(buf, "get time") == 0) || (strcmp(buf, "2") == 0)){
 
             printf("\n");
 
@@ -75,10 +75,11 @@ void comhand()
                 printf("%d:%d:%d",formatedHours,formatedMinutes,formatedSeconds);
             }
 
+            printf("\n");
         }
 
         //Get Date Command
-        else if((strcmp(buf, "Get Date") == 0)|| (strcmp(buf, "4") == 0)){
+        else if((strcmp_ic(buf, "get date") == 0)|| (strcmp(buf, "4") == 0)){
 
             printf("\n");
             //printf("Entered getDate\n");
@@ -103,10 +104,12 @@ void comhand()
 
             //printf("finished getDate");
 
+            printf("\n");
+            
         }
 
         //TODO: Set Time
-        else if((strcmp(buf, "Set Time") == 0)|| (strcmp(buf, "3") == 0)){
+        else if((strcmp_ic(buf, "set time") == 0)|| (strcmp(buf, "3") == 0)){
 
             //Ask for user input
             printf("Enter the time. (hh:mm:ss)\n");
