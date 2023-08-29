@@ -149,7 +149,16 @@ void comhand()
         //TODO: Set Date
 
          //TODO: Help Command
-        
+        else if (strcmp_ic(buf, "Help") == 0) {
+            puts("Type \"version\" to retrieve the current version of the operating system");
+            puts("Type \"get time\" to retrieve the current system time");
+            puts("Type \"set time\" to set the system time");
+            puts("Type \"get date\" to retrieve the current system date");
+            puts("Type \"set date\" to set the system date");
+            puts("Type \"set time\" to set the system time");
+            puts("Type \"help\" to see a list of commands you can run");
+            puts("Type \"shutdown\" to exit the operating system");
+        }
         
     }
 }
