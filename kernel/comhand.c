@@ -143,20 +143,6 @@ void comhand()
 
                 outb(0x70, 0x00);
                 outb(0x71, convertedSeconds);
-            
-                str_copy(output, buf, 0, 2);
-                outb(0x70, 0x04);
-                outb(0x71, strtobcd(output));
-
-                //Set Minutes
-                str_copy(output, buf, 3, 2);
-                outb(0x70, 0x02);
-                outb(0x71, strtobcd(output));
-
-                //Set Seconds
-                str_copy(output, buf, 6, 2);
-                outb(0x70, 0x00);
-                outb(0x71, strtobcd(output));
             }
 
             
@@ -165,16 +151,6 @@ void comhand()
         //TODO: Set Date
 
         //TODO: Help Command
-        else if (strcmp_ic(buf, "Help") == 0) {
-            puts("Type \"version\" to retrieve the current version of the operating system");
-            puts("Type \"get time\" to retrieve the current system time");
-            puts("Type \"set time\" to set the system time");
-            puts("Type \"get date\" to retrieve the current system date");
-            puts("Type \"set date\" to set the system date");
-            puts("Type \"set time\" to set the system time");
-            puts("Type \"help\" to see a list of commands you can run");
-            puts("Type \"shutdown\" to exit the operating system");
-        }//Use tokenized input to capture optional parameter for one command, tokens based on spaces
         else if (strcmp_ic(buf, "help") == 0) {
             //If "help" was the only word, print a list of all the commands and what they do
             puts("Type \"version\" to retrieve the current version of the operating system\n");
