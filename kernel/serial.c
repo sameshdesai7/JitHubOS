@@ -3,6 +3,8 @@
 #include <sys_req.h>
 #include <stdio.h>
 
+void backspace(int *pos, int* end, char* buffer, device dev);
+
 enum uart_registers
 {
 	RBR = 0, // Receive Buffer
@@ -84,34 +86,18 @@ int serial_poll(device dev, char *buffer, size_t len)
 				outb(dev, 10);
 				break;
 			}
-			else if(c == 127){ 		//backspace character 
+
+			else if(c == 127){ 	//backspace character
 				if (pos > 0) {
-					if (pos < end){
-						int posTemp = pos;
-
-						while(buffer[pos]){
-							outb(dev, '\b');
-							outb(dev, buffer[pos]);
-							outb(dev, ' ');
-							buffer[pos - 1] = buffer[pos];
-							pos++;
-						}
-						buffer[pos - 1] = '\0';
-						end--;
-						pos = posTemp - 1;
-						
-						for(int i = end; i > pos - 1; i--) 
-							outb(dev, '\b');
-					}
-
-				else {
-				buffer[--pos] = '\0';
-				end--;
-				outb(dev, '\b');
-				outb(dev, ' ');
-				outb(dev, '\b');
-				}
+						backspace(&pos, &end, buffer, dev);
 	
+				}
+			}
+
+			else if(c == 126){
+				if(pos < end){
+					outb(dev,buffer[pos++]);
+					backspace(&pos, &end, buffer, dev);
 				}
 			}
 
@@ -175,4 +161,35 @@ int serial_poll(device dev, char *buffer, size_t len)
 	// You must validate each key and handle special keys such as delete, back space, and
 	// arrow keys
 	return (int)pos;
+}
+
+void backspace(int *pos, int* end, char* buffer, device dev){
+	if (*pos > 0){
+		if (*pos < *end){
+			int posTemp = *pos;
+
+				while(buffer[*pos]){
+					outb(dev, '\b');
+					outb(dev, buffer[*pos]);
+					outb(dev, ' ');
+					buffer[*pos - 1] = buffer[*pos];
+					*pos = *pos + 1;
+				}
+			buffer[*pos - 1] = '\0';
+			*end = *end - 1;
+			*pos = posTemp - 1;
+					
+			for(int i = *end; i > *pos - 1; i--) 
+				outb(dev, '\b');
+
+		}
+		else {
+			buffer[--*pos] = '\0';
+			*end = *end - 1;
+			outb(dev, '\b');
+			outb(dev, ' ');
+			outb(dev, '\b');
+		}
+	}
+	return;	
 }
