@@ -116,9 +116,11 @@ int serial_poll(device dev, char *buffer, size_t len)
 			}
 
 			else if(c == 27 ){
+				for(int i =0; i < 100000; i++);
 				if (inb(dev + LSR) & 1){
 					char c2 = inb(dev);
 					if (c2 == 91){ //checks to see if an arrow key was hit
+						for(int i =0; i < 100000; i++);
 						if (inb(dev + LSR) & 1){
 							char c3 = inb(dev);
 							if (c3 == 68){ //left arrow key
