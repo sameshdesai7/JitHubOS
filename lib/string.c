@@ -18,6 +18,19 @@ int strcmp(const char *s1, const char *s2)
 	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
+int strcmp_ic(const char *s1, const char *s2)
+{
+	if( strlen(s1) != strlen(s2))
+		return 1;
+		
+	for( int i = 0; s1[i] && s2[i]; i++){
+		if( s1[i] != s2[i] && (s1[i] ^ 32) != s2[i]){
+			return 1;
+		}
+	}
+	return 0;
+}
+
 size_t strlen(const char *s)
 {
 	size_t len = 0;

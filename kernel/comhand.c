@@ -18,25 +18,24 @@ void comhand()
         char buf[100] = {0};
         sys_req(READ, COM1, buf, sizeof(buf));
 
-
         //if shutdown is selected
-        if(strcmp(buf, "shutdown") == 0){
-            printf("Confirm Shutdown? Y/N\n");
+        if((strcmp_ic(buf, "shutdown") == 0)|| (strcmp(buf, "7") == 0)){
+            printf("Confirm Shutdown? (Y/N)\n");
             //if shutdown is confirmed
             sys_req(READ, COM1, buf, sizeof(buf));
-            if((strcmp(buf, "Y") == 0) || (strcmp(buf, "y") == 0)){
+            if((strcmp_ic(buf, "Y") == 0)){
                 return;
             }
         }
 
         //Version Command
-        else if(strcmp(buf, "version") == 0){
+        else if((strcmp_ic(buf, "version") == 0) || (strcmp(buf, "1") == 0)){
             printf("Release Number: %d\n",VERSION);
         }
 
 
         //Get Time Command
-        else if(strcmp(buf, "Get Time") == 0){
+        else if((strcmp_ic(buf, "get time") == 0) || (strcmp(buf, "2") == 0)){
 
             printf("\n");
 
@@ -75,10 +74,11 @@ void comhand()
                 printf("%d:%d:%d",formatedHours,formatedMinutes,formatedSeconds);
             }
 
+            printf("\n");
         }
 
         //Get Date Command
-        else if(strcmp(buf, "Get Date") == 0){
+        else if((strcmp_ic(buf, "get date") == 0)|| (strcmp(buf, "4") == 0)){
 
             printf("\n");
             //printf("Entered getDate\n");
@@ -103,33 +103,47 @@ void comhand()
 
             //printf("finished getDate");
 
+            printf("\n");
+            
         }
 
         //TODO: Set Time
-        else if(strcmp(buf, "Set Time") == 0){
+        else if((strcmp_ic(buf, "set time") == 0)|| (strcmp(buf, "3") == 0)){
 
             //Ask for user input
             printf("Enter the time. (hh:mm:ss)\n");
             sys_req(READ, COM1, buf, sizeof(buf));
 
-            if (buf[2] != ':' || buf[5] != ':' || sizeof(buf)/sizeof(buf[0]) != 8) {
-                puts("Invalid date format, try again");
-                continue;
-            }
-
-            char* output = strtok(buf, ":");
-            int hourResult = atoi(output[0]);
-            int minuteResult = atoi(output[1]);
-            int secondResult = atoi(output[2]);
-
-            if (hourResult < 0 || hourResult > 23 || minuteResult < 0 || minuteResult > 59 || secondResult < 0 || secondResult > 59) {
-                puts("One or more values for hours, minutes, or seconds is invalid. Please try again.");
-                continue;
-            }
              
-            if (isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])) {
+            if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])){
                 
                 //Set Hours
+
+                //int hoursOnes = atoi(&buf[1]);
+                int hours = atoi(&buf[0]);
+
+                int convertedHours = ((hours/10) << 4 ) | (hours %10);
+                
+                outb(0x70, 0x04);
+                outb(0x71, convertedHours);
+
+                int minutes = atoi(&buf[3]);
+                printf("%d\n",minutes);
+
+                //Conversion needed due to BCD (Binary Coded Decimal)
+                int convertedMinutes = ((minutes/10) << 4 ) | (minutes %10);
+
+                outb(0x70, 0x02);
+                outb(0x71, convertedMinutes);
+
+                int seconds = atoi(&buf[6]);
+                printf("%d\n",seconds);
+
+                int convertedSeconds = ((seconds/10) << 4 ) | (seconds %10);
+
+                outb(0x70, 0x00);
+                outb(0x71, convertedSeconds);
+            
                 str_copy(output, buf, 0, 2);
                 outb(0x70, 0x04);
                 outb(0x71, strtobcd(output));
@@ -144,11 +158,13 @@ void comhand()
                 outb(0x70, 0x00);
                 outb(0x71, strtobcd(output));
             }
+
+            
         }
 
         //TODO: Set Date
 
-         //TODO: Help Command
+        //TODO: Help Command
         else if (strcmp_ic(buf, "Help") == 0) {
             puts("Type \"version\" to retrieve the current version of the operating system");
             puts("Type \"get time\" to retrieve the current system time");
@@ -158,7 +174,24 @@ void comhand()
             puts("Type \"set time\" to set the system time");
             puts("Type \"help\" to see a list of commands you can run");
             puts("Type \"shutdown\" to exit the operating system");
+        }//Use tokenized input to capture optional parameter for one command, tokens based on spaces
+        else if (strcmp_ic(buf, "help") == 0) {
+            //If "help" was the only word, print a list of all the commands and what they do
+            puts("Type \"version\" to retrieve the current version of the operating system\n");
+            puts("Type \"get time\" to retrieve the current system time\n");
+            puts("Type \"set time\" to set the system time\n");
+            puts("Type \"get date\" to retrieve the current system date\n");
+            puts("Type \"set date\" to set the system date\n");
+            puts("Type \"help\" to see a list of commands you can run\n");
+            puts("Type \"shutdown\" to exit the operating system\n");
         }
+        else if (strcmp_ic(buf, "help version") == 0) puts("Type \"version\" to retrieve the current version of the operating system\n");
+        else if (strcmp_ic(buf, "help help") == 0) puts("Type \"help\" to see a list of commands you can run\n");
+        else if (strcmp_ic(buf, "help shutdown") == 0) puts("Type \"shutdown\" to exit the operating system\n");
+        else if (strcmp_ic(buf, "help get time") == 0) puts("Type \"get time\" to retrieve the current system time\n");
+        else if (strcmp_ic(buf, "help set time") == 0) puts("Type \"set time\" to set the system time\n");
+        else if (strcmp_ic(buf, "help get date") == 0) puts("Type \"get date\" to retrieve the current system date\n");
+        else if (strcmp_ic(buf, "help set date") == 0) puts("Type \"set date\" to set the system date\n");
         
     }
 }
