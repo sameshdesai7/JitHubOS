@@ -18,7 +18,6 @@ void comhand()
         char buf[100] = {0};
         sys_req(READ, COM1, buf, sizeof(buf));
 
-
         //if shutdown is selected
         if((strcmp_ic(buf, "shutdown") == 0)|| (strcmp(buf, "7") == 0)){
             printf("Confirm Shutdown? (Y/N)\n");
@@ -152,7 +151,24 @@ void comhand()
         //TODO: Set Date
 
         //TODO: Help Command
-        
+        //Use tokenized input to capture optional parameter for one command, tokens based on spaces
+        else if (strcmp_ic(buf, "help") == 0) {
+            //If "help" was the only word, print a list of all the commands and what they do
+            puts("Type \"version\" to retrieve the current version of the operating system\n");
+            puts("Type \"get time\" to retrieve the current system time\n");
+            puts("Type \"set time\" to set the system time\n");
+            puts("Type \"get date\" to retrieve the current system date\n");
+            puts("Type \"set date\" to set the system date\n");
+            puts("Type \"help\" to see a list of commands you can run\n");
+            puts("Type \"shutdown\" to exit the operating system\n");
+        }
+        else if (strcmp_ic(buf, "help version") == 0) puts("Type \"version\" to retrieve the current version of the operating system\n");
+        else if (strcmp_ic(buf, "help help") == 0) puts("Type \"help\" to see a list of commands you can run\n");
+        else if (strcmp_ic(buf, "help shutdown") == 0) puts("Type \"shutdown\" to exit the operating system\n");
+        else if (strcmp_ic(buf, "help get time") == 0) puts("Type \"get time\" to retrieve the current system time\n");
+        else if (strcmp_ic(buf, "help set time") == 0) puts("Type \"set time\" to set the system time\n");
+        else if (strcmp_ic(buf, "help get date") == 0) puts("Type \"get date\" to retrieve the current system date\n");
+        else if (strcmp_ic(buf, "help set date") == 0) puts("Type \"set date\" to set the system date\n");
         
     }
 }
