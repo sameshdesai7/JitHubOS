@@ -37,7 +37,7 @@ void comhand()
         //Get Time Command
         else if((strcmp_ic(buf, "Get Time") == 0) || (strcmp(buf, "2") == 0)){
 
-            printf("\n");
+            printf("Time is: ");
 
             outb(0x70,0x04);
             int hours = inb(0x71);
@@ -74,12 +74,13 @@ void comhand()
                 printf("%d:%d:%d",formatedHours,formatedMinutes,formatedSeconds);
             }
 
+            printf("\n");   
         }
 
         //Get Date Command
         else if((strcmp_ic(buf, "Get Date") == 0)|| (strcmp(buf, "4") == 0)){
 
-            printf("\n");
+            printf("Date: ");
 
             //Get Year and Format
             outb(0x70,0x09);
@@ -99,6 +100,7 @@ void comhand()
             //Print Date
             printf("%d/%d/%d",formatedMonth,formatedDay,formatedYear);
 
+            printf("\n");
         }
 
         //TODO: Set Time
@@ -146,7 +148,7 @@ void comhand()
         else if((strcmp_ic(buf, "Set Date") == 0)|| (strcmp(buf, "5") == 0)){
 
             //Ask for user input
-            printf("Enter the time. (dd/mm/yyyy)\n");
+            printf("Enter the date. (dd/mm/yyyy)\n");
             sys_req(READ, COM1, buf, sizeof(buf));
 
             if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7]) && isdigit(buf[8]) && isdigit(buf[9])){
@@ -155,16 +157,12 @@ void comhand()
                 //Month
                 int month = atoi(&buf[0]);
 
-                 printf("%d\n",month);
-
                 int convertedMonth = ((month/10) << 4 ) | (month %10);
                 outb(0x70, 0x08);
                 outb(0x71, convertedMonth);
 
                 //Day
                 int day = atoi(&buf[3]);
-
-                printf("%d\n",day);
 
                 int convertedDay = ((day/10) << 4 ) | (day %10);
                 
@@ -187,7 +185,7 @@ void comhand()
 
         }
 
-        else if (strcmp_ic(buf, "help") == 0) {
+        else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "6") == 0) {
             //If "help" was the only word, print a list of all the commands and what they do
             puts("Type \"version\" to retrieve the current version of the operating system\n");
             puts("Type \"get time\" to retrieve the current system time\n");
@@ -197,13 +195,13 @@ void comhand()
             puts("Type \"help\" to see a list of commands you can run\n");
             puts("Type \"shutdown\" to exit the operating system\n");
         }
-        else if (strcmp_ic(buf, "help version") == 0) puts("Type \"version\" to retrieve the current version of the operating system\n");
-        else if (strcmp_ic(buf, "help help") == 0) puts("Type \"help\" to see a list of commands you can run\n");
-        else if (strcmp_ic(buf, "help shutdown") == 0) puts("Type \"shutdown\" to exit the operating system\n");
-        else if (strcmp_ic(buf, "help get time") == 0) puts("Type \"get time\" to retrieve the current system time\n");
-        else if (strcmp_ic(buf, "help set time") == 0) puts("Type \"set time\" to set the system time\n");
-        else if (strcmp_ic(buf, "help get date") == 0) puts("Type \"get date\" to retrieve the current system date\n");
-        else if (strcmp_ic(buf, "help set date") == 0) puts("Type \"set date\" to set the system date\n");
+        else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "6 version") == 0) puts("Type \"version\" to retrieve the current version of the operating system\n");
+        else if (strcmp_ic(buf, "help help") == 0 || strcmp_ic(buf, "6 help") == 0) puts("Type \"help\" to see a list of commands you can run\n");
+        else if (strcmp_ic(buf, "help shutdown") == 0 || strcmp_ic(buf, "6 shutdown") == 0) puts("Type \"shutdown\" to exit the operating system\n");
+        else if (strcmp_ic(buf, "help get time") == 0 || strcmp_ic(buf, "6 get time") == 0) puts("Type \"get time\" to retrieve the current system time\n");
+        else if (strcmp_ic(buf, "help set time") == 0 || strcmp_ic(buf, "6 set time") == 0) puts("Type \"set time\" to set the system time\n");
+        else if (strcmp_ic(buf, "help get date") == 0 || strcmp_ic(buf, "6 get date") == 0) puts("Type \"get date\" to retrieve the current system date\n");
+        else if (strcmp_ic(buf, "help set date") == 0 || strcmp_ic(buf, "6 set date") == 0) puts("Type \"set date\" to set the system date\n");
         
     }
 }
