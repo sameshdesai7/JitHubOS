@@ -20,23 +20,23 @@ void comhand()
 
 
         //if shutdown is selected
-        if((strcmp_ic(buf, "shutdown") == 0)|| (strcmp(buf, "7") == 0)){
-            printf("Confirm Shutdown? (Y/N)\n");
+        if((strcmp(buf, "shutdown") == 0)|| (strcmp(buf, "7") == 0)){
+            printf("Confirm Shutdown? Y/N\n");
             //if shutdown is confirmed
             sys_req(READ, COM1, buf, sizeof(buf));
-            if((strcmp_ic(buf, "Y") == 0)){
+            if((strcmp(buf, "Y") == 0) || (strcmp(buf, "y") == 0)){
                 return;
             }
         }
 
         //Version Command
-        else if((strcmp_ic(buf, "version") == 0) || (strcmp(buf, "1") == 0)){
+        else if((strcmp(buf, "version") == 0) || (strcmp(buf, "1") == 0)){
             printf("Release Number: %d\n",VERSION);
         }
 
 
         //Get Time Command
-        else if((strcmp_ic(buf, "get time") == 0) || (strcmp(buf, "2") == 0)){
+        else if((strcmp(buf, "Get Time") == 0) || (strcmp(buf, "2") == 0)){
 
             printf("\n");
 
@@ -75,11 +75,10 @@ void comhand()
                 printf("%d:%d:%d",formatedHours,formatedMinutes,formatedSeconds);
             }
 
-            printf("\n");
         }
 
         //Get Date Command
-        else if((strcmp_ic(buf, "get date") == 0)|| (strcmp(buf, "4") == 0)){
+        else if((strcmp(buf, "Get Date") == 0)|| (strcmp(buf, "4") == 0)){
 
             printf("\n");
             //printf("Entered getDate\n");
@@ -104,12 +103,10 @@ void comhand()
 
             //printf("finished getDate");
 
-            printf("\n");
-            
         }
 
         //TODO: Set Time
-        else if((strcmp_ic(buf, "set time") == 0)|| (strcmp(buf, "3") == 0)){
+        else if((strcmp(buf, "Set Time") == 0)|| (strcmp(buf, "3") == 0)){
 
             //Ask for user input
             printf("Enter the time. (hh:mm:ss)\n");
@@ -145,6 +142,51 @@ void comhand()
                 outb(0x70, 0x00);
                 outb(0x71, convertedSeconds);
             
+            }
+
+        }
+
+        //TODO: Set Time
+        else if((strcmp(buf, "Set Date") == 0)|| (strcmp(buf, "5") == 0)){
+
+            //Ask for user input
+            printf("Enter the time. (dd/mm/yyyy)\n");
+            sys_req(READ, COM1, buf, sizeof(buf));
+
+            if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7]) && isdigit(buf[8]) && isdigit(buf[9])){
+
+                
+                //Month
+                int month = atoi(&buf[0]);
+
+                 printf("%d\n",month);
+
+                int convertedMonth = ((month/10) << 4 ) | (month %10);
+                outb(0x70, 0x08);
+                outb(0x71, convertedMonth);
+
+                //Day
+                int day = atoi(&buf[3]);
+
+                printf("%d\n",day);
+
+                int convertedDay = ((day/10) << 4 ) | (day %10);
+                
+                outb(0x70, 0x07);
+                outb(0x71, convertedDay);
+
+
+                // int year = atoi(&buf[6]);
+
+                //  printf("%d\n",year);
+
+                // int convertedYear = ((year/10) << 4 ) | (year %10);
+                
+                // outb(0x70, 0x08);
+                // outb(0x71, convertedYear);
+
+                
+
             }
 
         }
