@@ -115,20 +115,44 @@ void comhand()
             printf("Enter the time. (hh:mm:ss)\n");
             sys_req(READ, COM1, buf, sizeof(buf));
 
-             
+            if(buf[1] == ':'){
+                buf[1] = buf[0];
+                buf[0] = '0';
+                for(int i = 7; i > 2; i--){
+                    buf[i] = buf[i - 1];
+                }
+                buf[2] = ':';
+            }
+
             if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])){
                 
                 //Set Hours
-
-                //int hoursOnes = atoi(&buf[1]);
                 int hours = atoi(&buf[0]);
+                int minutes = atoi(&buf[3]);
+                int seconds = atoi(&buf[6]);
+
+                if(hours > 23 || minutes > 59 || seconds > 59){
+                    printf("\033[0;31m");
+                    if(hours > 23){
+                        printf("Invalid time format. Hours must be 1-23.\n");
+                    }
+                    
+                    if(minutes > 59){
+                        printf("Invalid time format. Minutes must be 1-59.\n");
+                    }
+
+                    if(seconds > 59){
+                        printf("Invalid time format. Seconds must be 1-59.\n");
+                    }
+                    printf("\033[0;0m");
+                    continue;
+                }
+
+                cli();
                 int convertedHours = ((hours/10) << 4 ) | (hours %10);
                 
                 outb(0x70, 0x04);
                 outb(0x71, convertedHours);
-
-                int minutes = atoi(&buf[3]);
-                //printf("%d\n",minutes);
 
                 //Conversion needed due to BCD (Binary Coded Decimal)
                 int convertedMinutes = ((minutes/10) << 4 ) | (minutes %10);
@@ -136,13 +160,16 @@ void comhand()
                 outb(0x70, 0x02);
                 outb(0x71, convertedMinutes);
 
-                int seconds = atoi(&buf[6]);
-                printf("%d\n",seconds);
-
                 int convertedSeconds = ((seconds/10) << 4 ) | (seconds %10);
 
                 outb(0x70, 0x00);
                 outb(0x71, convertedSeconds);
+                
+                // printf("\033[0;32m");
+                printf("\033[0;32mTime set to %s.\n\033[0;0m", buf);
+                // printf("\033[0;0m");
+
+                sti();
             }
 
             
