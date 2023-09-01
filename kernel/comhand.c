@@ -103,7 +103,25 @@ void comhand()
             int formatedMonth = ((month & 0x70) >> 4)*10 + (month & 0x0F);
             
             //Print Date
-            printf("%d/%d/%d",formatedMonth,formatedDay,formatedYear);
+            //printf("%d/%d/%d",formatedMonth,formatedDay,formatedYear);
+
+            //If minutes and seconds are 1 digit
+            if((formatedDay <=9)&&(formatedYear <=9)){
+                printf("%d/0%d/0%d",formatedMonth,formatedDay,formatedYear);
+            }
+            //if seconds are 1 digit
+            else if(formatedDay <=9){
+
+                printf("%d/0%d/%d",formatedMonth,formatedDay,formatedYear);
+            }
+            //if minutes are 1 digit
+            else if(formatedYear <=9){
+                printf("%d/%d/0%d",formatedMonth,formatedDay,formatedYear);
+            }
+            
+            else{
+                printf("%d/%d/%d",formatedMonth,formatedDay,formatedYear);
+            }
 
             printf("\n");
         }
@@ -182,7 +200,7 @@ void comhand()
             printf("Enter the date. (mm/dd/yyyy)\n");
             sys_req(READ, COM1, buf, sizeof(buf));
 
-            if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7]) && isdigit(buf[8]) && isdigit(buf[9])){
+            if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])){
 
                 cli();
                 //Month
@@ -200,18 +218,13 @@ void comhand()
                 outb(0x70, 0x07);
                 outb(0x71, convertedDay);
 
+                int year = atoi(&buf[6]);
+                printf("%d\n",year);
 
-                int yearUpper = atoi(&buf[6])/100;
-                printf("%d\n",yearUpper);
-
-                int yearLower = atoi(&buf[7]);
-                printf("%d\n",yearLower);
-
-
-                int convertedYearLower = ((yearLower/10) << 4 ) | (yearLower %10);
+                int convertedYear = ((year/10) << 4 ) | (year %10);
                 
                 outb(0x70, 0x09);
-                outb(0x71, convertedYearLower);
+                outb(0x71, convertedYear);
 
                 sti();
 
