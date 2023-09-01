@@ -7,6 +7,7 @@
 #include <mpx/io.h>
 #include <mpx/serial.h>
 #include <ctype.h>
+#include <mpx/interrupts.h>
 
 void comhand()
 {
@@ -41,7 +42,9 @@ void comhand()
 
             outb(0x70,0x04);
             int hours = inb(0x71);
-            int formatedHours = ((hours & 0x70) >> 4)*10 + (hours & 0x0F);
+            int formatedHours = ((hours & 0x30) >> 4) * 10 + (hours & 0x0F);
+
+            //printf("%d",hours);
 
             outb(0x70,0x02);
             int minutes = inb(0x71);
@@ -57,16 +60,16 @@ void comhand()
             //Account for single digit minutes or seconds
 
             //If minutes and seconds are 1 digit
-            if((formatedMinutes < 9)&&(formatedSeconds < 9)){
+            if((formatedMinutes <=9)&&(formatedSeconds <=9)){
                 printf("%d:0%d:0%d",formatedHours,formatedMinutes,formatedSeconds);
             }
             //if seconds are 1 digit
-            else if(formatedSeconds < 9){
+            else if(formatedSeconds <=9){
 
                 printf("%d:%d:0%d",formatedHours,formatedMinutes,formatedSeconds);
             }
             //if minutes are 1 digit
-            else if(formatedMinutes < 9){
+            else if(formatedMinutes <=9){
                 printf("%d:0%d:%d",formatedHours,formatedMinutes,formatedSeconds);
             }
             
@@ -86,6 +89,8 @@ void comhand()
             outb(0x70,0x09);
             int year = inb(0x71);
             int formatedYear = ((year & 0x70) >> 4)*10 + (year & 0x0F);
+
+            
             
             //Get Day and Format
             outb(0x70,0x07);
@@ -118,14 +123,13 @@ void comhand()
 
                 //int hoursOnes = atoi(&buf[1]);
                 int hours = atoi(&buf[0]);
-
                 int convertedHours = ((hours/10) << 4 ) | (hours %10);
                 
                 outb(0x70, 0x04);
                 outb(0x71, convertedHours);
 
                 int minutes = atoi(&buf[3]);
-                printf("%d\n",minutes);
+                //printf("%d\n",minutes);
 
                 //Conversion needed due to BCD (Binary Coded Decimal)
                 int convertedMinutes = ((minutes/10) << 4 ) | (minutes %10);
@@ -145,16 +149,16 @@ void comhand()
             
         }
 
-        //TODO: Set Time
+        //TODO: Set Date
         else if((strcmp(buf, "Set Date") == 0)|| (strcmp(buf, "5") == 0)){
 
             //Ask for user input
-            printf("Enter the time. (dd/mm/yyyy)\n");
+            printf("Enter the date. (mm/dd/yyyy)\n");
             sys_req(READ, COM1, buf, sizeof(buf));
 
             if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7]) && isdigit(buf[8]) && isdigit(buf[9])){
 
-                
+                cli();
                 //Month
                 int month = atoi(&buf[0]);
 
@@ -175,16 +179,19 @@ void comhand()
                 outb(0x71, convertedDay);
 
 
-                // int year = atoi(&buf[6]);
+                int yearUpper = atoi(&buf[6])/100;
+                printf("%d\n",yearUpper);
 
-                //  printf("%d\n",year);
+                int yearLower = atoi(&buf[7]);
+                printf("%d\n",yearLower);
 
-                // int convertedYear = ((year/10) << 4 ) | (year %10);
+
+                int convertedYearLower = ((yearLower/10) << 4 ) | (yearLower %10);
                 
-                // outb(0x70, 0x08);
-                // outb(0x71, convertedYear);
+                outb(0x70, 0x09);
+                outb(0x71, convertedYearLower);
 
-                
+                sti();
 
             }
 
