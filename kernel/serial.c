@@ -105,23 +105,22 @@ int serial_poll(device dev, char *buffer, size_t len)
 				for(int i =0; i < 100000; i++);
 				if (inb(dev + LSR) & 1){
 					char c2 = inb(dev);
-					if (c2 == 91){ //checks to see if an arrow key was hit
+					if (c2 == 91){ 	//checks to see if an arrow key was hit
 						for(int i =0; i < 100000; i++);
 						if (inb(dev + LSR) & 1){
 							char c3 = inb(dev);
-							if (c3 == 68){ //left arrow key
+							if (c3 == 68){ 	//left arrow key
 								if (pos > 0){
 									 pos--;
 									outb(dev, '\b');
 								}
 							}
-							if (c3 == 67 && pos < end){ //right arrow key
+							if (c3 == 67 && pos < end){  //right arrow key
 								outb(dev, buffer[pos++]);
 							}
 						}
 					}
 				}
-				//how to implement the esc key?
 			}
 			
 
@@ -157,9 +156,6 @@ int serial_poll(device dev, char *buffer, size_t len)
 		}
 	}
 	buffer[end] = '\0';
-	// insert your code to gather keyboard input via the technique of polling.
-	// You must validate each key and handle special keys such as delete, back space, and
-	// arrow keys
 	return (int)pos;
 }
 
