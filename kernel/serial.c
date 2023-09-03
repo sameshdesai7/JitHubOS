@@ -3,8 +3,6 @@
 #include <sys_req.h>
 #include <stdio.h>
 
-void backspace(int *pos, int* end, char* buffer, device dev);
-
 enum uart_registers
 {
 	RBR = 0, // Receive Buffer

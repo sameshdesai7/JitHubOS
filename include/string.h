@@ -34,6 +34,16 @@ void* memset(void *address, int c, size_t n);
 */
 int strcmp(const char *s1, const char *s2);
 
+/**
+ * @author Noah Marner
+ * @brief A string compare function that ignores case
+ * 
+ * This function compares two strings while ignoring case. This case is used in comhand to
+ * make comparing user input more friendly.
+ * @param s1 The first string to compare
+ * @param s2 the second string to compare
+ * @return 0 if strings are equal ignoring case, 1 if not
+*/
 int strcmp_ic(const char *s1, const char *s2);
 
 /**
