@@ -170,29 +170,51 @@ void comhand()
         else if((strcmp_ic(buf, "Set Date") == 0)|| (strcmp(buf, "5") == 0)){
 
             //Ask for user input
-            printf("Enter the date. (mm/dd/yyyy)\n");
+            printf("Enter the date. (mm/dd/yy)\n");
             sys_req(READ, COM1, buf, sizeof(buf));
 
             if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])){
 
                 cli();
-                //Month
                 int month = atoi(&buf[0]);
+                int day = atoi(&buf[3]);
+                int year = atoi(&buf[6]);
+                
+                if (month < 1 || day < 1 || year < 1){
+                    puts("Date cannot be inputted as 0 or lower\n");
+                    continue;
+                }
+                if (month > 12){
+                    puts("Month cannot be greater than 12\n");
+                    continue;
+                }
+                if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day > 31){
+                    puts("The month you inputted cannot have over 31 days\n");
+                    continue;
+                }
+                if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30){
+                    puts("The month you inputted cannot have over 30 days\n");
+                    continue;
+                }
+                if (month == 2){
+                    if (year % 4 == 0 && day > 29){
+                        puts("February cannot have over 29 days on a leap year\n");
+                        continue;
+                    }
+                    else if (day > 28){
+                        puts("February cannot have over 28 days when it is not a leap year\n");
+                        continue;
+                    }
+                }
 
                 int convertedMonth = ((month/10) << 4 ) | (month %10);
                 outb(0x70, 0x08);
                 outb(0x71, convertedMonth);
 
-                //Day
-                int day = atoi(&buf[3]);
-
                 int convertedDay = ((day/10) << 4 ) | (day %10);
                 
                 outb(0x70, 0x07);
                 outb(0x71, convertedDay);
-
-                int year = atoi(&buf[6]);
-                printf("%d\n",year);
 
                 int convertedYear = ((year/10) << 4 ) | (year %10);
                 
@@ -201,6 +223,10 @@ void comhand()
 
                 sti();
 
+            }
+            else{
+                puts("Invalid format of date was inputted\n");
+                continue;
             }
 
         }
