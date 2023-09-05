@@ -13,9 +13,9 @@ void comhand()
 {
 
     for (;;){
-
-        printMenu();
+        
         char buf[100] = {0};
+        printMenu();
         sys_req(READ, COM1, buf, sizeof(buf));
 
         //Shutdown Command
@@ -80,7 +80,8 @@ void printMenu(){
 
 }
 
-int shutdown(char* buf){
+int shutdown(){
+    char buf[100] = {0};
     printf("Confirm Shutdown? Y/N\n");
             //if shutdown is confirmed
             sys_req(READ, COM1, buf, sizeof(buf));
@@ -257,48 +258,51 @@ void getDate(void){
             printf("\n");
 }
 
-        //TODO: Set Time
-        else if((strcmp_ic(buf, "Set Time") == 0)|| (strcmp(buf, "3") == 0)){
+    // void setTime(void){
+    //     //TODO: Set Time
+    //     else if((strcmp_ic(buf, "Set Time") == 0)|| (strcmp(buf, "3") == 0)){
 
-            //Ask for user input
-            printf("Enter the time. (hh:mm:ss)\n");
-            sys_req(READ, COM1, buf, sizeof(buf));
+    //         //Ask for user input
+    //         printf("Enter the time. (hh:mm:ss)\n");
+    //         sys_req(READ, COM1, buf, sizeof(buf));
 
              
-            if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])){
+    //         if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])){
                 
-                //Set Hours
+    //             //Set Hours
 
-                //int hoursOnes = atoi(&buf[1]);
-                int hours = atoi(&buf[0]);
-                int convertedHours = ((hours/10) << 4 ) | (hours %10);
+    //             //int hoursOnes = atoi(&buf[1]);
+    //             int hours = atoi(&buf[0]);
+    //             int convertedHours = ((hours/10) << 4 ) | (hours %10);
                 
-                outb(0x70, 0x04);
-                outb(0x71, convertedHours);
+    //             outb(0x70, 0x04);
+    //             outb(0x71, convertedHours);
 
-                int minutes = atoi(&buf[3]);
-                //printf("%d\n",minutes);
+    //             int minutes = atoi(&buf[3]);
+    //             //printf("%d\n",minutes);
 
-                //Conversion needed due to BCD (Binary Coded Decimal)
-                int convertedMinutes = ((minutes/10) << 4 ) | (minutes %10);
+    //             //Conversion needed due to BCD (Binary Coded Decimal)
+    //             int convertedMinutes = ((minutes/10) << 4 ) | (minutes %10);
 
-                outb(0x70, 0x02);
-                outb(0x71, convertedMinutes);
+    //             outb(0x70, 0x02);
+    //             outb(0x71, convertedMinutes);
 
-                int seconds = atoi(&buf[6]);
-                printf("%d\n",seconds);
+    //             int seconds = atoi(&buf[6]);
+    //             printf("%d\n",seconds);
 
-                int convertedSeconds = ((seconds/10) << 4 ) | (seconds %10);
+    //             int convertedSeconds = ((seconds/10) << 4 ) | (seconds %10);
 
-                outb(0x70, 0x00);
-                outb(0x71, convertedSeconds);
-            }
+    //             outb(0x70, 0x00);
+    //             outb(0x71, convertedSeconds);
+    //         }
 
             
-        }
+    //     }
+    // }
 
+    void setDate(void){
         //TODO: Set Date
-        else if((strcmp_ic(buf, "Set Date") == 0)|| (strcmp(buf, "5") == 0)){
+        char buf[100] = {0};
 
             //Ask for user input
             printf("Enter the date. (mm/dd/yyyy)\n");
@@ -313,28 +317,28 @@ void getDate(void){
                 
                 if (month < 1 || day < 1 || year < 1){
                     puts("Date cannot be inputted as 0 or lower\n");
-                    continue;
+                    return;
                 }
                 if (month > 12){
                     puts("Month cannot be greater than 12\n");
-                    continue;
+                    return;
                 }
                 if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day > 31){
                     puts("The month you inputted cannot have over 31 days\n");
-                    continue;
+                    return;
                 }
                 if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30){
                     puts("The month you inputted cannot have over 30 days\n");
-                    continue;
+                    return;
                 }
                 if (month == 2){
                     if (year % 4 == 0 && day > 29){
                         puts("February cannot have over 29 days on a leap year\n");
-                        continue;
+                        return;
                     }
                     else if (day > 28){
                         puts("February cannot have over 28 days when it is not a leap year\n");
-                        continue;
+                        return;
                     }
                 }
 
@@ -355,9 +359,7 @@ void getDate(void){
                 sti();
 
             }
-
-        }
-
+    }
 
 void help(void){
     //If "help" was the only word, print a list of all the commands and what they do
