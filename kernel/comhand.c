@@ -9,6 +9,9 @@
 #include <ctype.h>
 #include <mpx/interrupts.h>
 
+#define COMPILE_DATE __DATE__
+#define COMPILE_TIME __TIME__
+
 void comhand()
 {
 
@@ -95,6 +98,8 @@ int shutdown(){
 
 void version(void){
     printf("Release Number: %d\n",VERSION);
+    printf("Date of most recent compile: %s\n", COMPILE_DATE);
+    printf("Time of most recent compile: %s\n", COMPILE_TIME);
 }
 
 void getTime(void){
