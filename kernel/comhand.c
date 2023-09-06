@@ -61,7 +61,11 @@ void comhand()
         else if (strcmp_ic(buf, "help set time") == 0 || strcmp_ic(buf, "6 set time") == 0) puts("Type \"set time\" to set the system time\n");
         else if (strcmp_ic(buf, "help get date") == 0 || strcmp_ic(buf, "6 get date") == 0) puts("Type \"get date\" to retrieve the current system date\n");
         else if (strcmp_ic(buf, "help set date") == 0 || strcmp_ic(buf, "6 set date") == 0) puts("Type \"set date\" to set the system date\n");
-        
+        else {
+            printf("\033[0;31m");
+            puts("Invalid query\n");
+            printf("\033[0;0m");
+        }
     }
 }
 
@@ -82,7 +86,9 @@ void printMenu(){
 
 int shutdown(){
     char buf[100] = {0};
+    printf("\033[0;36m");
     printf("Confirm Shutdown? Y/N\n");
+    printf("\033[0;0m");
             //if shutdown is confirmed
             sys_req(READ, COM1, buf, sizeof(buf));
             if(strcmp_ic(buf, "Y") == 0){
@@ -94,10 +100,13 @@ int shutdown(){
 }
 
 void version(void){
+    printf("\033[0;36m");
     printf("Release Number: %d\n",VERSION);
+    printf("\033[0;0m");
 }
 
 void getTime(void){
+    printf("\033[0;36m");
     printf("Time is: ");
 
     outb(0x70,0x04);
@@ -136,14 +145,16 @@ void getTime(void){
     else{
         printf("%d:%d:%d",formatedHours,formatedMinutes,formatedSeconds);
     }
-
-    printf("\n"); 
+    printf("\033[0;0m\n");
 }
 
 void setTime(void){
 
     //Ask for user input
+    
+    printf("\033[0;36m");
     printf("Enter the time. (hh:mm:ss)\n");
+    printf("\033[0;0m");
     char buf[100] = {0};
     sys_req(READ, COM1, buf, sizeof(buf));
 
@@ -215,6 +226,8 @@ void setTime(void){
 }
 
 void getDate(void){
+    
+    printf("\033[0;36m");
     printf("Date: ");
 
             //Get Year and Format
@@ -254,58 +267,18 @@ void getDate(void){
             else{
                 printf("%d/%d/%d",formatedMonth,formatedDay,formatedYear);
             }
-
-            printf("\n");
+            printf("\033[0;0m\n");
 }
-
-    // void setTime(void){
-    //     //TODO: Set Time
-    //     else if((strcmp_ic(buf, "Set Time") == 0)|| (strcmp(buf, "3") == 0)){
-
-    //         //Ask for user input
-    //         printf("Enter the time. (hh:mm:ss)\n");
-    //         sys_req(READ, COM1, buf, sizeof(buf));
-
-             
-    //         if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])){
-                
-    //             //Set Hours
-
-    //             //int hoursOnes = atoi(&buf[1]);
-    //             int hours = atoi(&buf[0]);
-    //             int convertedHours = ((hours/10) << 4 ) | (hours %10);
-                
-    //             outb(0x70, 0x04);
-    //             outb(0x71, convertedHours);
-
-    //             int minutes = atoi(&buf[3]);
-    //             //printf("%d\n",minutes);
-
-    //             //Conversion needed due to BCD (Binary Coded Decimal)
-    //             int convertedMinutes = ((minutes/10) << 4 ) | (minutes %10);
-
-    //             outb(0x70, 0x02);
-    //             outb(0x71, convertedMinutes);
-
-    //             int seconds = atoi(&buf[6]);
-    //             printf("%d\n",seconds);
-
-    //             int convertedSeconds = ((seconds/10) << 4 ) | (seconds %10);
-
-    //             outb(0x70, 0x00);
-    //             outb(0x71, convertedSeconds);
-    //         }
-
-            
-    //     }
-    // }
 
     void setDate(void){
         //TODO: Set Date
         char buf[100] = {0};
 
             //Ask for user input
-            printf("Enter the date. (mm/dd/yyyy)\n");
+            
+            printf("\033[0;36m");
+            printf("Enter the date. (mm/dd/yy)\n");
+            printf("\033[0;0m");
             sys_req(READ, COM1, buf, sizeof(buf));
 
             if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])){
@@ -314,33 +287,42 @@ void getDate(void){
                 int month = atoi(&buf[0]);
                 int day = atoi(&buf[3]);
                 int year = atoi(&buf[6]);
-                
+
+                printf("\033[0;31m");
+
                 if (month < 1 || day < 1 || year < 1){
                     puts("Date cannot be inputted as 0 or lower\n");
+                    printf("\033[0;0m");
                     return;
                 }
-                if (month > 12){
+                else if (month > 12){
                     puts("Month cannot be greater than 12\n");
+                    printf("\033[0;0m");
                     return;
                 }
-                if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day > 31){
+                else if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day > 31){
                     puts("The month you inputted cannot have over 31 days\n");
+                    printf("\033[0;0m");
                     return;
                 }
-                if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30){
+                else if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30){
                     puts("The month you inputted cannot have over 30 days\n");
+                    printf("\033[0;0m");
                     return;
                 }
-                if (month == 2){
-                    if (year % 4 == 0 && day > 29){
-                        puts("February cannot have over 29 days on a leap year\n");
+                else if (month == 2 && day > 28){
+                    if (year % 4 != 0){
+                        puts("February cannot have over 28 days when it is not a leap year\n");
+                        printf("\033[0;0m");
                         return;
                     }
-                    else if (day > 28){
-                        puts("February cannot have over 28 days when it is not a leap year\n");
+                    else if (day > 29){
+                        puts("February cannot have over 29 days on a leap year\n");
+                        printf("\033[0;0m");
                         return;
                     }
                 }
+
 
                 int convertedMonth = ((month/10) << 4 ) | (month %10);
                 outb(0x70, 0x08);
@@ -355,14 +337,23 @@ void getDate(void){
                 
                 outb(0x70, 0x09);
                 outb(0x71, convertedYear);
-
+                
+                printf("\033[0;32m");
+                printf("Date set to %s\n", buf);
+                printf("\033[0;0m");
                 sti();
 
+            }
+            else{ //if the overall format does not match a proper format
+                printf("\033[0;31m");
+                puts("Invalid date format");
+                printf("\033[0;0m");
             }
     }
 
 void help(void){
     //If "help" was the only word, print a list of all the commands and what they do
+    printf("\033[0;36m");
     puts("Type \"version\" to retrieve the current version of the operating system\n");
     puts("Type \"get time\" to retrieve the current system time\n");
     puts("Type \"set time\" to set the system time\n");
@@ -370,4 +361,5 @@ void help(void){
     puts("Type \"set date\" to set the system date\n");
     puts("Type \"help\" to see a list of commands you can run\n");
     puts("Type \"shutdown\" to exit the operating system\n");
+    printf("\033[0;0m");
 }
