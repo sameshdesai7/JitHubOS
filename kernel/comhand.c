@@ -9,106 +9,38 @@
 #include <ctype.h>
 #include <mpx/interrupts.h>
 
+#define COMPILE_DATE __DATE__
+#define COMPILE_TIME __TIME__
+
 void comhand()
 {
 
     for (;;){
+
+        printMenu();
         
         char buf[100] = {0};
-        printMenu();
         sys_req(READ, COM1, buf, sizeof(buf));
 
-        //Shutdown Command
-        if((strcmp_ic(buf, "shutdown") == 0)|| (strcmp(buf, "7") == 0)){
-            if(shutdown(buf))
-                return;
-        }
 
-        //Version Command
-        else if((strcmp_ic(buf, "version") == 0) || (strcmp(buf, "1") == 0)){
-            version();
-        }
-
-        //Get Time Command
-        else if((strcmp_ic(buf, "Get Time") == 0) || (strcmp(buf, "2") == 0)){
-            getTime(); 
-        }
-
-        //Get Date Command
-        else if((strcmp_ic(buf, "Get Date") == 0)|| (strcmp(buf, "4") == 0)){
-            getDate();
-        }
-
-        //TODO: Set Time
-        else if((strcmp_ic(buf, "Set Time") == 0)|| (strcmp(buf, "3") == 0)){
-            setTime();
-        }
-
-        //TODO: Set Date
-        else if((strcmp_ic(buf, "Set Date") == 0)|| (strcmp(buf, "5") == 0)){
-            setDate();
-        }
-
-        else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "6") == 0) {
-        
-            help();
-        }
-
-        else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "6 version") == 0) puts("Type \"version\" to retrieve the current version of the operating system\n");
-        else if (strcmp_ic(buf, "help help") == 0 || strcmp_ic(buf, "6 help") == 0) puts("Type \"help\" to see a list of commands you can run\n");
-        else if (strcmp_ic(buf, "help shutdown") == 0 || strcmp_ic(buf, "6 shutdown") == 0) puts("Type \"shutdown\" to exit the operating system\n");
-        else if (strcmp_ic(buf, "help get time") == 0 || strcmp_ic(buf, "6 get time") == 0) puts("Type \"get time\" to retrieve the current system time\n");
-        else if (strcmp_ic(buf, "help set time") == 0 || strcmp_ic(buf, "6 set time") == 0) puts("Type \"set time\" to set the system time\n");
-        else if (strcmp_ic(buf, "help get date") == 0 || strcmp_ic(buf, "6 get date") == 0) puts("Type \"get date\" to retrieve the current system date\n");
-        else if (strcmp_ic(buf, "help set date") == 0 || strcmp_ic(buf, "6 set date") == 0) puts("Type \"set date\" to set the system date\n");
-        else {
-            printf("\033[0;31m");
-            puts("Invalid query\n");
-            printf("\033[0;0m");
-        }
-    }
-}
-
-void printMenu(){
-        printf("\n");
-        printf("Enter one of the following:\n");
-        printf("1. Version\n");
-        printf("2. Get Time\n");
-        printf("3. Set Time\n");
-        printf("4. Get Date\n");
-        printf("5. Set Date\n");
-        printf("6. Help\n");
-        printf("7. Shutdown\n");
-        printf("\n");
-        printf(">> ");
-
-}
-
-int shutdown(){
-    char buf[100] = {0};
-    printf("\033[0;36m");
-    printf("Confirm Shutdown? Y/N\n");
-    printf("\033[0;0m");
+        //if shutdown is selected
+        if(strcmp(buf, "shutdown") == 0){
+            printf("Confirm Shutdown? Y/N\n");
             //if shutdown is confirmed
             sys_req(READ, COM1, buf, sizeof(buf));
-            if(strcmp_ic(buf, "Y") == 0){
-                return 1;
+            if((strcmp(buf, "Y") == 0) || (strcmp(buf, "y") == 0)){
+                return;
             }
-            else{
-                return 0;
-            }
-}
+        }
 
 void version(void){
-    printf("\033[0;36m");
     printf("Release Number: %d\n",VERSION);
-    printf("\033[0;0m");
+    printf("Date of most recent compile: %s\n", COMPILE_DATE);
+    printf("Time of most recent compile: %s\n", COMPILE_TIME);
 }
 
-void getTime(void){
-    printf("\033[0;36m");
-    printf("Time is: ");
 
+<<<<<<< HEAD
     outb(0x70,0x04);
     int hours = inb(0x71);
     int formatedHours = fromBCD(hours);
@@ -129,70 +61,51 @@ void getTime(void){
     }
     //if seconds are 1 digit
     else if(formatedSeconds <=9){
+=======
+        //Get Time Command
+        else if(strcmp(buf, "Get Time") == 0){
 
-        printf("%d:%d:0%d",formatedHours,formatedMinutes,formatedSeconds);
-    }
-    //if minutes are 1 digit
-    else if(formatedMinutes <=9){
-        printf("%d:0%d:%d",formatedHours,formatedMinutes,formatedSeconds);
-    }
-    
-    else{
-        printf("%d:%d:%d",formatedHours,formatedMinutes,formatedSeconds);
-    }
-    printf("\033[0;0m\n");
-}
+            printf("\n");
 
-void setTime(void){
+            outb(0x70,0x04);
+            int hours = inb(0x71);
+            int formatedHours = ((hours & 0x70) >> 4)*10 + (hours & 0x0F);
 
-    //Ask for user input
-    
-    printf("\033[0;36m");
-    printf("Enter the time. (hh:mm:ss)\n");
-    printf("\033[0;0m");
-    char buf[100] = {0};
-    sys_req(READ, COM1, buf, sizeof(buf));
+            outb(0x70,0x02);
+            int minutes = inb(0x71);
+            int formatedMinutes = ((minutes & 0x70) >> 4)*10 + (minutes & 0x0F);
 
-    if(buf[1] == ':'){
-        buf[1] = buf[0];
-        buf[0] = '0';
-        for(int i = 7; i > 2; i--){
-            buf[i] = buf[i - 1];
-        }
-        buf[2] = ':';
-    }
+            outb(0x70,0x00);
+            int seconds = inb(0x71);
+            int formatedSeconds = ((seconds & 0x70) >> 4)*10 + (seconds & 0x0F);
 
-    if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])){
-        
-        //Set Hours
-        int hours = atoi(&buf[0]);
-        int minutes = atoi(&buf[3]);
-        int seconds = atoi(&buf[6]);
-        int isInvalid = 0;
+            //Add padding 0 if seconds is 1 digit 
 
-        if(hours > 23 || minutes > 59 || seconds > 59){
-            printf("\033[0;31m");
-            if(hours > 23){
-                printf("Invalid time format. Hours must be 1-23.\n");
+>>>>>>> 2aa73bb5cb76b39023610f7756880f6ae1d83313
+
+            //Account for single digit minutes or seconds
+
+            //If minutes and seconds are 1 digit
+            if((formatedMinutes < 9)&&(formatedSeconds < 9)){
+                printf("%d:0%d:0%d",formatedHours,formatedMinutes,formatedSeconds);
+            }
+            //if seconds are 1 digit
+            else if(formatedSeconds < 9){
+
+                printf("%d:%d:0%d",formatedHours,formatedMinutes,formatedSeconds);
+            }
+            //if minutes are 1 digit
+            else if(formatedMinutes < 9){
+                printf("%d:0%d:%d",formatedHours,formatedMinutes,formatedSeconds);
             }
             
-            if(minutes > 59){
-                printf("Invalid time format. Minutes must be 1-59.\n");
+            else{
+                printf("%d:%d:%d",formatedHours,formatedMinutes,formatedSeconds);
             }
 
-            if(seconds > 59){
-                printf("Invalid time format. Seconds must be 1-59.\n");
-            }
-            printf("\033[0;0m");
-            isInvalid = 1;
-
-            
         }
 
-        if(isInvalid){
-            return;
-        }
-
+<<<<<<< HEAD
         cli();
         
         outb(0x70, 0x04);
@@ -211,18 +124,24 @@ void setTime(void){
 
 
 }
+=======
+        //Get Date Command
+        else if(strcmp(buf, "Get Date") == 0){
+>>>>>>> 2aa73bb5cb76b39023610f7756880f6ae1d83313
 
-void getDate(void){
-    
-    printf("\033[0;36m");
-    printf("Date: ");
+            printf("\n");
+            //printf("Entered getDate\n");
 
             //Get Year and Format
             outb(0x70,0x09);
             int year = inb(0x71);
+<<<<<<< HEAD
             int formatedYear = fromBCD(year);
 
             
+=======
+            int formatedYear = ((year & 0x70) >> 4)*10 + (year & 0x0F);
+>>>>>>> 2aa73bb5cb76b39023610f7756880f6ae1d83313
             
             //Get Day and Format
             outb(0x70,0x07);
@@ -232,39 +151,27 @@ void getDate(void){
             //Get Month and format
             outb(0x70,0x08);
             int month = inb(0x71);
+<<<<<<< HEAD
             int formatedMonth = fromBCD(month);
-
-            //If minutes and seconds are 1 digit
-            if((formatedDay <=9)&&(formatedYear <=9)){
-                printf("%d/0%d/0%d",formatedMonth,formatedDay,formatedYear);
-            }
-            //if seconds are 1 digit
-            else if(formatedDay <=9){
-
-                printf("%d/0%d/%d",formatedMonth,formatedDay,formatedYear);
-            }
-            //if minutes are 1 digit
-            else if(formatedYear <=9){
-                printf("%d/%d/0%d",formatedMonth,formatedDay,formatedYear);
-            }
+=======
+            int formatedMonth = ((month & 0x70) >> 4)*10 + (month & 0x0F);
             
-            else{
-                printf("%d/%d/%d",formatedMonth,formatedDay,formatedYear);
-            }
-            printf("\033[0;0m\n");
-}
+            //Print Date
+            printf("%d/%d/%d",formatedMonth,formatedDay,formatedYear);
+>>>>>>> 2aa73bb5cb76b39023610f7756880f6ae1d83313
 
-    void setDate(void){
-        //TODO: Set Date
-        char buf[100] = {0};
+            //printf("finished getDate");
+
+        }
+
+        //TODO: Set Time
+        else if(strcmp(buf, "Set Time") == 0){
 
             //Ask for user input
-            
-            printf("\033[0;36m");
-            printf("Enter the date. (mm/dd/yy)\n");
-            printf("\033[0;0m");
+            printf("Enter the time. (hh:mm:ss)\n");
             sys_req(READ, COM1, buf, sizeof(buf));
 
+<<<<<<< HEAD
             if(isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])){
 
                 cli();
@@ -320,24 +227,62 @@ void getDate(void){
                 printf("Date set to %s\n", buf);
                 printf("\033[0;0m");
                 sti();
+=======
+            if (buf[2] != ':' || buf[5] != ':' || sizeof(buf)/sizeof(buf[0]) != 8) {
+                puts("Invalid date format, try again");
+                continue;
+            }
 
+            char* output = strtok(buf, ":");
+            int hourResult = atoi(output[0]);
+            int minuteResult = atoi(output[1]);
+            int secondResult = atoi(output[2]);
+>>>>>>> 2aa73bb5cb76b39023610f7756880f6ae1d83313
+
+            if (hourResult < 0 || hourResult > 23 || minuteResult < 0 || minuteResult > 59 || secondResult < 0 || secondResult > 59) {
+                puts("One or more values for hours, minutes, or seconds is invalid. Please try again.");
+                continue;
             }
-            else{ //if the overall format does not match a proper format
-                printf("\033[0;31m");
-                puts("Invalid date format");
-                printf("\033[0;0m");
+             
+            if (isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7])) {
+                
+                //Set Hours
+                str_copy(output, buf, 0, 2);
+                outb(0x70, 0x04);
+                outb(0x71, strtobcd(output));
+
+                //Set Minutes
+                str_copy(output, buf, 3, 2);
+                outb(0x70, 0x02);
+                outb(0x71, strtobcd(output));
+
+                //Set Seconds
+                str_copy(output, buf, 6, 2);
+                outb(0x70, 0x00);
+                outb(0x71, strtobcd(output));
             }
+        }
+
+        //TODO: Set Date
+
+         //TODO: Help Command
+        
+        
     }
-
-void help(void){
-    //If "help" was the only word, print a list of all the commands and what they do
-    printf("\033[0;36m");
-    puts("Type \"version\" to retrieve the current version of the operating system\n");
-    puts("Type \"get time\" to retrieve the current system time\n");
-    puts("Type \"set time\" to set the system time\n");
-    puts("Type \"get date\" to retrieve the current system date\n");
-    puts("Type \"set date\" to set the system date\n");
-    puts("Type \"help\" to see a list of commands you can run\n");
-    puts("Type \"shutdown\" to exit the operating system\n");
-    printf("\033[0;0m");
 }
+
+void printMenu(){
+        printf("\n");
+        printf("Enter one of the following:\n");
+        printf("1. Version\n");
+        printf("2. Get Time\n");
+        printf("3. Set Time\n");
+        printf("4. Get Date\n");
+        printf("5. Set Date\n");
+        printf("6. Help\n");
+        printf("7. Shutdown\n");
+        printf("\n");
+        printf(">> ");
+
+}
+
