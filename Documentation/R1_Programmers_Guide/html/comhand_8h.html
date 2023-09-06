@@ -95,7 +95,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ab13e858612c64eeef73aff1d8a03945e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the menu that has different functions the user can choose from to use.  <a href="comhand_8h.html#ab13e858612c64eeef73aff1d8a03945e">More...</a><br /></td></tr>
 <tr class="separator:ab13e858612c64eeef73aff1d8a03945e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad349600382dfe00fc1eead8957ce7832"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="comhand_8h.html#ad349600382dfe00fc1eead8957ce7832">shutdown</a> ()</td></tr>
-<tr class="memdesc:ad349600382dfe00fc1eead8957ce7832"><td class="mdescLeft">&#160;</td><td class="mdescRight">allows the user to shutdown the OS, but double checks to see if the user really wants to  <a href="comhand_8h.html#ad349600382dfe00fc1eead8957ce7832">More...</a><br /></td></tr>
+<tr class="memdesc:ad349600382dfe00fc1eead8957ce7832"><td class="mdescLeft">&#160;</td><td class="mdescRight">allows the user to shutdown the OS, but requires confirmation  <a href="comhand_8h.html#ad349600382dfe00fc1eead8957ce7832">More...</a><br /></td></tr>
 <tr class="separator:ad349600382dfe00fc1eead8957ce7832"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af986bd0575ec9b913dfab4b8422509ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="comhand_8h.html#af986bd0575ec9b913dfab4b8422509ae">version</a> (void)</td></tr>
 <tr class="memdesc:af986bd0575ec9b913dfab4b8422509ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows the user which version of the OS they are using.  <a href="comhand_8h.html#af986bd0575ec9b913dfab4b8422509ae">More...</a><br /></td></tr>
@@ -161,7 +161,8 @@ Jackson Monk </dd></dl>
 <p>Gets the current date set within the OS. </p>
 <dl class="section author"><dt>Author</dt><dd>Sam Desai </dd>
 <dd>
-Jackson Monk </dd></dl>
+Jackson Monk</dd></dl>
+<p>Attaches the index of the time register (mins, seconds, hours, etc) to the index register of the RTC. Then, using inb to read from the RTC data port (0x71), puts the value in an integer and formats the value to decimal using the fromBCD function. This is done for days, month, and year. Finally, checks for single digits in days or month and adds padding zeros, then prints out the value. </p>
 
 </div>
 </div>
@@ -184,7 +185,8 @@ Jackson Monk </dd></dl>
 <p>Gets the current time set within the OS. </p>
 <dl class="section author"><dt>Author</dt><dd>Sam Desai </dd>
 <dd>
-Jackson Monk </dd></dl>
+Jackson Monk</dd></dl>
+<p>Attaches the index of the time register (mins, seconds, hours, etc) to the index register of the RTC. Then, using inb to read from the RTC data port (0x71), puts the value in an integer and formats the value to decimal using the fromBCD function. This is done for hours, minutes, and seconds. Finally, checks for single digits in minutes or seconds and adds padding zeros, then prints out the value. </p>
 
 </div>
 </div>
@@ -207,7 +209,8 @@ Jackson Monk </dd></dl>
 <p>Displays a list of all of the different functions and what they are made to do. </p>
 <dl class="section author"><dt>Author</dt><dd>Sam Desai </dd>
 <dd>
-Jackson Monk </dd></dl>
+Jackson Monk</dd></dl>
+<p>Prints a list of commands with explanations. This function will also take one input and give specific details for that input. </p>
 
 </div>
 </div>
@@ -252,7 +255,8 @@ Jackson Monk </dd></dl>
 <p>Allows the user to set the date within the OS, but does not allow any invalid dates. </p>
 <dl class="section author"><dt>Author</dt><dd>Sam Desai </dd>
 <dd>
-Jackson Monk </dd></dl>
+Jackson Monk</dd></dl>
+<p>Starts by validating the input with numerous tests. Disables interrupts, converts the inputs into BCD format by calling the toBCD function and attaches the index of the time register (days, minutes, years, etc) to the index register of the RTC. Lastly, uses outb to write to the BCD values to the data port, prints out the time if successful, and reenables interrupts. </p>
 
 </div>
 </div>
@@ -275,7 +279,10 @@ Jackson Monk </dd></dl>
 <p>Allows the user to set the time of the OS, but doesn't allow them to input an invalid time. </p>
 <dl class="section author"><dt>Author</dt><dd>Sam Desai </dd>
 <dd>
-Jackson Monk </dd></dl>
+Jackson Monk </dd>
+<dd>
+Noah Marner</dd></dl>
+<p>Starts by validating the minutes and seconds by checking if they are over 59 and adds padding to single digit hour field. Then checks if all inputs are digits. If any validating reveals errors, sets a flag to 1 to exit the function. Disables interrupts, converts the inputs into BCD format by calling the toBCD function and attaches the index of the time register (mins, seconds, hours, etc) to the index register of the RTC. Lastly, uses outb to write to the BCD values to the data port, prints out the time if successful, and reenables interrupts. </p>
 
 </div>
 </div>
@@ -294,7 +301,7 @@ Jackson Monk </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>allows the user to shutdown the OS, but double checks to see if the user really wants to </p>
+<p>allows the user to shutdown the OS, but requires confirmation </p>
 <dl class="section author"><dt>Author</dt><dd>Sam Desai </dd>
 <dd>
 Jackson Monk </dd></dl>

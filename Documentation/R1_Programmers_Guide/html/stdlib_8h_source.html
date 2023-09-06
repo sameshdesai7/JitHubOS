@@ -76,17 +76,21 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">int</span> <a class="code" href="stdlib_8h.html#a30670a60464f77af17dfb353353d6df8">atoi</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *s);</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">char</span>* <a class="code" href="stdlib_8h.html#a15ca34a94485b37b1f9c93da06e12a66">itoa</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">char</span>* buffer);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">int</span> <a class="code" href="stdlib_8h.html#ac6490d3a2bd188997a8d367be0d92c3e">isdigit</a>(<span class="keywordtype">char</span> c);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">int</span> <a class="code" href="stdlib_8h.html#a5d584ecaafdf660a17f771c0997f1169">strtobcd</a>(<span class="keywordtype">char</span>* <span class="keywordtype">string</span>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">char</span>* <a class="code" href="stdlib_8h.html#a15ca34a94485b37b1f9c93da06e12a66">itoa</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">char</span>* buffer);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">int</span> <a class="code" href="stdlib_8h.html#ac6490d3a2bd188997a8d367be0d92c3e">isdigit</a>(<span class="keywordtype">char</span> c);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordtype">int</span> <a class="code" href="stdlib_8h.html#a1189992d811dcccd69632e25a2a0ab9f">toBCD</a>(<span class="keywordtype">int</span> num);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">int</span> <a class="code" href="stdlib_8h.html#a6e80871581862fd9af426c8c916f3b26">fromBCD</a>(<span class="keywordtype">int</span> bcd);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="astdlib_8h_html_a1189992d811dcccd69632e25a2a0ab9f"><div class="ttname"><a href="stdlib_8h.html#a1189992d811dcccd69632e25a2a0ab9f">toBCD</a></div><div class="ttdeci">int toBCD(int num)</div><div class="ttdoc">Converts a string to a binary-coded decimal (bcd)</div></div>
 <div class="ttc" id="astdlib_8h_html_a15ca34a94485b37b1f9c93da06e12a66"><div class="ttname"><a href="stdlib_8h.html#a15ca34a94485b37b1f9c93da06e12a66">itoa</a></div><div class="ttdeci">char * itoa(int i, char *buffer)</div><div class="ttdoc">Converts a valid integer to a string and stores it in buffer.</div></div>
 <div class="ttc" id="astdlib_8h_html_ac6490d3a2bd188997a8d367be0d92c3e"><div class="ttname"><a href="stdlib_8h.html#ac6490d3a2bd188997a8d367be0d92c3e">isdigit</a></div><div class="ttdeci">int isdigit(char c)</div><div class="ttdoc">Checks if the provided character is a digit.</div></div>
 <div class="ttc" id="astdlib_8h_html_a30670a60464f77af17dfb353353d6df8"><div class="ttname"><a href="stdlib_8h.html#a30670a60464f77af17dfb353353d6df8">atoi</a></div><div class="ttdeci">int atoi(const char *s)</div><div class="ttdoc">Convert an ASCII string to an integer.</div></div>
-<div class="ttc" id="astdlib_8h_html_a5d584ecaafdf660a17f771c0997f1169"><div class="ttname"><a href="stdlib_8h.html#a5d584ecaafdf660a17f771c0997f1169">strtobcd</a></div><div class="ttdeci">int strtobcd(char *string)</div><div class="ttdoc">Converts a string to a binary-coded decimal (bcd)</div></div>
+<div class="ttc" id="astdlib_8h_html_a6e80871581862fd9af426c8c916f3b26"><div class="ttname"><a href="stdlib_8h.html#a6e80871581862fd9af426c8c916f3b26">fromBCD</a></div><div class="ttdeci">int fromBCD(int bcd)</div><div class="ttdoc">Converts a binary-coded decimal to an int.</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

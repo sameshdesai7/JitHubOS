@@ -1,19 +1,13 @@
 var searchData=
 [
-  ['serial_5finit_104',['serial_init',['../serial_8h.html#a59d1db7894c07b31b520be0ae0a32896',1,'serial.h']]],
-  ['serial_5fout_105',['serial_out',['../serial_8h.html#a7e049d65b09969503d73dd367775d0f6',1,'serial.h']]],
-  ['serial_5fpoll_106',['serial_poll',['../serial_8h.html#a1e9204d031fa281b2983b1e97859c179',1,'serial.h']]],
-  ['setdate_107',['setDate',['../comhand_8h.html#ac3f57064ee44a4f27c7ea9a051acdcc0',1,'comhand.h']]],
-  ['settime_108',['setTime',['../comhand_8h.html#a9582710fe9ac4a169effb615ca0dcc59',1,'comhand.h']]],
-  ['shutdown_109',['shutdown',['../comhand_8h.html#ad349600382dfe00fc1eead8957ce7832',1,'comhand.h']]],
-  ['strcmp_110',['strcmp',['../string_8h.html#a11bd144d7d44914099a3aeddf1c8567d',1,'string.h']]],
-  ['strcmp_5fic_111',['strcmp_ic',['../string_8h.html#a7cf6afdc88ad06565420969f87cd4805',1,'string.h']]],
-  ['strlen_112',['strlen',['../string_8h.html#aa383452fe445bfae989358c9d7d96f4f',1,'string.h']]],
-  ['strtobcd_113',['strtobcd',['../stdlib_8h.html#a5d584ecaafdf660a17f771c0997f1169',1,'stdlib.h']]],
-  ['strtok_114',['strtok',['../string_8h.html#a282ca433291c6e69a01d5f106c4b02ff',1,'string.h']]],
-  ['sys_5falloc_5fmem_115',['sys_alloc_mem',['../memory_8h.html#a7bb253c308c19ed0f00940aaf7f3f3aa',1,'memory.h']]],
-  ['sys_5ffree_5fmem_116',['sys_free_mem',['../memory_8h.html#a950663d39dbb073c9dff9cf3b5d3392c',1,'memory.h']]],
-  ['sys_5fidle_5fprocess_117',['sys_idle_process',['../processes_8h.html#aacd3fe93c6c875e45b891534368d4840',1,'processes.h']]],
-  ['sys_5freq_118',['sys_req',['../sys__req_8h.html#a0826d3da32611e0fc48b5d9cbe6c6e26',1,'sys_req.h']]],
-  ['sys_5fset_5fheap_5ffunctions_119',['sys_set_heap_functions',['../memory_8h.html#a462db3a1d9c70195e513b21680b6a013',1,'memory.h']]]
+  ['pic_5finit_96',['pic_init',['../interrupts_8h.html#afc70164c232cee70941b16e3f2ca029a',1,'interrupts.h']]],
+  ['printf_97',['printf',['../stdio_8h.html#a133c04c35a1c14c6f8d8078831705661',1,'stdio.h']]],
+  ['printmenu_98',['printMenu',['../comhand_8h.html#ab13e858612c64eeef73aff1d8a03945e',1,'comhand.h']]],
+  ['proc1_99',['proc1',['../processes_8h.html#a953d53b5d8bba0c5f36c49911876eaa0',1,'processes.h']]],
+  ['proc2_100',['proc2',['../processes_8h.html#ababf3a8cb41db24ebd166203db634911',1,'processes.h']]],
+  ['proc3_101',['proc3',['../processes_8h.html#a59b88eb10208caac157ee15f9766664f',1,'processes.h']]],
+  ['proc4_102',['proc4',['../processes_8h.html#a08225926fb673d2f0cf33fdf41760ded',1,'processes.h']]],
+  ['proc5_103',['proc5',['../processes_8h.html#aa268f9868ecd59cc58e70145e5e33872',1,'processes.h']]],
+  ['putc_104',['putc',['../stdio_8h.html#acc0ee6e9643f83a5ab11722197fc25ec',1,'stdio.h']]],
+  ['puts_105',['puts',['../stdio_8h.html#a299d0f9cb9e7b14e1278a4ed21e4d76f',1,'stdio.h']]]
 ];

@@ -37,8 +37,7 @@ int strcmp(const char *s1, const char *s2);
 /**
  * @author Noah Marner
  * @brief A string compare function that ignores case
- * 
- * This function compares two strings while ignoring case. This case is used in comhand to
+ * @details This function compares two strings while ignoring case. This case is used in comhand to
  * make comparing user input more friendly.
  * @param s1 The first string to compare
  * @param s2 the second string to compare

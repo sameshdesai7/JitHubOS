@@ -11,47 +11,47 @@
 \contentsline {subsubsection}{\numberline {2.1.2.4}help()}{5}{subsubsection.2.1.2.4}%
 \contentsline {subsubsection}{\numberline {2.1.2.5}printMenu()}{5}{subsubsection.2.1.2.5}%
 \contentsline {subsubsection}{\numberline {2.1.2.6}setDate()}{5}{subsubsection.2.1.2.6}%
-\contentsline {subsubsection}{\numberline {2.1.2.7}setTime()}{5}{subsubsection.2.1.2.7}%
+\contentsline {subsubsection}{\numberline {2.1.2.7}setTime()}{6}{subsubsection.2.1.2.7}%
 \contentsline {subsubsection}{\numberline {2.1.2.8}shutdown()}{6}{subsubsection.2.1.2.8}%
 \contentsline {subsubsection}{\numberline {2.1.2.9}version()}{6}{subsubsection.2.1.2.9}%
-\contentsline {section}{\numberline {2.2}include/ctype.h File Reference}{6}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Detailed Description}{6}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Function Documentation}{6}{subsection.2.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.2.1}isspace()}{6}{subsubsection.2.2.2.1}%
+\contentsline {section}{\numberline {2.2}include/ctype.h File Reference}{7}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Detailed Description}{7}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Function Documentation}{7}{subsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.2.1}isspace()}{7}{subsubsection.2.2.2.1}%
 \contentsline {section}{\numberline {2.3}include/memory.h File Reference}{7}{section.2.3}%
 \contentsline {section}{\numberline {2.4}include/mpx/gdt.h File Reference}{7}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Detailed Description}{7}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Function Documentation}{7}{subsection.2.4.2}%
-\contentsline {subsubsection}{\numberline {2.4.2.1}gdt\_init()}{7}{subsubsection.2.4.2.1}%
-\contentsline {section}{\numberline {2.5}include/mpx/interrupts.h File Reference}{7}{section.2.5}%
+\contentsline {subsection}{\numberline {2.4.1}Detailed Description}{8}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Function Documentation}{8}{subsection.2.4.2}%
+\contentsline {subsubsection}{\numberline {2.4.2.1}gdt\_init()}{8}{subsubsection.2.4.2.1}%
+\contentsline {section}{\numberline {2.5}include/mpx/interrupts.h File Reference}{8}{section.2.5}%
 \contentsline {subsection}{\numberline {2.5.1}Detailed Description}{8}{subsection.2.5.1}%
 \contentsline {subsection}{\numberline {2.5.2}Macro Definition Documentation}{8}{subsection.2.5.2}%
-\contentsline {subsubsection}{\numberline {2.5.2.1}cli}{8}{subsubsection.2.5.2.1}%
-\contentsline {subsubsection}{\numberline {2.5.2.2}sti}{8}{subsubsection.2.5.2.2}%
-\contentsline {subsection}{\numberline {2.5.3}Function Documentation}{8}{subsection.2.5.3}%
-\contentsline {subsubsection}{\numberline {2.5.3.1}idt\_init()}{8}{subsubsection.2.5.3.1}%
+\contentsline {subsubsection}{\numberline {2.5.2.1}cli}{9}{subsubsection.2.5.2.1}%
+\contentsline {subsubsection}{\numberline {2.5.2.2}sti}{9}{subsubsection.2.5.2.2}%
+\contentsline {subsection}{\numberline {2.5.3}Function Documentation}{9}{subsection.2.5.3}%
+\contentsline {subsubsection}{\numberline {2.5.3.1}idt\_init()}{9}{subsubsection.2.5.3.1}%
 \contentsline {subsubsection}{\numberline {2.5.3.2}idt\_install()}{9}{subsubsection.2.5.3.2}%
 \contentsline {subsubsection}{\numberline {2.5.3.3}irq\_init()}{9}{subsubsection.2.5.3.3}%
 \contentsline {subsubsection}{\numberline {2.5.3.4}pic\_init()}{9}{subsubsection.2.5.3.4}%
-\contentsline {section}{\numberline {2.6}include/mpx/io.h File Reference}{9}{section.2.6}%
-\contentsline {subsection}{\numberline {2.6.1}Detailed Description}{9}{subsection.2.6.1}%
-\contentsline {subsection}{\numberline {2.6.2}Macro Definition Documentation}{9}{subsection.2.6.2}%
-\contentsline {subsubsection}{\numberline {2.6.2.1}inb}{9}{subsubsection.2.6.2.1}%
+\contentsline {section}{\numberline {2.6}include/mpx/io.h File Reference}{10}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Detailed Description}{10}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Macro Definition Documentation}{10}{subsection.2.6.2}%
+\contentsline {subsubsection}{\numberline {2.6.2.1}inb}{10}{subsubsection.2.6.2.1}%
 \contentsline {subsubsection}{\numberline {2.6.2.2}outb}{10}{subsubsection.2.6.2.2}%
-\contentsline {section}{\numberline {2.7}include/mpx/panic.h File Reference}{10}{section.2.7}%
-\contentsline {subsection}{\numberline {2.7.1}Detailed Description}{10}{subsection.2.7.1}%
-\contentsline {subsection}{\numberline {2.7.2}Function Documentation}{10}{subsection.2.7.2}%
-\contentsline {subsubsection}{\numberline {2.7.2.1}\_\_attribute\_\_()}{10}{subsubsection.2.7.2.1}%
+\contentsline {section}{\numberline {2.7}include/mpx/panic.h File Reference}{11}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Detailed Description}{11}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}Function Documentation}{11}{subsection.2.7.2}%
+\contentsline {subsubsection}{\numberline {2.7.2.1}\_\_attribute\_\_()}{11}{subsubsection.2.7.2.1}%
 \contentsline {section}{\numberline {2.8}include/mpx/serial.h File Reference}{11}{section.2.8}%
-\contentsline {subsection}{\numberline {2.8.1}Detailed Description}{11}{subsection.2.8.1}%
-\contentsline {subsection}{\numberline {2.8.2}Function Documentation}{11}{subsection.2.8.2}%
-\contentsline {subsubsection}{\numberline {2.8.2.1}backspace()}{11}{subsubsection.2.8.2.1}%
+\contentsline {subsection}{\numberline {2.8.1}Detailed Description}{12}{subsection.2.8.1}%
+\contentsline {subsection}{\numberline {2.8.2}Function Documentation}{12}{subsection.2.8.2}%
+\contentsline {subsubsection}{\numberline {2.8.2.1}backspace()}{12}{subsubsection.2.8.2.1}%
 \contentsline {subsubsection}{\numberline {2.8.2.2}serial\_init()}{12}{subsubsection.2.8.2.2}%
-\contentsline {subsubsection}{\numberline {2.8.2.3}serial\_out()}{12}{subsubsection.2.8.2.3}%
+\contentsline {subsubsection}{\numberline {2.8.2.3}serial\_out()}{13}{subsubsection.2.8.2.3}%
 \contentsline {subsubsection}{\numberline {2.8.2.4}serial\_poll()}{13}{subsubsection.2.8.2.4}%
-\contentsline {section}{\numberline {2.9}include/mpx/vm.h File Reference}{13}{section.2.9}%
-\contentsline {subsection}{\numberline {2.9.1}Detailed Description}{13}{subsection.2.9.1}%
-\contentsline {subsection}{\numberline {2.9.2}Function Documentation}{13}{subsection.2.9.2}%
+\contentsline {section}{\numberline {2.9}include/mpx/vm.h File Reference}{14}{section.2.9}%
+\contentsline {subsection}{\numberline {2.9.1}Detailed Description}{14}{subsection.2.9.1}%
+\contentsline {subsection}{\numberline {2.9.2}Function Documentation}{14}{subsection.2.9.2}%
 \contentsline {subsubsection}{\numberline {2.9.2.1}kmalloc()}{14}{subsubsection.2.9.2.1}%
 \contentsline {subsubsection}{\numberline {2.9.2.2}vm\_init()}{15}{subsubsection.2.9.2.2}%
 \contentsline {section}{\numberline {2.10}include/processes.h File Reference}{15}{section.2.10}%
@@ -71,19 +71,20 @@
 \contentsline {subsubsection}{\numberline {2.11.2.3}puts()}{18}{subsubsection.2.11.2.3}%
 \contentsline {section}{\numberline {2.12}include/stdlib.h File Reference}{18}{section.2.12}%
 \contentsline {subsection}{\numberline {2.12.1}Detailed Description}{18}{subsection.2.12.1}%
-\contentsline {subsection}{\numberline {2.12.2}Function Documentation}{18}{subsection.2.12.2}%
-\contentsline {subsubsection}{\numberline {2.12.2.1}atoi()}{18}{subsubsection.2.12.2.1}%
-\contentsline {subsubsection}{\numberline {2.12.2.2}isdigit()}{19}{subsubsection.2.12.2.2}%
-\contentsline {subsubsection}{\numberline {2.12.2.3}itoa()}{19}{subsubsection.2.12.2.3}%
-\contentsline {subsubsection}{\numberline {2.12.2.4}strtobcd()}{20}{subsubsection.2.12.2.4}%
-\contentsline {section}{\numberline {2.13}include/string.h File Reference}{20}{section.2.13}%
+\contentsline {subsection}{\numberline {2.12.2}Function Documentation}{19}{subsection.2.12.2}%
+\contentsline {subsubsection}{\numberline {2.12.2.1}atoi()}{19}{subsubsection.2.12.2.1}%
+\contentsline {subsubsection}{\numberline {2.12.2.2}fromBCD()}{19}{subsubsection.2.12.2.2}%
+\contentsline {subsubsection}{\numberline {2.12.2.3}isdigit()}{20}{subsubsection.2.12.2.3}%
+\contentsline {subsubsection}{\numberline {2.12.2.4}itoa()}{20}{subsubsection.2.12.2.4}%
+\contentsline {subsubsection}{\numberline {2.12.2.5}toBCD()}{21}{subsubsection.2.12.2.5}%
+\contentsline {section}{\numberline {2.13}include/string.h File Reference}{21}{section.2.13}%
 \contentsline {subsection}{\numberline {2.13.1}Detailed Description}{21}{subsection.2.13.1}%
-\contentsline {subsection}{\numberline {2.13.2}Function Documentation}{21}{subsection.2.13.2}%
-\contentsline {subsubsection}{\numberline {2.13.2.1}memcpy()}{21}{subsubsection.2.13.2.1}%
-\contentsline {subsubsection}{\numberline {2.13.2.2}memset()}{21}{subsubsection.2.13.2.2}%
-\contentsline {subsubsection}{\numberline {2.13.2.3}strcmp()}{22}{subsubsection.2.13.2.3}%
-\contentsline {subsubsection}{\numberline {2.13.2.4}strcmp\_ic()}{22}{subsubsection.2.13.2.4}%
-\contentsline {subsubsection}{\numberline {2.13.2.5}strlen()}{22}{subsubsection.2.13.2.5}%
+\contentsline {subsection}{\numberline {2.13.2}Function Documentation}{22}{subsection.2.13.2}%
+\contentsline {subsubsection}{\numberline {2.13.2.1}memcpy()}{22}{subsubsection.2.13.2.1}%
+\contentsline {subsubsection}{\numberline {2.13.2.2}memset()}{22}{subsubsection.2.13.2.2}%
+\contentsline {subsubsection}{\numberline {2.13.2.3}strcmp()}{23}{subsubsection.2.13.2.3}%
+\contentsline {subsubsection}{\numberline {2.13.2.4}strcmp\_ic()}{23}{subsubsection.2.13.2.4}%
+\contentsline {subsubsection}{\numberline {2.13.2.5}strlen()}{23}{subsubsection.2.13.2.5}%
 \contentsline {subsubsection}{\numberline {2.13.2.6}strtok()}{24}{subsubsection.2.13.2.6}%
 \contentsline {section}{\numberline {2.14}include/sys\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}req.h File Reference}{24}{section.2.14}%
 \contentsline {subsection}{\numberline {2.14.1}Detailed Description}{24}{subsection.2.14.1}%
