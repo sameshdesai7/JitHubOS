@@ -1,0 +1,180 @@
+\hypertarget{comhand_8h}{}\doxysection{include/comhand.h File Reference}
+\label{comhand_8h}\index{include/comhand.h@{include/comhand.h}}
+
+
+A set of functions that allow users to interact with the OS.  
+
+
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{comhand_8h_a1c6d5de492ac61ad29aec7aa9a436bbf}\label{comhand_8h_a1c6d5de492ac61ad29aec7aa9a436bbf}} 
+\#define {\bfseries V\+E\+R\+S\+I\+ON}~1
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{comhand_8h_ae29c7b66f539c9c5b7107678d890c012}{comhand}} (void)
+\begin{DoxyCompactList}\small\item\em calls all of the different functions that a user would use within the OS \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{comhand_8h_ab13e858612c64eeef73aff1d8a03945e}{print\+Menu}} ()
+\begin{DoxyCompactList}\small\item\em Prints the menu that has different functions the user can choose from to use. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{comhand_8h_ad349600382dfe00fc1eead8957ce7832}{shutdown}} ()
+\begin{DoxyCompactList}\small\item\em allows the user to shutdown the OS, but double checks to see if the user really wants to \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{comhand_8h_af986bd0575ec9b913dfab4b8422509ae}{version}} (void)
+\begin{DoxyCompactList}\small\item\em Shows the user which version of the OS they are using. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{comhand_8h_a0b00c5d28357a4cfa30830e9a45c63fd}{get\+Time}} (void)
+\begin{DoxyCompactList}\small\item\em Gets the current time set within the OS. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{comhand_8h_a9582710fe9ac4a169effb615ca0dcc59}{set\+Time}} (void)
+\begin{DoxyCompactList}\small\item\em Allows the user to set the time of the OS, but doesn\textquotesingle{}t allow them to input an invalid time. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{comhand_8h_a72384471ba513dca25a2b5c7c5b1729a}{get\+Date}} (void)
+\begin{DoxyCompactList}\small\item\em Gets the current date set within the OS. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{comhand_8h_ac3f57064ee44a4f27c7ea9a051acdcc0}{set\+Date}} (void)
+\begin{DoxyCompactList}\small\item\em Allows the user to set the date within the OS, but does not allow any invalid dates. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{comhand_8h_a0bed8474bd33a912769360766f6b10d4}{help}} (void)
+\begin{DoxyCompactList}\small\item\em Displays a list of all of the different functions and what they are made to do. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A set of functions that allow users to interact with the OS. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{comhand_8h_ae29c7b66f539c9c5b7107678d890c012}\label{comhand_8h_ae29c7b66f539c9c5b7107678d890c012}} 
+\index{comhand.h@{comhand.h}!comhand@{comhand}}
+\index{comhand@{comhand}!comhand.h@{comhand.h}}
+\doxysubsubsection{\texorpdfstring{comhand()}{comhand()}}
+{\footnotesize\ttfamily void comhand (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+calls all of the different functions that a user would use within the OS 
+
+\begin{DoxyAuthor}{Author}
+Sam Desai 
+
+Jackson Monk 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{comhand_8h_a72384471ba513dca25a2b5c7c5b1729a}\label{comhand_8h_a72384471ba513dca25a2b5c7c5b1729a}} 
+\index{comhand.h@{comhand.h}!getDate@{getDate}}
+\index{getDate@{getDate}!comhand.h@{comhand.h}}
+\doxysubsubsection{\texorpdfstring{getDate()}{getDate()}}
+{\footnotesize\ttfamily void get\+Date (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Gets the current date set within the OS. 
+
+\begin{DoxyAuthor}{Author}
+Sam Desai 
+
+Jackson Monk 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{comhand_8h_a0b00c5d28357a4cfa30830e9a45c63fd}\label{comhand_8h_a0b00c5d28357a4cfa30830e9a45c63fd}} 
+\index{comhand.h@{comhand.h}!getTime@{getTime}}
+\index{getTime@{getTime}!comhand.h@{comhand.h}}
+\doxysubsubsection{\texorpdfstring{getTime()}{getTime()}}
+{\footnotesize\ttfamily void get\+Time (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Gets the current time set within the OS. 
+
+\begin{DoxyAuthor}{Author}
+Sam Desai 
+
+Jackson Monk 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{comhand_8h_a0bed8474bd33a912769360766f6b10d4}\label{comhand_8h_a0bed8474bd33a912769360766f6b10d4}} 
+\index{comhand.h@{comhand.h}!help@{help}}
+\index{help@{help}!comhand.h@{comhand.h}}
+\doxysubsubsection{\texorpdfstring{help()}{help()}}
+{\footnotesize\ttfamily void help (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Displays a list of all of the different functions and what they are made to do. 
+
+\begin{DoxyAuthor}{Author}
+Sam Desai 
+
+Jackson Monk 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{comhand_8h_ab13e858612c64eeef73aff1d8a03945e}\label{comhand_8h_ab13e858612c64eeef73aff1d8a03945e}} 
+\index{comhand.h@{comhand.h}!printMenu@{printMenu}}
+\index{printMenu@{printMenu}!comhand.h@{comhand.h}}
+\doxysubsubsection{\texorpdfstring{printMenu()}{printMenu()}}
+{\footnotesize\ttfamily void print\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Prints the menu that has different functions the user can choose from to use. 
+
+\begin{DoxyAuthor}{Author}
+Sam Desai 
+
+Jackson Monk 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{comhand_8h_ac3f57064ee44a4f27c7ea9a051acdcc0}\label{comhand_8h_ac3f57064ee44a4f27c7ea9a051acdcc0}} 
+\index{comhand.h@{comhand.h}!setDate@{setDate}}
+\index{setDate@{setDate}!comhand.h@{comhand.h}}
+\doxysubsubsection{\texorpdfstring{setDate()}{setDate()}}
+{\footnotesize\ttfamily void set\+Date (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Allows the user to set the date within the OS, but does not allow any invalid dates. 
+
+\begin{DoxyAuthor}{Author}
+Sam Desai 
+
+Jackson Monk 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{comhand_8h_a9582710fe9ac4a169effb615ca0dcc59}\label{comhand_8h_a9582710fe9ac4a169effb615ca0dcc59}} 
+\index{comhand.h@{comhand.h}!setTime@{setTime}}
+\index{setTime@{setTime}!comhand.h@{comhand.h}}
+\doxysubsubsection{\texorpdfstring{setTime()}{setTime()}}
+{\footnotesize\ttfamily void set\+Time (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Allows the user to set the time of the OS, but doesn\textquotesingle{}t allow them to input an invalid time. 
+
+\begin{DoxyAuthor}{Author}
+Sam Desai 
+
+Jackson Monk 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{comhand_8h_ad349600382dfe00fc1eead8957ce7832}\label{comhand_8h_ad349600382dfe00fc1eead8957ce7832}} 
+\index{comhand.h@{comhand.h}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!comhand.h@{comhand.h}}
+\doxysubsubsection{\texorpdfstring{shutdown()}{shutdown()}}
+{\footnotesize\ttfamily int shutdown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+allows the user to shutdown the OS, but double checks to see if the user really wants to 
+
+\begin{DoxyAuthor}{Author}
+Sam Desai 
+
+Jackson Monk 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+int -\/ returns a 1 if the user confirmed shutdown or a 0 if the user denied shutdown 
+\end{DoxyReturn}
+\mbox{\Hypertarget{comhand_8h_af986bd0575ec9b913dfab4b8422509ae}\label{comhand_8h_af986bd0575ec9b913dfab4b8422509ae}} 
+\index{comhand.h@{comhand.h}!version@{version}}
+\index{version@{version}!comhand.h@{comhand.h}}
+\doxysubsubsection{\texorpdfstring{version()}{version()}}
+{\footnotesize\ttfamily void version (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Shows the user which version of the OS they are using. 
+
+\begin{DoxyAuthor}{Author}
+Sam Desai 
+
+Jackson Monk 
+\end{DoxyAuthor}

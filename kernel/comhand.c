@@ -111,23 +111,18 @@ void getTime(void){
 
     outb(0x70,0x04);
     int hours = inb(0x71);
-    int formatedHours = ((hours & 0x30) >> 4) * 10 + (hours & 0x0F);
-
-    //printf("%d",hours);
+    int formatedHours = fromBCD(hours);
 
     outb(0x70,0x02);
     int minutes = inb(0x71);
-    int formatedMinutes = ((minutes & 0x70) >> 4)*10 + (minutes & 0x0F);
+    int formatedMinutes = fromBCD(minutes);
 
     outb(0x70,0x00);
     int seconds = inb(0x71);
-    int formatedSeconds = ((seconds & 0x70) >> 4)*10 + (seconds & 0x0F);
+    int formatedSeconds = fromBCD(seconds);
 
     //Add padding 0 if seconds is 1 digit 
-
-
     //Account for single digit minutes or seconds
-
     //If minutes and seconds are 1 digit
     if((formatedMinutes <=9)&&(formatedSeconds <=9)){
         printf("%d:0%d:0%d",formatedHours,formatedMinutes,formatedSeconds);
@@ -199,25 +194,17 @@ void setTime(void){
         }
 
         cli();
-        int convertedHours = ((hours/10) << 4 ) | (hours %10);
         
         outb(0x70, 0x04);
-        outb(0x71, convertedHours);
-
-        //Conversion needed due to BCD (Binary Coded Decimal)
-        int convertedMinutes = ((minutes/10) << 4 ) | (minutes %10);
+        outb(0x71, toBCD(hours));
 
         outb(0x70, 0x02);
-        outb(0x71, convertedMinutes);
-
-        int convertedSeconds = ((seconds/10) << 4 ) | (seconds %10);
+        outb(0x71, toBCD(minutes));
 
         outb(0x70, 0x00);
-        outb(0x71, convertedSeconds);
-        
-        // printf("\033[0;32m");
+        outb(0x71, toBCD(seconds));
+
         printf("\033[0;32mTime set to %s.\n\033[0;0m", buf);
-        // printf("\033[0;0m");
 
         sti();
     }
@@ -233,22 +220,19 @@ void getDate(void){
             //Get Year and Format
             outb(0x70,0x09);
             int year = inb(0x71);
-            int formatedYear = ((year & 0x70) >> 4)*10 + (year & 0x0F);
+            int formatedYear = fromBCD(year);
 
             
             
             //Get Day and Format
             outb(0x70,0x07);
             int day = inb(0x71);
-            int formatedDay = ((day & 0x70) >> 4)*10 + (day & 0x0F);
+            int formatedDay = fromBCD(day);
             
             //Get Month and format
             outb(0x70,0x08);
             int month = inb(0x71);
-            int formatedMonth = ((month & 0x70) >> 4)*10 + (month & 0x0F);
-            
-            //Print Date
-            //printf("%d/%d/%d",formatedMonth,formatedDay,formatedYear);
+            int formatedMonth = fromBCD(month);
 
             //If minutes and seconds are 1 digit
             if((formatedDay <=9)&&(formatedYear <=9)){
@@ -323,20 +307,14 @@ void getDate(void){
                     }
                 }
 
-
-                int convertedMonth = ((month/10) << 4 ) | (month %10);
                 outb(0x70, 0x08);
-                outb(0x71, convertedMonth);
-
-                int convertedDay = ((day/10) << 4 ) | (day %10);
+                outb(0x71, toBCD(month));
                 
                 outb(0x70, 0x07);
-                outb(0x71, convertedDay);
-
-                int convertedYear = ((year/10) << 4 ) | (year %10);
+                outb(0x71, toBCD(day));
                 
                 outb(0x70, 0x09);
-                outb(0x71, convertedYear);
+                outb(0x71, toBCD(year));
                 
                 printf("\033[0;32m");
                 printf("Date set to %s\n", buf);

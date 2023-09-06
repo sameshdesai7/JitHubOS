@@ -87,11 +87,17 @@ int isdigit(char c){
 	}
 }
 
-int strtobcd(char* string) {
-	int num = atoi(string);
+int toBCD(int num) {
 	int tens_digit = num / 10;
 	int ones_digit = num % 10;
 	int bcd = (tens_digit << 4) | ones_digit;
 	return bcd;
+}
+
+int fromBCD(int bcd) {
+	int tens_digit = ((bcd & 0x70) >> 4) * 10;
+	int ones_digit = bcd & 0x0F;
+	int num = tens_digit + ones_digit;
+	return num;
 }
 

@@ -1,0 +1,132 @@
+\hypertarget{string_8h}{}\doxysection{include/string.h File Reference}
+\label{string_8h}\index{include/string.h@{include/string.h}}
+
+
+A subset of standard C library functions.  
+
+
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+Include dependency graph for string.\+h\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ \mbox{\hyperlink{string_8h_a758187ddeb8646e53ab14cca659f26f9}{memcpy}} (void $\ast$restrict dst, const void $\ast$restrict src, size\+\_\+t n)
+\item 
+void $\ast$ \mbox{\hyperlink{string_8h_a39f458616ba14d36a329fca2ad5b2107}{memset}} (void $\ast$address, int c, size\+\_\+t n)
+\item 
+int \mbox{\hyperlink{string_8h_a11bd144d7d44914099a3aeddf1c8567d}{strcmp}} (const char $\ast$s1, const char $\ast$s2)
+\item 
+int \mbox{\hyperlink{string_8h_a7cf6afdc88ad06565420969f87cd4805}{strcmp\+\_\+ic}} (const char $\ast$s1, const char $\ast$s2)
+\begin{DoxyCompactList}\small\item\em A string compare function that ignores case. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{string_8h_aa383452fe445bfae989358c9d7d96f4f}{strlen}} (const char $\ast$s)
+\item 
+char $\ast$ \mbox{\hyperlink{string_8h_a282ca433291c6e69a01d5f106c4b02ff}{strtok}} (char $\ast$restrict s1, const char $\ast$restrict s2)
+\item 
+\mbox{\Hypertarget{string_8h_ab476341a7e1d5bea4c9597d9aebdd36c}\label{string_8h_ab476341a7e1d5bea4c9597d9aebdd36c}} 
+void {\bfseries str\+\_\+copy} (char $\ast$dest, char $\ast$source, int start, size\+\_\+t length)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A subset of standard C library functions. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{string_8h_a758187ddeb8646e53ab14cca659f26f9}\label{string_8h_a758187ddeb8646e53ab14cca659f26f9}} 
+\index{string.h@{string.h}!memcpy@{memcpy}}
+\index{memcpy@{memcpy}!string.h@{string.h}}
+\doxysubsubsection{\texorpdfstring{memcpy()}{memcpy()}}
+{\footnotesize\ttfamily void$\ast$ memcpy (\begin{DoxyParamCaption}\item[{void $\ast$restrict}]{dst,  }\item[{const void $\ast$restrict}]{src,  }\item[{size\+\_\+t}]{n }\end{DoxyParamCaption})}
+
+Copy a region of memory. 
+\begin{DoxyParams}{Parameters}
+{\em dst} & The destination memory region \\
+\hline
+{\em src} & The source memory region \\
+\hline
+{\em n} & The number of bytes to copy \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the destination memory region 
+\end{DoxyReturn}
+\mbox{\Hypertarget{string_8h_a39f458616ba14d36a329fca2ad5b2107}\label{string_8h_a39f458616ba14d36a329fca2ad5b2107}} 
+\index{string.h@{string.h}!memset@{memset}}
+\index{memset@{memset}!string.h@{string.h}}
+\doxysubsubsection{\texorpdfstring{memset()}{memset()}}
+{\footnotesize\ttfamily void$\ast$ memset (\begin{DoxyParamCaption}\item[{void $\ast$}]{address,  }\item[{int}]{c,  }\item[{size\+\_\+t}]{n }\end{DoxyParamCaption})}
+
+Fill a region of memory. 
+\begin{DoxyParams}{Parameters}
+{\em address} & The start of the memory region \\
+\hline
+{\em c} & The byte to fill memory with \\
+\hline
+{\em n} & The number of bytes to fill \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the filled memory region 
+\end{DoxyReturn}
+\mbox{\Hypertarget{string_8h_a11bd144d7d44914099a3aeddf1c8567d}\label{string_8h_a11bd144d7d44914099a3aeddf1c8567d}} 
+\index{string.h@{string.h}!strcmp@{strcmp}}
+\index{strcmp@{strcmp}!string.h@{string.h}}
+\doxysubsubsection{\texorpdfstring{strcmp()}{strcmp()}}
+{\footnotesize\ttfamily int strcmp (\begin{DoxyParamCaption}\item[{const char $\ast$}]{s1,  }\item[{const char $\ast$}]{s2 }\end{DoxyParamCaption})}
+
+Compares two strings 
+\begin{DoxyParams}{Parameters}
+{\em s1} & The first string to compare \\
+\hline
+{\em s2} & The second string to compare \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if strings are equal, $<$0 if s1 is lexicographically before s2, $>$0 otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{string_8h_a7cf6afdc88ad06565420969f87cd4805}\label{string_8h_a7cf6afdc88ad06565420969f87cd4805}} 
+\index{string.h@{string.h}!strcmp\_ic@{strcmp\_ic}}
+\index{strcmp\_ic@{strcmp\_ic}!string.h@{string.h}}
+\doxysubsubsection{\texorpdfstring{strcmp\_ic()}{strcmp\_ic()}}
+{\footnotesize\ttfamily int strcmp\+\_\+ic (\begin{DoxyParamCaption}\item[{const char $\ast$}]{s1,  }\item[{const char $\ast$}]{s2 }\end{DoxyParamCaption})}
+
+
+
+A string compare function that ignores case. 
+
+\begin{DoxyAuthor}{Author}
+Noah Marner This function compares two strings while ignoring case. This case is used in comhand to make comparing user input more friendly. 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em s1} & The first string to compare \\
+\hline
+{\em s2} & the second string to compare \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if strings are equal ignoring case, 1 if not 
+\end{DoxyReturn}
+\mbox{\Hypertarget{string_8h_aa383452fe445bfae989358c9d7d96f4f}\label{string_8h_aa383452fe445bfae989358c9d7d96f4f}} 
+\index{string.h@{string.h}!strlen@{strlen}}
+\index{strlen@{strlen}!string.h@{string.h}}
+\doxysubsubsection{\texorpdfstring{strlen()}{strlen()}}
+{\footnotesize\ttfamily size\+\_\+t strlen (\begin{DoxyParamCaption}\item[{const char $\ast$}]{s }\end{DoxyParamCaption})}
+
+Returns the length of a string. 
+\begin{DoxyParams}{Parameters}
+{\em s} & A N\+U\+L-\/terminated string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of bytes in the string (not counting N\+UL terminator) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{string_8h_a282ca433291c6e69a01d5f106c4b02ff}\label{string_8h_a282ca433291c6e69a01d5f106c4b02ff}} 
+\index{string.h@{string.h}!strtok@{strtok}}
+\index{strtok@{strtok}!string.h@{string.h}}
+\doxysubsubsection{\texorpdfstring{strtok()}{strtok()}}
+{\footnotesize\ttfamily char$\ast$ strtok (\begin{DoxyParamCaption}\item[{char $\ast$restrict}]{s1,  }\item[{const char $\ast$restrict}]{s2 }\end{DoxyParamCaption})}
+
+Split string into tokens T\+O\+DO 

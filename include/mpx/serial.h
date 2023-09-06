@@ -29,8 +29,8 @@ int serial_out(device dev, const char *buffer, size_t len);
  @author Noah Marner
  @author Blake Wagner
  @brief Reads a string from a serial port
-
- This function is used to read in data from the console. It reads characters until either
+ 
+ @details This function is used to read in data from the console. It reads characters until either
  the length limit is reached or an enter key is read in. Special characters such as backspace, delete
  and arrow keys are also handled in this function.
  @param device The serial port to read data from
@@ -45,7 +45,7 @@ int serial_poll(device dev, char *buffer, size_t len);
  * @author Blake Wagner
  * @brief Helper method for serial_poll that does the work of a backspace
  * 
- * This function is used when a backspace or delete character is input. If there is a backspace,
+ * @details This function is used when a backspace or delete character is input. If there is a backspace,
  * the function is simply called. When a delete character is input, the position is set 
  * forward one and then the function is called.
  * @param pos The current position in the buffer
@@ -53,7 +53,6 @@ int serial_poll(device dev, char *buffer, size_t len);
  * @param buffer A buffer that stores the current string
  * @param dev The serial port to read data from
 */
-
 void backspace(int *pos, int* end, char* buffer, device dev);
 
 #endif

@@ -1,0 +1,115 @@
+\hypertarget{stdlib_8h}{}\doxysection{include/stdlib.h File Reference}
+\label{stdlib_8h}\index{include/stdlib.h@{include/stdlib.h}}
+
+
+A subset of standard C library functions.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{stdlib_8h_a30670a60464f77af17dfb353353d6df8}{atoi}} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Convert an A\+S\+C\+II string to an integer. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{stdlib_8h_a15ca34a94485b37b1f9c93da06e12a66}{itoa}} (int i, char $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Converts a valid integer to a string and stores it in buffer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{stdlib_8h_ac6490d3a2bd188997a8d367be0d92c3e}{isdigit}} (char c)
+\begin{DoxyCompactList}\small\item\em Checks if the provided character is a digit. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{stdlib_8h_a5d584ecaafdf660a17f771c0997f1169}{strtobcd}} (char $\ast$string)
+\begin{DoxyCompactList}\small\item\em Converts a string to a binary-\/coded decimal (bcd) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A subset of standard C library functions. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{stdlib_8h_a30670a60464f77af17dfb353353d6df8}\label{stdlib_8h_a30670a60464f77af17dfb353353d6df8}} 
+\index{stdlib.h@{stdlib.h}!atoi@{atoi}}
+\index{atoi@{atoi}!stdlib.h@{stdlib.h}}
+\doxysubsubsection{\texorpdfstring{atoi()}{atoi()}}
+{\footnotesize\ttfamily int atoi (\begin{DoxyParamCaption}\item[{const char $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Convert an A\+S\+C\+II string to an integer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & A N\+U\+L-\/terminated string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the string converted to an integer 
+\end{DoxyReturn}
+\mbox{\Hypertarget{stdlib_8h_ac6490d3a2bd188997a8d367be0d92c3e}\label{stdlib_8h_ac6490d3a2bd188997a8d367be0d92c3e}} 
+\index{stdlib.h@{stdlib.h}!isdigit@{isdigit}}
+\index{isdigit@{isdigit}!stdlib.h@{stdlib.h}}
+\doxysubsubsection{\texorpdfstring{isdigit()}{isdigit()}}
+{\footnotesize\ttfamily int isdigit (\begin{DoxyParamCaption}\item[{char}]{c }\end{DoxyParamCaption})}
+
+
+
+Checks if the provided character is a digit. 
+
+\begin{DoxyAuthor}{Author}
+Jackson Monk 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The character to compare to a digit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An integer indicating whether or not the character is a digit. Non-\/zero if true, 0 if false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{stdlib_8h_a15ca34a94485b37b1f9c93da06e12a66}\label{stdlib_8h_a15ca34a94485b37b1f9c93da06e12a66}} 
+\index{stdlib.h@{stdlib.h}!itoa@{itoa}}
+\index{itoa@{itoa}!stdlib.h@{stdlib.h}}
+\doxysubsubsection{\texorpdfstring{itoa()}{itoa()}}
+{\footnotesize\ttfamily char$\ast$ itoa (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{char $\ast$}]{buffer }\end{DoxyParamCaption})}
+
+
+
+Converts a valid integer to a string and stores it in buffer. 
+
+\begin{DoxyAuthor}{Author}
+Samesh Desai 
+
+Noah Marner 
+
+Jackson Monk 
+
+Blake Wagner 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em i} & The integer to convert to a string \\
+\hline
+{\em buffer} & The destination string for the result \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The same string placed into buffer 
+\end{DoxyReturn}
+\mbox{\Hypertarget{stdlib_8h_a5d584ecaafdf660a17f771c0997f1169}\label{stdlib_8h_a5d584ecaafdf660a17f771c0997f1169}} 
+\index{stdlib.h@{stdlib.h}!strtobcd@{strtobcd}}
+\index{strtobcd@{strtobcd}!stdlib.h@{stdlib.h}}
+\doxysubsubsection{\texorpdfstring{strtobcd()}{strtobcd()}}
+{\footnotesize\ttfamily int strtobcd (\begin{DoxyParamCaption}\item[{char $\ast$}]{string }\end{DoxyParamCaption})}
+
+
+
+Converts a string to a binary-\/coded decimal (bcd) 
+
+\begin{DoxyAuthor}{Author}
+Jackson Monk 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The string to convert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The bcd representation of the string as an integer 
+\end{DoxyReturn}
