@@ -16,6 +16,9 @@ ASFLAGS = -f elf -g
 CC	= clang
 CFLAGS  = @make/CFLAGS
 
+comhand: comhand.c
+	$(CC) $(CFLAGS) -o $@ $< comhand.c -DCOMPILE_DATE=\"$(shell date +'%Y-%m-%d')\" -DCOMPILE_TIME=\"$(shell date +'%H:%M:%S')\"
+
 ifeq ($(shell uname), Darwin)
 LD	= i686-elf-ld
 else
