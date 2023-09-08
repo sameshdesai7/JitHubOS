@@ -15,17 +15,20 @@
 
 void comhand()
 {
-
+    //infinite loop
     for (;;)
     {
-
+        //buffer for first input read in
         char buf[100] = {0};
+        //prints the menu that shows all of the choices
         printMenu();
+        //reads in the first input
         sys_req(READ, COM1, buf, sizeof(buf));
 
         // Shutdown Command
         if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "7") == 0))
         {
+            //if shutdown is confirmed, exit loop
             if (shutdown(buf))
                 return;
         }
@@ -48,22 +51,24 @@ void comhand()
             getDate();
         }
 
-        // TODO: Set Time
+        //Set Time Command
         else if ((strcmp_ic(buf, "Set Time") == 0) || (strcmp(buf, "3") == 0))
         {
             setTime();
         }
 
-        // TODO: Set Date
+        //Set Date Command
         else if ((strcmp_ic(buf, "Set Date") == 0) || (strcmp(buf, "5") == 0))
         {
             setDate();
         }
 
+        //help command
         else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "6") == 0)
         {
             help();
         }
+        //individual help commands
         else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "6 version") == 0){
             printf("\033[0;36m");
             puts("Type \"version\" to retrieve the current version of the operating system\n");
@@ -133,10 +138,12 @@ int shutdown()
     sys_req(READ, COM1, buf, sizeof(buf));
     if (strcmp_ic(buf, "Y") == 0)
     {
+        //exit loop
         return 1;
     }
     else
     {
+        //continue loop
         return 0;
     }
 }
@@ -155,15 +162,21 @@ void getTime(void)
     printf("\033[0;36m");
     printf("Time is: ");
 
+    //Attaching the hours register to port 70
     outb(0x70, 0x04);
+    //Reading the data from the hours register through port 71
     int hours = inb(0x71);
     int formatedHours = fromBCD(hours);
 
+    //Attaching the minutes register to port 70
     outb(0x70, 0x02);
+    //Reading the data from the minutes register through port 71
     int minutes = inb(0x71);
     int formatedMinutes = fromBCD(minutes);
 
+    //Attaching the seconds register to port 70
     outb(0x70, 0x00);
+    //Reading the data from the seconds register through port 71
     int seconds = inb(0x71);
     int formatedSeconds = fromBCD(seconds);
 
@@ -205,6 +218,7 @@ void setTime(void)
     char buf[100] = {0};
     sys_req(READ, COM1, buf, sizeof(buf));
 
+    //checks to see hours are only 1 digit and will replace with the equivalent 2 digits
     if (buf[1] == ':')
     {
         buf[1] = buf[0];
@@ -225,6 +239,7 @@ void setTime(void)
         int seconds = atoi(&buf[6]);
         int isInvalid = 0;
 
+        //verifies input
         if (hours > 23 || minutes > 59 || seconds > 59)
         {
             printf("\033[0;31m");
@@ -250,7 +265,7 @@ void setTime(void)
         {
             return;
         }
-
+        //disables interrupts and sets the time to each register
         cli();
 
         outb(0x70, 0x04);
@@ -263,7 +278,7 @@ void setTime(void)
         outb(0x71, toBCD(seconds));
 
         printf("\033[0;32mTime set to %s.\n\033[0;0m", buf);
-
+        //enables interrupts
         sti();
     }
 }
@@ -351,14 +366,14 @@ void setDate(void)
 
     if (isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7]))
     {
-
+        //disables interrupts
         cli();
         int month = atoi(&buf[0]);
         int day = atoi(&buf[3]);
         int year = atoi(&buf[6]);
 
         printf("\033[0;31m");
-
+        //verifies input
         if (month < 1 || day < 1 || year < 1)
         {
             puts("Date cannot be inputted as 0 or lower\n");
@@ -399,6 +414,7 @@ void setDate(void)
             }
         }
 
+        //sets the date to each of the registers
         outb(0x70, 0x08);
         outb(0x71, toBCD(month));
 
@@ -411,6 +427,7 @@ void setDate(void)
         printf("\033[0;32m");
         printf("Date set to %s\n", buf);
         printf("\033[0;0m");
+        //enables interrupts
         sti();
     }
     else
