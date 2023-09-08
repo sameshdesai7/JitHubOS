@@ -181,6 +181,7 @@ void setTime(void)
     printf("\033[0;36m");
     printf("Enter the time. (hh:mm:ss)\n");
     printf("\033[0;0m");
+    printf(">> ");
     char buf[100] = {0};
     sys_req(READ, COM1, buf, sizeof(buf));
 
@@ -302,6 +303,7 @@ void setDate(void)
     printf("\033[0;36m");
     printf("Enter the date. (mm/dd/yy)\n");
     printf("\033[0;0m");
+    printf(">> ");
     sys_req(READ, COM1, buf, sizeof(buf));
     
     //changes the month to 2 digits if they are not inputted as 2
