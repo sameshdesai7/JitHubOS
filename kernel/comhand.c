@@ -303,6 +303,29 @@ void setDate(void)
     printf("Enter the date. (mm/dd/yy)\n");
     printf("\033[0;0m");
     sys_req(READ, COM1, buf, sizeof(buf));
+    
+    //changes the month to 2 digits if they are not inputted as 2
+    if (buf[1] == '/')
+    {
+        buf[1] = buf[0];
+        buf[0] = '0';
+        for (int i = 7; i > 2; i--)
+        {
+            buf[i] = buf[i - 1];
+        }
+        buf[2] = '/';
+    }
+     //changes the day to 2 digits if they are not inputted as 2
+    if (buf[4] == '/')
+    {
+        buf[4] = buf[3];
+        buf[3] = '0';
+        for (int i = 7; i > 5; i--)
+        {
+            buf[i] = buf[i - 1];
+        }
+        buf[5] = '/';
+    }
 
     if (isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7]))
     {
@@ -380,12 +403,12 @@ void help(void)
 {
     // If "help" was the only word, print a list of all the commands and what they do
     printf("\033[0;36m");
-    puts("Type \"version\" to retrieve the current version of the operating system\n");
-    puts("Type \"get time\" to retrieve the current system time\n");
-    puts("Type \"set time\" to set the system time\n");
-    puts("Type \"get date\" to retrieve the current system date\n");
-    puts("Type \"set date\" to set the system date\n");
-    puts("Type \"help\" to see a list of commands you can run\n");
-    puts("Type \"shutdown\" to exit the operating system\n");
+    puts("Type \"version\" or type ‘1’to retrieve the current version of the operating system\n");
+    puts("Type \"get time\" or type ‘2’ to retrieve the current system time\n");
+    puts("Type \"set time\" or type ‘3’ to set the system time\n");
+    puts("Type \"get date\" or type ‘4’ to retrieve the current system date\n");
+    puts("Type \"set date\" or type ‘5’ to set the system date\n");
+    puts("Type \"help\" or type ‘6’ to see a list of commands you can run\n");
+    puts("Type \"shutdown\" or type ‘7’ to exit the operating system\n");
     printf("\033[0;0m");
 }
