@@ -6,6 +6,8 @@
 #include <string.h>
 #include <memory.h>
 #include <../include/comhand.h>
+#include <stdlib.h>
+#include <mpx/io.h>
 
 static void klogv(device dev, const char *msg)
 {
@@ -87,6 +89,13 @@ void kmain(void)
 	// 9) YOUR command handler -- *create and #include an appropriate .h file*
 	// Pass execution to your command handler so the user can interact with
 	// the system.
+
+	outb(0x70, 0x04);
+    int hours = inb(0x71);
+    int formatedHours = fromBCD(hours) - 4;
+	outb(0x70, 0x04);
+    outb(0x71, toBCD(formatedHours));
+
 	comhand();
 	klogv(COM1, "Transferring control to commhand...");
 	// R4: __asm__ volatile ("int $0x60" :: "a"(IDLE));
