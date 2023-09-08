@@ -9,6 +9,7 @@
 #include <ctype.h>
 #include <mpx/interrupts.h>
 
+//compile constants to be used in version to show when the most recent compilation was
 #define COMPILE_DATE __DATE__
 #define COMPILE_TIME __TIME__
 
@@ -61,24 +62,43 @@ void comhand()
 
         else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "6") == 0)
         {
-
             help();
         }
-
-        else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "6 version") == 0)
+        else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "6 version") == 0){
+            printf("\033[0;36m");
             puts("Type \"version\" to retrieve the current version of the operating system\n");
-        else if (strcmp_ic(buf, "help help") == 0 || strcmp_ic(buf, "6 help") == 0)
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help help") == 0 || strcmp_ic(buf, "6 help") == 0){
+            printf("\033[0;36m");
             puts("Type \"help\" to see a list of commands you can run\n");
-        else if (strcmp_ic(buf, "help shutdown") == 0 || strcmp_ic(buf, "6 shutdown") == 0)
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help shutdown") == 0 || strcmp_ic(buf, "6 shutdown") == 0){
+            printf("\033[0;36m");
             puts("Type \"shutdown\" to exit the operating system\n");
-        else if (strcmp_ic(buf, "help get time") == 0 || strcmp_ic(buf, "6 get time") == 0)
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help get time") == 0 || strcmp_ic(buf, "6 get time") == 0){
+            printf("\033[0;36m");
             puts("Type \"get time\" to retrieve the current system time\n");
-        else if (strcmp_ic(buf, "help set time") == 0 || strcmp_ic(buf, "6 set time") == 0)
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help set time") == 0 || strcmp_ic(buf, "6 set time") == 0){
+            printf("\033[0;36m");
             puts("Type \"set time\" to set the system time\n");
-        else if (strcmp_ic(buf, "help get date") == 0 || strcmp_ic(buf, "6 get date") == 0)
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help get date") == 0 || strcmp_ic(buf, "6 get date") == 0){
+            printf("\033[0;36m");
             puts("Type \"get date\" to retrieve the current system date\n");
-        else if (strcmp_ic(buf, "help set date") == 0 || strcmp_ic(buf, "6 set date") == 0)
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help set date") == 0 || strcmp_ic(buf, "6 set date") == 0){
+            printf("\033[0;36m");
             puts("Type \"set date\" to set the system date\n");
+            printf("\033[0;0m");
+        }
         else
         {
             printf("\033[0;31m");
