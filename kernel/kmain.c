@@ -89,12 +89,28 @@ void kmain(void)
 	// 9) YOUR command handler -- *create and #include an appropriate .h file*
 	// Pass execution to your command handler so the user can interact with
 	// the system.
-
+	
+	// Adjusting time back 4 hours to account for system time
+	// This technically should adjust the month back if hours < 4 and day is = 1, and then year...
 	outb(0x70, 0x04);
     int hours = inb(0x71);
-    int formatedHours = fromBCD(hours) - 4;
+    int formattedHours = fromBCD(hours);
+	int adjustedHours;
+	if(formattedHours > 4)
+		adjustedHours = formattedHours - 4;
+	else {
+		adjustedHours = 24 - (4 - formattedHours);
+		outb(0x70, 0x07);
+		int day = inb(0x71);
+		int formattedDay = fromBCD(day);
+		if(formattedDay > 1){
+			int adjustedDay = formattedDay - 1;
+			outb(0x70, 0x07);
+        	outb(0x71, toBCD(adjustedDay));
+		}
+	}
 	outb(0x70, 0x04);
-    outb(0x71, toBCD(formatedHours));
+    outb(0x71, toBCD(adjustedHours));
 
 	comhand();
 	klogv(COM1, "Transferring control to commhand...");
