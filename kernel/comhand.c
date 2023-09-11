@@ -230,6 +230,13 @@ void setTime(void)
         buf[2] = ':';
     }
 
+
+    if(!(isdigit(buf[6]) && isdigit(buf[7]))){
+        printf("\033[0;31m");
+        printf("Error. Did not enter seconds. Please use the hh:mm:ss format.");
+        printf("\033[0;0m");
+    }
+
     if (isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7]))
     {
 
@@ -340,6 +347,13 @@ void setDate(void)
     printf("\033[0;0m");
     printf(">> ");
     sys_req(READ, COM1, buf, sizeof(buf));
+
+    if(strlen(buf) > 8){
+        printf("\033[0;31m");
+        printf("Invalid Date Format. Please use the mm/dd/yy format.");
+        printf("\033[0;0m");
+        return;
+    }
     
     //changes the month to 2 digits if they are not inputted as 2
     if (buf[1] == '/')
@@ -368,9 +382,10 @@ void setDate(void)
     {
         //disables interrupts
         cli();
+        int year = atoi(&buf[6]);
         int month = atoi(&buf[0]);
         int day = atoi(&buf[3]);
-        int year = atoi(&buf[6]);
+        
 
         printf("\033[0;31m");
         //verifies input
@@ -415,14 +430,15 @@ void setDate(void)
         }
 
         //sets the date to each of the registers
+
+        outb(0x70, 0x09);
+        outb(0x71, toBCD(year));
+        
         outb(0x70, 0x08);
         outb(0x71, toBCD(month));
 
         outb(0x70, 0x07);
         outb(0x71, toBCD(day));
-
-        outb(0x70, 0x09);
-        outb(0x71, toBCD(year));
 
         printf("\033[0;32m");
         printf("Date set to %s\n", buf);
