@@ -19,4 +19,4 @@ KERNEL_OBJECTS=\
 	kernel/kmain.o\
 	kernel/core-c.o\
 	kernel/comhand.o\
-	lib/pcb.o
+	kernel/pcb.o

@@ -1,11 +1,8 @@
 #ifndef MPX_CTYPE_H
 #define MPX_CTYPE_H
 
-extern struct pcb *queue_head;
-
 typedef struct pcb {
         char *name_ptr;
-        char name_arr[20];
 } pcb;
 
 pcb* pcb_allocate(void);

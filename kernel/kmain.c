@@ -8,6 +8,8 @@
 #include <../include/comhand.h>
 #include <stdlib.h>
 #include <mpx/io.h>
+#include <pcb.h>
+#include <dataStructs/queue.h>
 
 static void klogv(device dev, const char *msg)
 {
@@ -111,6 +113,19 @@ void kmain(void)
 	}
 	outb(0x70, 0x04);
     outb(0x71, toBCD(adjustedHours));
+
+	// pcb test1 = {.name_ptr = "numero1"};
+	// pcb* test2 = {.name_ptr = "numero2"};
+	// pcb* test3 = {.name_ptr = "numero3"};
+
+	// node* tes1 = {.pcb = test1};
+	// node* tes2 = {.pcb = test2};
+	// node* tes3 = {.pcb = test3};
+
+	// queue* q;
+
+	// enqueue(q, test1);
+	// printq(q);
 
 	comhand();
 	klogv(COM1, "Transferring control to commhand...");

@@ -1,5 +1,6 @@
 #ifndef MPX_STDLIB_H
 #define MPX_STDLIB_H
+#define NULL ((void*)0)
 
 /**
  @file stdlib.h
