@@ -386,7 +386,7 @@ void setDate(void)
         int month = atoi(&buf[0]);
         int day = atoi(&buf[3]);
         
-
+        // int days[]= {31, 28, }
         printf("\033[0;31m");
         //verifies input
         if (month < 1 || day < 1 || year < 1)
@@ -430,19 +430,31 @@ void setDate(void)
         }
 
         //sets the date to each of the registers
+        if (month == 2 | month == 4 || month == 6 || month == 9 || month == 11){
+            outb(0x70, 0x09);
+            outb(0x71, toBCD(year));
 
-        outb(0x70, 0x09);
-        outb(0x71, toBCD(year));
-        
-        outb(0x70, 0x08);
-        outb(0x71, toBCD(month));
+            outb(0x70, 0x07);
+            outb(0x71, toBCD(day));
+            
+            outb(0x70, 0x08);
+            outb(0x71, toBCD(month));
+        }
+        else{
+            outb(0x70, 0x09);
+            outb(0x71, toBCD(year));
 
-        outb(0x70, 0x07);
-        outb(0x71, toBCD(day));
+            outb(0x70, 0x08);
+            outb(0x71, toBCD(month));
+
+            outb(0x70, 0x07);
+            outb(0x71, toBCD(day));
+        }
 
         printf("\033[0;32m");
         printf("Date set to %s\n", buf);
         printf("\033[0;0m");
+
         //enables interrupts
         sti();
     }
