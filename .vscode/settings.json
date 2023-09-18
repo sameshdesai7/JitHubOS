@@ -3,7 +3,10 @@
         "**/target": true
     },
     "files.associations": {
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "stddef.h": "c",
+        "corecrt.h": "c",
+        "stdio.h": "c"
     },
     "C_Cpp.dimInactiveRegions": false
 }

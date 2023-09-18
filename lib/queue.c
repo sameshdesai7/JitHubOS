@@ -1,7 +1,8 @@
 #include <dataStructs/queue.h>
-#include <stdlib.h>
+#include "../include/stdlib.h"
 #include <pcb.h>
 #include <stdio.h>
+#include <string.h>
 
 void enqueue(queue* q, node* newNode){
     
