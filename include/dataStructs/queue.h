@@ -6,7 +6,7 @@
 
 typedef struct node {
     pcb* pcb;
-    pcb* next;
+    struct node* next;
 } node;
 
 typedef struct queue {
