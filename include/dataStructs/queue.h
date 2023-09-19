@@ -1,7 +1,7 @@
 #ifndef MPX_STDLIB_H
 #define MPX_STDLIB_H
 
-#include "../pcb.h"
+#include <../pcb.h>
 #include <stdlib.h>
 
 typedef struct node {

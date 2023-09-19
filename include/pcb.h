@@ -1,6 +1,8 @@
 #ifndef MPX_CTYPE_H
 #define MPX_CTYPE_H
 
+#include <memory.h>
+
 typedef struct pcb {
         char *name_ptr;
 } pcb;
