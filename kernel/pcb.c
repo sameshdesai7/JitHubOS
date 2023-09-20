@@ -1,8 +1,16 @@
 #include <pcb.h>
 
-// pcb* pcb_allocate(void){
-
-// }
+/**
+ * @brief Allocates memory for a new PCB
+*/
+pcb* pcb_allocate(void){
+    pcb* newPCB = sys_alloc_mem(sizeof(pcb*));
+    if (newPCB == NULL) {
+        puts("Error allocating memory for new PCB");
+        return NULL;
+    }
+    return newPCB;
+}
 
 // int pcb_free(pcb* pcb){
 
