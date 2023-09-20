@@ -11,6 +11,10 @@
 #include <pcb.h>
 #include <dataStructs/queue.h>
 
+// typedef struct pcb {
+//         char *name_ptr;
+// } pcb;
+
 static void klogv(device dev, const char *msg)
 {
 	char prefix[] = "klogv: ";

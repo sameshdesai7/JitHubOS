@@ -1,5 +1,5 @@
-#ifndef MPX_STDLIB_H
-#define MPX_STDLIB_H
+#ifndef QUEUE_H
+#define QUEUE_H
 
 #include <../pcb.h>
 #include <stdlib.h>
