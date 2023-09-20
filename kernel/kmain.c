@@ -118,19 +118,19 @@ void kmain(void)
 	outb(0x70, 0x04);
     outb(0x71, toBCD(adjustedHours));
 
-	struct pcb *test1 = sys_alloc_mem(sizeof(*test1));
-	test1->name_ptr = "numero1";
+	pcb test1 = {.name_ptr = "numero1"};
+	pcb test2 = {.name_ptr = "numero2"};
+	pcb test3 = {.name_ptr = "numero3"};
 
-	// pcb* test2 = {.name_ptr = "numero2"};
-	// pcb* test3 = {.name_ptr = "numero3"};
+	node tes1 = {.pcb = &test1};
+	node tes2 = {.pcb = &test2};
+	node tes3 = {.pcb = &test3};
 
-	// node* tes1 = {.pcb = test1};
-	// node* tes2 = {.pcb = test2};
-	// node* tes3 = {.pcb = test3};
+	queue* q = sys_alloc_mem(sizeof(queue*));
 
-	// queue* q;
-
-	enqueue(q, test1);
+	enqueue(q, &tes1);
+	enqueue(q, &tes2);
+	enqueue(q, &tes3);
 	printq(q);
 
 	comhand();
