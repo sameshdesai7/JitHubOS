@@ -1,4 +1,5 @@
 #include <pcb.h>
+#include <stdio.h>
 
 /**
  * @brief Allocates memory for a new PCB
