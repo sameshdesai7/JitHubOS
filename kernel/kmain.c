@@ -8,7 +8,7 @@
 #include <../include/comhand.h>
 #include <stdlib.h>
 #include <mpx/io.h>
-#include <pcb.h>	
+#include <pcb.h>
 #include <dataStructs/queue.h>
 
 static void klogv(device dev, const char *msg)
@@ -114,7 +114,7 @@ void kmain(void)
 	outb(0x70, 0x04);
     outb(0x71, toBCD(adjustedHours));
 
-	struct pcb* test1 = sys_alloc_mem(100);
+	struct pcb *test1 = sys_alloc_mem(sizeof(*test1));
 	test1->name_ptr = "numero1";
 
 	// pcb* test2 = {.name_ptr = "numero2"};
