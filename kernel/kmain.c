@@ -4,6 +4,7 @@
 #include <mpx/vm.h>
 #include <sys_req.h>
 #include <string.h>
+#include <stdio.h>
 #include <memory.h>
 #include <../include/comhand.h>
 #include <stdlib.h>
@@ -118,30 +119,33 @@ void kmain(void)
 	outb(0x70, 0x04);
     outb(0x71, toBCD(adjustedHours));
 
-	// pcb* pcb1 = pcb_setup("priority3", 0, 3);
-	// pcb* pcb2 = pcb_setup("priority1", 0, 1);
-	// pcb* pcb3 = pcb_setup("priority2", 0, 2);
-	// pcb* pcb4 = pcb_setup("priority3.2", 0, 3);
-	// pcb* pcb5 = pcb_setup("priority2.2", 0, 2);
-	// pcb* pcb6 = pcb_setup("priority1.2", 0, 1);
-	// pcb* pcb7 = pcb_setup("priority1.3", 0, 1);
-
-	pcb pcb1 = {.name_ptr = "disdafirstone", .priority = 1, .clas = 0, .state = "ready", .next = NULL};
+	// pcb* pcb1 = pcb_allocate();
+	// pcb* pcb2 = pcb_allocate();
+	// pcb1->name_ptr = "priority1";
+	// pcb1->priority = 1;
+	// pcb2->name_ptr = "priority0";
+	// pcb2->priority = 0;
+	pcb* pcb1 = pcb_setup("priority1.1", 0, 1);
+	pcb* pcb2 = pcb_setup("priority0.1", 0, 0);
+	pcb* pcb3 = pcb_setup("priority2.1", 0, 2);
+	pcb* pcb4 = pcb_setup("priority3.2", 0, 3);
+	pcb* pcb5 = pcb_setup("priority2.2", 0, 2);
+	pcb* pcb6 = pcb_setup("priority1.2", 0, 1);
+	pcb* pcb7 = pcb_setup("priority1.3", 0, 1);
 
 	queue* q = sys_alloc_mem(sizeof(queue*));
 
-	enqueue(q, &pcb1);
-	// enqueue(q, pcb1);
-	// enqueue(q, pcb2);
-	// enqueue(q, pcb3);
-	// enqueue(q, pcb4);
-	// enqueue(q, pcb5);
-	// enqueue(q, pcb6);
-	// enqueue(q, pcb7);
+	enqueue(q, pcb1);
+	enqueue(q, pcb2);
+	enqueue(q, pcb3);
+	enqueue(q, pcb4);
+	enqueue(q, pcb5);
+	enqueue(q, pcb6);
+	enqueue(q, pcb7);
 	printq(q);
 
-	comhand();
 	klogv(COM1, "Transferring control to commhand...");
+	comhand();
 	// R4: __asm__ volatile ("int $0x60" :: "a"(IDLE));
 
 	// 10) System Shutdown -- *headers to be determined by your design*

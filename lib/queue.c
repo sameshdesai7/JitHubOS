@@ -5,7 +5,7 @@
 #include <string.h>
 
 void enqueue(queue* q, pcb* newPCB){
-
+ 
     if(q->head == NULL){
         q->head = newPCB;
         q->tail = newPCB;
@@ -24,7 +24,7 @@ void enqueue(queue* q, pcb* newPCB){
     while(temp->next != NULL && newPCB->priority >= temp->next->priority){
         temp = temp->next;
     }
-
+    
     if(temp->next == NULL) {
         // newPCB will be tail
         q->tail->next = newPCB;
@@ -61,5 +61,5 @@ void printq(queue* q){
         printf("%s, ", temp->name_ptr);
         temp = temp->next;
     }
-    printf("%s]", temp->name_ptr);
+    printf("%s]\n", temp->name_ptr);
 }

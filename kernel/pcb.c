@@ -6,7 +6,7 @@
  * @brief Allocates memory for a new PCB
 */
 pcb* pcb_allocate(void){
-    pcb* newPCB = sys_alloc_mem(sizeof(pcb*));
+    pcb* newPCB = sys_alloc_mem(sizeof(pcb));
     if (newPCB == NULL) {
         puts("Error allocating memory for new PCB");
         return NULL;
@@ -36,7 +36,7 @@ pcb* pcb_setup(const char * name, int clas, int priority){
     newPCB->clas = clas;
 
     newPCB->state = sys_alloc_mem(sizeof(char*));
-    newPCB->state = "ready";
+    newPCB->state = (char*)"ready";
 
     newPCB->next = NULL;
     
