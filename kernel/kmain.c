@@ -125,7 +125,9 @@ void kmain(void)
 	// pcb1->priority = 1;
 	// pcb2->name_ptr = "priority0";
 	// pcb2->priority = 0;
-	pcb* pcb3 = pcb_setup("priority2", 0, 2);
+	pcb* pcb1 = pcb_setup("priority1.1", 0, 1);
+	pcb* pcb2 = pcb_setup("priority0.1", 0, 0);
+	pcb* pcb3 = pcb_setup("priority2.1", 0, 2);
 	pcb* pcb4 = pcb_setup("priority3.2", 0, 3);
 	pcb* pcb5 = pcb_setup("priority2.2", 0, 2);
 	pcb* pcb6 = pcb_setup("priority1.2", 0, 1);
@@ -133,22 +135,17 @@ void kmain(void)
 
 	queue* q = sys_alloc_mem(sizeof(queue*));
 
-	// enqueue(q, pcb1);
-	// enqueue(q, pcb2);
+	enqueue(q, pcb1);
+	enqueue(q, pcb2);
 	enqueue(q, pcb3);
-	printf("%s, %d, %d, %s\n", pcb3->name_ptr, pcb3->priority, pcb3->clas, pcb3->state);
 	enqueue(q, pcb4);
-	printf("%s, %d, %d, %s\n", pcb4->name_ptr, pcb4->priority, pcb4->clas, pcb4->state);
 	enqueue(q, pcb5);
-	printf("%s, %d, %d, %s\n", pcb5->name_ptr, pcb5->priority, pcb5->clas, pcb5->state);
 	enqueue(q, pcb6);
-	printf("%s, %d, %d, %s\n", pcb6->name_ptr, pcb6->priority, pcb6->clas, pcb6->state);
 	enqueue(q, pcb7);
-	printf("%s, %d, %d, %s\n", pcb7->name_ptr, pcb7->priority, pcb7->clas, pcb7->state);
 	printq(q);
 
-	comhand();
 	klogv(COM1, "Transferring control to commhand...");
+	comhand();
 	// R4: __asm__ volatile ("int $0x60" :: "a"(IDLE));
 
 	// 10) System Shutdown -- *headers to be determined by your design*
