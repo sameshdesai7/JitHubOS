@@ -1,5 +1,6 @@
 #include <pcb.h>
 #include <stdio.h>
+#include <dataStructs/queue.h>
 
 /**
  * @brief Allocates memory for a new PCB
@@ -42,13 +43,29 @@ pcb* pcb_setup(const char * name, int clas, int priority){
     return newPCB;
 }
 
-// pcb* pcb_find(const char * name){
+pcb* pcb_find(queue *q, const char * name){
+    
+    pcb* temp = q->head;
+    
+    while(temp->name_ptr != name){
+        temp = temp->next;
+    }
+    return temp;
+}
 
-// }
+void pcb_insert(queue *q, pcb* new_pcb){
 
-// void pcb_insert(pcb* pcb){
+    pcb* temp = q->head;
+    
+    while(new_pcb->priority > temp->priority){
+        temp = temp->next;
+    }
 
-// }
+    
+    new_pcb->next = temp->next;
+    temp->next->next = new_pcb;
+    
+}
 
 // void pcb_remove(pcb* pcb){
 
