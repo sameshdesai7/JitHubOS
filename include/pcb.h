@@ -5,6 +5,10 @@
 
 typedef struct pcb {
         char *name_ptr;
+        int priority;
+        int clas;
+        char* state;
+        struct pcb* next;
 } pcb;
 
 pcb* pcb_allocate(void);

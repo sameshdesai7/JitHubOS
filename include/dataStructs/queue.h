@@ -4,17 +4,12 @@
 #include "../pcb.h"
 #include <stdlib.h>
 
-typedef struct node {
-    pcb* pcb;
-    struct node* next;
-} node;
-
 typedef struct queue {
-    node* head;
-    node* tail;
+    pcb* head;
+    pcb* tail;
 } queue;
 
-void enqueue(queue* q, node* newNode);
+void enqueue(queue* q, pcb* newPCB);
 
 pcb* dequeue(queue* q);
 

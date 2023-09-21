@@ -4,16 +4,37 @@
 #include <stdio.h>
 #include <string.h>
 
-void enqueue(queue* q, node* newNode){
-    
+void enqueue(queue* q, pcb* newPCB){
+
     if(q->head == NULL){
-        q->head = newNode;
-        q->tail = newNode;
+        q->head = newPCB;
+        q->tail = newPCB;
         return;
     }
-    
-    q->tail->next = newNode;
-    q->tail = newNode;
+
+    if(q->head->priority > newPCB->priority){
+        // newPCB will be head
+        newPCB->next = q->head;
+        q->head = newPCB;
+        return;
+    }
+
+    pcb* temp = q->head;
+
+    while(temp->next != NULL && newPCB->priority >= temp->next->priority){
+        temp = temp->next;
+    }
+
+    if(temp->next == NULL) {
+        // newPCB will be tail
+        q->tail->next = newPCB;
+        q->tail = newPCB;
+    }
+    else{
+        newPCB->next = temp->next;
+        temp->next = newPCB;
+    }
+    return;
 }
 
 pcb* dequeue(queue* q){
@@ -21,24 +42,24 @@ pcb* dequeue(queue* q){
         return NULL;
     }
 
-    node* temp = q->head;
+    pcb* temp = q->head;
 
     if(q->head->next != NULL){
         q->head = q->head->next;
-        return temp->pcb;
+        return temp;
     }
 
     q->head = NULL;
     q->tail = NULL;
-    return temp->pcb;
+    return temp;
 }
 
 void printq(queue* q){
-    node* temp = q->head;
+    pcb* temp = q->head;
     printf("[");
     while(temp->next != NULL){
-        printf("%s, ", temp->pcb->name_ptr);
+        printf("%s, ", temp->name_ptr);
         temp = temp->next;
     }
-    printf("%s]", temp->pcb->name_ptr);
+    printf("%s]", temp->name_ptr);
 }

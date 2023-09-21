@@ -118,19 +118,26 @@ void kmain(void)
 	outb(0x70, 0x04);
     outb(0x71, toBCD(adjustedHours));
 
-	pcb test1 = {.name_ptr = "numero1"};
-	pcb test2 = {.name_ptr = "numero2"};
-	pcb test3 = {.name_ptr = "numero3"};
+	// pcb* pcb1 = pcb_setup("priority3", 0, 3);
+	// pcb* pcb2 = pcb_setup("priority1", 0, 1);
+	// pcb* pcb3 = pcb_setup("priority2", 0, 2);
+	// pcb* pcb4 = pcb_setup("priority3.2", 0, 3);
+	// pcb* pcb5 = pcb_setup("priority2.2", 0, 2);
+	// pcb* pcb6 = pcb_setup("priority1.2", 0, 1);
+	// pcb* pcb7 = pcb_setup("priority1.3", 0, 1);
 
-	node tes1 = {.pcb = &test1};
-	node tes2 = {.pcb = &test2};
-	node tes3 = {.pcb = &test3};
+	pcb pcb1 = {.name_ptr = "disdafirstone", .priority = 1, .clas = 0, .state = "ready", .next = NULL};
 
 	queue* q = sys_alloc_mem(sizeof(queue*));
 
-	enqueue(q, &tes1);
-	enqueue(q, &tes2);
-	enqueue(q, &tes3);
+	enqueue(q, &pcb1);
+	// enqueue(q, pcb1);
+	// enqueue(q, pcb2);
+	// enqueue(q, pcb3);
+	// enqueue(q, pcb4);
+	// enqueue(q, pcb5);
+	// enqueue(q, pcb6);
+	// enqueue(q, pcb7);
 	printq(q);
 
 	comhand();
