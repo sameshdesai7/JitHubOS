@@ -4,6 +4,7 @@
 #include <mpx/vm.h>
 #include <sys_req.h>
 #include <string.h>
+#include <stdio.h>
 #include <memory.h>
 #include <../include/comhand.h>
 #include <stdlib.h>
@@ -118,26 +119,32 @@ void kmain(void)
 	outb(0x70, 0x04);
     outb(0x71, toBCD(adjustedHours));
 
-	// pcb* pcb1 = pcb_setup("priority3", 0, 3);
-	// pcb* pcb2 = pcb_setup("priority1", 0, 1);
-	// pcb* pcb3 = pcb_setup("priority2", 0, 2);
-	// pcb* pcb4 = pcb_setup("priority3.2", 0, 3);
-	// pcb* pcb5 = pcb_setup("priority2.2", 0, 2);
-	// pcb* pcb6 = pcb_setup("priority1.2", 0, 1);
-	// pcb* pcb7 = pcb_setup("priority1.3", 0, 1);
-
-	pcb pcb1 = {.name_ptr = "disdafirstone", .priority = 1, .clas = 0, .state = "ready", .next = NULL};
+	// pcb* pcb1 = pcb_allocate();
+	// pcb* pcb2 = pcb_allocate();
+	// pcb1->name_ptr = "priority1";
+	// pcb1->priority = 1;
+	// pcb2->name_ptr = "priority0";
+	// pcb2->priority = 0;
+	pcb* pcb3 = pcb_setup("priority2", 0, 2);
+	pcb* pcb4 = pcb_setup("priority3.2", 0, 3);
+	pcb* pcb5 = pcb_setup("priority2.2", 0, 2);
+	pcb* pcb6 = pcb_setup("priority1.2", 0, 1);
+	pcb* pcb7 = pcb_setup("priority1.3", 0, 1);
 
 	queue* q = sys_alloc_mem(sizeof(queue*));
 
-	enqueue(q, &pcb1);
 	// enqueue(q, pcb1);
 	// enqueue(q, pcb2);
-	// enqueue(q, pcb3);
-	// enqueue(q, pcb4);
-	// enqueue(q, pcb5);
-	// enqueue(q, pcb6);
-	// enqueue(q, pcb7);
+	enqueue(q, pcb3);
+	printf("%s, %d, %d, %s\n", pcb3->name_ptr, pcb3->priority, pcb3->clas, pcb3->state);
+	enqueue(q, pcb4);
+	printf("%s, %d, %d, %s\n", pcb4->name_ptr, pcb4->priority, pcb4->clas, pcb4->state);
+	enqueue(q, pcb5);
+	printf("%s, %d, %d, %s\n", pcb5->name_ptr, pcb5->priority, pcb5->clas, pcb5->state);
+	enqueue(q, pcb6);
+	printf("%s, %d, %d, %s\n", pcb6->name_ptr, pcb6->priority, pcb6->clas, pcb6->state);
+	enqueue(q, pcb7);
+	printf("%s, %d, %d, %s\n", pcb7->name_ptr, pcb7->priority, pcb7->clas, pcb7->state);
 	printq(q);
 
 	comhand();
