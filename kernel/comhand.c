@@ -24,7 +24,7 @@ void comhand()
     blocked->pFlag = 0;
     susReady->pFlag = 1;
     susBlocked->pFlag = 0;
-    
+
     //infinite loop
     for (;;)
     {
@@ -541,27 +541,68 @@ void setDate(void)
     }
 }
 
-/*
-void createPCB(const char* name, int class, int priority) {
+void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name, int class, int priority) {
+    if (pcb_find(ready, blocked, susReady, susBlocked, name) != NULL) {
+        printf("Cannot create process %s. Name already exists.", name);
+        return;
+    }
+    if (class < 0 || class > 1) {
+        printf("Invalid class value for process %s. Class must be either 0 for system process or 1 for user process.", name);
+        return;
+    }
+    if (priority < 0 || priority > 9) {
+        printf("Invalid priority for process %s. Priority must be valid integer from 0 to 9.", name);
+        return;
+    }
     pcb* newPCB = pcb_setup(name, class, priority);
     pcb_insert(ready, blocked, susReady, susBlocked, newPCB);
-
 }
 
-void deletePCB(const char* name) {
-    pcb* toRemove = pcb_find(name);
+void deletePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name) {
+    pcb* toRemove = pcb_find(ready, blocked, susReady, susBlocked, name);
+    if (toRemove == NULL) {
+        printf("Could not find process %s to delete.", name);
+        return;
+    }
+    if (toRemove->clas == 0) {
+        printf("Error: %s is a system process. Cannot request to delete a system process.", name);
+        return;
+    }
+
     pcb_remove(ready, blocked, susReady, susBlocked, toRemove);
     pcb_free(toRemove);
-};
-
-void blockPCB(const char* name) {
-    name->state = "blocked";
-    
 }
 
-void unblockPCB(const char* name);
+void blockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name) {
+    pcb* toBlock = pcb_find(ready, blocked, susReady, susBlocked, name);
+    if (toBlock == NULL) {
+        printf("Could not find process %s to block.", name);
+        return;
+    }
+    toBlock->state = "blocked";
+    pcb_insert(ready, blocked, susReady, susBlocked, pcb_remove(ready, blocked, susReady, susBlocked, toBlock));
+}
 
-void suspendPCB(const char* name);
+void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name) {
+    pcb* toReady = pcb_find(ready, blocked, susReady, susBlocked, name);
+    if (toReady == NULL) {
+        printf("Could not find process %s to ready.", name);
+        return;
+    }
+    toReady->state = "ready";
+    pcb_insert(ready, blocked, susReady, susBlocked, pcb_remove(ready, blocked, susReady, susBlocked, toReady));
+}
+
+void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name) {
+    pcb* toSuspend = pcb_find(ready, blocked, susReady, susBlocked, name);
+    if (toSuspend == NULL) {
+        printf("Could not find process %s to suspend.", name);
+        return;
+    }
+    if (strcmp(toSuspend->state, "ready") == 0) toSuspend->state = "susReady";
+    else if (strcmp(toSuspend->state, "blocked") == 0) toSuspend->state = "susBlocked";
+    pcb_insert(ready, blocked, susReady, susBlocked, pcb_remove(ready, blocked, susReady, susBlocked, toSuspend));
+}
 
 void resumePCB(const char* name);
 
@@ -574,7 +615,6 @@ void showReady();
 void showBlocked();
 
 void showAll();
-*/
 
 void help(void)
 {
