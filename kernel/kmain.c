@@ -119,12 +119,6 @@ void kmain(void)
 	outb(0x70, 0x04);
     outb(0x71, toBCD(adjustedHours));
 
-	// pcb* pcb1 = pcb_allocate();
-	// pcb* pcb2 = pcb_allocate();
-	// pcb1->name_ptr = "priority1";
-	// pcb1->priority = 1;
-	// pcb2->name_ptr = "priority0";
-	// pcb2->priority = 0;
 	pcb* pcb1 = pcb_setup("priority1.1", 0, 1);
 	pcb* pcb2 = pcb_setup("priority0.1", 0, 0);
 	pcb* pcb3 = pcb_setup("priority2.1", 0, 2);
@@ -133,7 +127,7 @@ void kmain(void)
 	pcb* pcb6 = pcb_setup("priority1.2", 0, 1);
 	pcb* pcb7 = pcb_setup("priority1.3", 0, 1);
 
-	queue* q = sys_alloc_mem(sizeof(queue*));
+	queue* q = sys_alloc_mem(sizeof(queue));
 
 	enqueue(q, pcb1);
 	enqueue(q, pcb2);

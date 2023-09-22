@@ -7,6 +7,7 @@
 typedef struct queue {
     pcb* head;
     pcb* tail;
+    int priorityFlag;
 } queue;
 
 void enqueue(queue* q, pcb* newPCB);

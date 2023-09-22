@@ -8,6 +8,7 @@
 #include <mpx/serial.h>
 #include <ctype.h>
 #include <mpx/interrupts.h>
+#include <dataStructs/queue.h>
 
 //compile constants to be used in version to show when the most recent compilation was
 #define COMPILE_DATE __DATE__
@@ -15,6 +16,15 @@
 
 void comhand()
 {
+    queue* ready = sys_alloc_mem(sizeof(queue));
+    queue* blocked = sys_alloc_mem(sizeof(queue));
+    queue* susReady = sys_alloc_mem(sizeof(queue));
+    queue* susBlocked = sys_alloc_mem(sizeof(queue));
+    ready->priorityFlag = 1;
+    blocked->priorityFlag = 0;
+    susReady->priorityFlag = 1;
+    susBlocked->priorityFlag = 0;
+    
     //infinite loop
     for (;;)
     {
