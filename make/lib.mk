@@ -14,5 +14,4 @@ LIB_OBJECTS=\
 	lib/stdlib.o\
 	lib/core.o\
 	lib/ctype.o\
-	lib/stdio.o\
-	lib/queue.o
+	lib/stdio.o

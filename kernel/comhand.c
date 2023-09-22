@@ -8,7 +8,7 @@
 #include <mpx/serial.h>
 #include <ctype.h>
 #include <mpx/interrupts.h>
-#include <dataStructs/queue.h>
+#include <dataStructs.h>
 
 //compile constants to be used in version to show when the most recent compilation was
 #define COMPILE_DATE __DATE__
@@ -20,10 +20,10 @@ void comhand()
     queue* blocked = sys_alloc_mem(sizeof(queue));
     queue* susReady = sys_alloc_mem(sizeof(queue));
     queue* susBlocked = sys_alloc_mem(sizeof(queue));
-    ready->priorityFlag = 1;
-    blocked->priorityFlag = 0;
-    susReady->priorityFlag = 1;
-    susBlocked->priorityFlag = 0;
+    ready->pFlag = 1;
+    blocked->pFlag = 0;
+    susReady->pFlag = 1;
+    susBlocked->pFlag = 0;
     
     //infinite loop
     for (;;)
@@ -36,7 +36,7 @@ void comhand()
         sys_req(READ, COM1, buf, sizeof(buf));
 
         // Shutdown Command
-        if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "7") == 0))
+        if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "18") == 0))
         {
             //if shutdown is confirmed, exit loop
             if (shutdown(buf))
@@ -73,8 +73,62 @@ void comhand()
             setDate();
         }
 
+        // //create PCB Command
+        // else if ((strcmp_ic(buf, "Create PCB") == 0) || (strcmp(buf, "6") == 0)){
+        //     createPCB();
+        // }
+
+        // //Delete PCB Command
+        // else if ((strcmp_ic(buf, "Delete PCB") == 0) || (strcmp(buf, "7") == 0)){
+        //     deletePCB();
+        // }
+
+        // //Block PCB Command
+        // else if ((strcmp_ic(buf, "Block PCB") == 0) || (strcmp(buf, "8") == 0)){
+        //     blockPCB();
+        // }
+
+        // //Unblock PCB Command
+        // else if ((strcmp_ic(buf, "Unblock PCB") == 0) || (strcmp(buf, "9") == 0)){
+        //     unblockPCB();
+        // }
+
+        // //Suspend PCB Command
+        // else if ((strcmp_ic(buf, "Suspend PCB") == 0) || (strcmp(buf, "10") == 0)){
+        //     suspendPCB();
+        // }
+        
+        // //Resume PCB Command
+        // else if ((strcmp_ic(buf, "Resume PCB") == 0) || (strcmp(buf, "11") == 0)){
+        //     resumePCB();
+        // }
+        
+        // //Set PCB Priority Command
+        // else if ((strcmp_ic(buf, "Set PCB Priority") == 0) || (strcmp(buf, "12") == 0)){
+        //     setPCBPriority();
+        // }
+        
+        // //Show PCB Command
+        // else if ((strcmp_ic(buf, "Show PCB") == 0) || (strcmp(buf, "13") == 0)){
+        //     showPCB();
+        // }
+
+        // //Show Ready Command
+        // else if ((strcmp_ic(buf, "Show Ready") == 0) || (strcmp(buf, "14") == 0)){
+        //     showReady();
+        // }
+
+        // //Show Blocked Command
+        // else if ((strcmp_ic(buf, "Show Blocked") == 0) || (strcmp(buf, "15") == 0)){
+        //     showBlocked();
+        // }
+        // //Show All command
+        // else if ((strcmp_ic(buf, "Show All") == 0) || (strcmp(buf, "16") == 0)){
+        //     showAll();
+        // }
+
         //help command
-        else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "6") == 0)
+        else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "17") == 0)
         {
             help();
         }
@@ -132,8 +186,19 @@ void printMenu()
     printf("3. Set Time\n");
     printf("4. Get Date\n");
     printf("5. Set Date\n");
-    printf("6. Help\n");
-    printf("7. Shutdown\n");
+    printf("6. Create PCB\n");
+    printf("7. Delete PCB\n");
+    printf("8. Block PCB\n");
+    printf("9. Unblock PCB\n");
+    printf("10. Suspend PCB\n");
+    printf("11. Resume PCB\n");
+    printf("12. Set PCB Priority\n");
+    printf("13. Show PCB\n");
+    printf("14. Show Ready\n");
+    printf("15. Show Blocked\n");
+    printf("16. Show All\n");
+    printf("17. Help\n");
+    printf("18. Shutdown\n");
     printf("\n");
     printf(">> ");
 }
@@ -475,6 +540,41 @@ void setDate(void)
         printf("\033[0;0m");
     }
 }
+
+/*
+void createPCB(const char* name, int class, int priority) {
+    pcb* newPCB = pcb_setup(name, class, priority);
+    pcb_insert(ready, blocked, susReady, susBlocked, newPCB);
+
+}
+
+void deletePCB(const char* name) {
+    pcb* toRemove = pcb_find(name);
+    pcb_remove(ready, blocked, susReady, susBlocked, toRemove);
+    pcb_free(toRemove);
+};
+
+void blockPCB(const char* name) {
+    name->state = "blocked";
+    
+}
+
+void unblockPCB(const char* name);
+
+void suspendPCB(const char* name);
+
+void resumePCB(const char* name);
+
+void setPCBPriority(const char* name, int priority);
+
+void showPCB(const char* name);
+
+void showReady();
+
+void showBlocked();
+
+void showAll();
+*/
 
 void help(void)
 {

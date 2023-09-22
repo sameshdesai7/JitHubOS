@@ -9,8 +9,7 @@
 #include <../include/comhand.h>
 #include <stdlib.h>
 #include <mpx/io.h>
-#include <pcb.h>
-#include <dataStructs/queue.h>
+#include <dataStructs.h>
 
 // typedef struct pcb {
 //         char *name_ptr;

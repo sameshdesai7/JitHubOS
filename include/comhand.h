@@ -1,7 +1,8 @@
-#ifndef MPX_CTYPE_H
-#define MPX_CTYPE_H
+#ifndef COMHAND_H
+#define COMHAND_H
+#include <dataStructs.h>
 
-#define VERSION 1
+#define VERSION 2
 /**
  * @file comhand.h
  * @brief A set of functions that allow users to interact with the OS
@@ -96,6 +97,28 @@ void setDate(void);
  * give specific details for that input.
  */
 void help(void);
+
+// void createPCB(void);
+
+// void deletePCB(void);
+
+// void blockPCB(void);
+
+// void unblockPCB(void);
+
+// void suspendPCB(void);
+
+// void resumePCB(void);
+
+// void setPCBPriority(void);
+
+// void showPCB(void);
+
+// void showReady(void);
+
+// void showBlocked(void);
+
+// void showAll(void);
 
 #endif
 
