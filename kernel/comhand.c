@@ -73,25 +73,25 @@ void comhand()
             setDate();
         }
 
-        // //create PCB Command
-        // else if ((strcmp_ic(buf, "Create PCB") == 0) || (strcmp(buf, "6") == 0)){
-        //     createPCB();
-        // }
+        //create PCB Command
+        else if ((strcmp_ic(buf, "Create PCB") == 0) || (strcmp(buf, "6") == 0)){
+            createPCB(ready, blocked, susReady, susBlocked);
+        }
 
-        // //Delete PCB Command
-        // else if ((strcmp_ic(buf, "Delete PCB") == 0) || (strcmp(buf, "7") == 0)){
-        //     deletePCB();
-        // }
+        //Delete PCB Command
+        else if ((strcmp_ic(buf, "Delete PCB") == 0) || (strcmp(buf, "7") == 0)){
+            deletePCB(ready, blocked, susReady, susBlocked);
+        }
 
-        // //Block PCB Command
-        // else if ((strcmp_ic(buf, "Block PCB") == 0) || (strcmp(buf, "8") == 0)){
-        //     blockPCB();
-        // }
+        //Block PCB Command
+        else if ((strcmp_ic(buf, "Block PCB") == 0) || (strcmp(buf, "8") == 0)){
+            blockPCB(ready, blocked, susReady, susBlocked);
+        }
 
-        // //Unblock PCB Command
-        // else if ((strcmp_ic(buf, "Unblock PCB") == 0) || (strcmp(buf, "9") == 0)){
-        //     unblockPCB();
-        // }
+        //Unblock PCB Command
+        else if ((strcmp_ic(buf, "Unblock PCB") == 0) || (strcmp(buf, "9") == 0)){
+            unblockPCB(ready, blocked, susReady, susBlocked);
+        }
 
         // //Suspend PCB Command
         // else if ((strcmp_ic(buf, "Suspend PCB") == 0) || (strcmp(buf, "10") == 0)){
@@ -541,7 +541,15 @@ void setDate(void)
     }
 }
 
-void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name, int class, int priority) {
+void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked) {
+
+    printf("\033[0;36mEnter name\n>> \033[0;0m");
+    
+    printf("\033[0;36mEnter class\n>> \033[0;0m");
+    
+    printf("\033[0;36mEnter Priority\n>> \033[0;0m");
+    
+
     if (pcb_find(ready, blocked, susReady, susBlocked, name) != NULL) {
         printf("Cannot create process %s. Name already exists.", name);
         return;

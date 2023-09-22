@@ -12,8 +12,8 @@ typedef struct pcb{
 } pcb;
 
 typedef struct queue{
-    pcb* head;
-    pcb* tail;
+    struct pcb* head;
+    struct pcb* tail;
     int pFlag;
 } queue;
 
@@ -33,7 +33,7 @@ pcb* pcb_find(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, 
 
 int pcb_insert(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, pcb* pcb);
 
-void pcb_remove(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, pcb* pcb);
+pcb* pcb_remove(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, pcb* pcb);
 
 
 #endif

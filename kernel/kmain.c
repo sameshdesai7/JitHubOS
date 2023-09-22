@@ -118,25 +118,6 @@ void kmain(void)
 	outb(0x70, 0x04);
     outb(0x71, toBCD(adjustedHours));
 
-	pcb* pcb1 = pcb_setup("priority1.1", 0, 1);
-	pcb* pcb2 = pcb_setup("priority0.1", 0, 0);
-	pcb* pcb3 = pcb_setup("priority2.1", 0, 2);
-	pcb* pcb4 = pcb_setup("priority3.2", 0, 3);
-	pcb* pcb5 = pcb_setup("priority2.2", 0, 2);
-	pcb* pcb6 = pcb_setup("priority1.2", 0, 1);
-	pcb* pcb7 = pcb_setup("priority1.3", 0, 1);
-
-	queue* q = sys_alloc_mem(sizeof(queue));
-
-	enqueue(q, pcb1);
-	enqueue(q, pcb2);
-	enqueue(q, pcb3);
-	enqueue(q, pcb4);
-	enqueue(q, pcb5);
-	enqueue(q, pcb6);
-	enqueue(q, pcb7);
-	printq(q);
-
 	klogv(COM1, "Transferring control to commhand...");
 	comhand();
 	// R4: __asm__ volatile ("int $0x60" :: "a"(IDLE));

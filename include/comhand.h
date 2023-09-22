@@ -98,13 +98,13 @@ void setDate(void);
  */
 void help(void);
 
-// void createPCB(void);
+void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name, int class, int priority);
 
-// void deletePCB(void);
+void deletePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name);
 
-// void blockPCB(void);
+void blockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name);
 
-// void unblockPCB(void);
+void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name);
 
 // void suspendPCB(void);
 

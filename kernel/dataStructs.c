@@ -171,44 +171,52 @@ int pcb_insert(queue* ready, queue* blocked, queue* susReady, queue* susBlocked,
     
 }
 
-// pcb* pcb_remove(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, pcb* pcb){
+pcb* pcb_remove(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, pcb* pcb){
 
-//     struct pcb* temp = find(pcb);
+    queue* q = ready;
+    struct pcb* temp = ready->head;
 
-//     if(strcmp_ic(temp->state, "ready") == 0){
-//     }
-//     else if (strcmp_ic(temp->state, "blocked") == 0){
-//         temp = blocked->head;
-//     }
-//     else if (strcmp_ic(temp->state, "susReady") == 0){
-//         temp = susReady->head;
-//     }
-//     else if (strcmp_ic(temp->state, "susBlocked") == 0){
-//         temp = susBlocked->head;
-//     }
-//     else{
-//         return NULL;
-//     }
+    if (strcmp_ic(temp->state, "blocked") == 0){
+        q = blocked;
+    }
+    else if (strcmp_ic(temp->state, "susReady") == 0){
+        q = susReady;
+    }
+    else if (strcmp_ic(temp->state, "susBlocked") == 0){
+        q = susBlocked;
+    }
+    else{
+        return NULL;
+    }
 
-//     if(temp == NULL){
-//         return NULL;
-//     }
+    temp = q->head;
 
-//     pcb* temp = q->head;
+    if(temp == NULL){
+        return NULL;
+    }
 
-//     if(q->head->next != NULL){
-//         q->head = q->head->next;
-//         return temp;
-//     }
+    if(temp->next == NULL && temp->name_ptr == pcb->name_ptr){
+        q->head = NULL;
+        q->tail = NULL;
+    }
 
-//     while(temp->name_ptr != name && temp->next != NULL){
-//         temp = temp->next;
-//         if(temp->name == this.name){
-            
-//         }
-//     }
-
+    while(temp->next != NULL && temp->next->name_ptr != pcb->name_ptr){
+        temp = temp->next;
+    }
     
+    if(temp->next->name_ptr == pcb->name_ptr){
+        if(temp->next->next == NULL){
+            temp->next = NULL;
+            q->tail=temp;
+        }
+        else {
+            struct pcb* temp2 = temp->next;
+            temp->next = temp->next->next;
+            temp2->next = NULL;
+        }
+            return temp->next;
+    }
+    else return NULL;
 
-// }
+}
 
