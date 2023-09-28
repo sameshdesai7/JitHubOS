@@ -98,27 +98,27 @@ void setDate(void);
  */
 void help(void);
 
-void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name, int class, int priority);
+void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
-void deletePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name);
+void deletePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
-void blockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name);
+void blockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
-void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name);
+void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
-// void suspendPCB(void);
+void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
-// void resumePCB(void);
+// void resumePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
-// void setPCBPriority(void);
+void setPCBPriority(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
-// void showPCB(void);
+void showPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
-// void showReady(void);
+void showReady(queue* ready);
 
-// void showBlocked(void);
+void showBlocked(queue* blocked);
 
-// void showAll(void);
+void showAll(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
 #endif
 

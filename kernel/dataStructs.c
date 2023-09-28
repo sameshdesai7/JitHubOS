@@ -54,6 +54,11 @@ pcb* dequeue(queue* q){
 }
 
 void printq(queue* q){
+    if(q->head == NULL){
+        printf("[]\n");
+        return;
+    }
+
     pcb* temp = q->head;
     printf("[");
     while(temp->next != NULL){
@@ -61,6 +66,7 @@ void printq(queue* q){
         temp = temp->next;
     }
     printf("%s]\n", temp->name_ptr);
+    return;
 }
 
 
@@ -107,59 +113,73 @@ pcb* pcb_setup(const char * name, int clas, int priority){
 
 pcb* pcb_find(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char * name){
 
-    
-    pcb* temp = ready->head;
-    
-    while(temp->name_ptr != name && temp->next != NULL){
-        temp = temp->next;
-        if(temp->name_ptr == name){
-            return temp;
+    pcb* temp = ready->head; 
+    if(temp != NULL){  
+        if(strcmp(temp->name_ptr, name) == 0){
+                return temp;
+            }
+        while(temp->next != NULL && temp->name_ptr != name){
+            temp = temp->next;
+            if(strcmp(temp->name_ptr, name) == 0){
+                return temp;
+            }
         }
     }
 
     temp = blocked -> head;
-
-    while(temp->name_ptr != name && temp->next != NULL){
-        temp = temp->next;
-        if(temp->name_ptr == name){
-            return temp;
+    if(temp != NULL){
+        if(strcmp(temp->name_ptr, name) == 0){
+                return temp;
+            }
+        while(temp->next != NULL && temp->name_ptr != name){
+            temp = temp->next;
+            if(strcmp(temp->name_ptr, name) == 0){
+                return temp;
+            }
         }
     }
     
     temp = susReady->head;
-
-    while(temp->name_ptr != name && temp->next != NULL){
-        temp = temp->next;
-        if(temp->name_ptr == name){
-            return temp;
+    if(temp != NULL){
+        if(strcmp(temp->name_ptr, name) == 0){
+                return temp;
+            }
+        while(temp->next != NULL && temp->name_ptr != name){
+            temp = temp->next;
+            if(temp->name_ptr == name){
+                return temp;
+            }
+            
         }
-        
     }
 
     temp = susBlocked->head;
-    
-    while(temp->name_ptr != name && temp->next != NULL){
-        temp = temp->next;
-        if(temp->name_ptr == name){
-            return temp;
+    if(temp != NULL){
+        if(strcmp(temp->name_ptr, name) == 0){
+                return temp;
+            }
+        while(temp->next != NULL && temp->name_ptr != name){
+            temp = temp->next;
+            if(temp->name_ptr == name){
+                return temp;
+            }
         }
     }
-    
+
     return NULL;
 }
 
 int pcb_insert(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, pcb* new_pcb){
-
-    if(strcmp_ic(new_pcb->state,"ready")){
+    if(strcmp_ic(new_pcb->state,"ready") == 0){
         enqueue(ready, new_pcb);
     }
-    else if(strcmp_ic(new_pcb->state,"blocked")){
+    else if(strcmp_ic(new_pcb->state,"blocked") == 0){
         enqueue(blocked, new_pcb);
     }
-    else if(strcmp_ic(new_pcb->state,"susReady")){
+    else if(strcmp_ic(new_pcb->state,"susReady") == 0){
         enqueue(susReady, new_pcb);
     }
-    else if(strcmp_ic(new_pcb->state,"susBlocked")){
+    else if(strcmp_ic(new_pcb->state,"susBlocked") == 0){
         enqueue(susBlocked, new_pcb);
         
     }
@@ -174,49 +194,47 @@ int pcb_insert(queue* ready, queue* blocked, queue* susReady, queue* susBlocked,
 pcb* pcb_remove(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, pcb* pcb){
 
     queue* q = ready;
-    struct pcb* temp = ready->head;
-
-    if (strcmp_ic(temp->state, "blocked") == 0){
+    
+    if(strcmp_ic(pcb->state, "ready") == 0){
+    }
+    else if (strcmp_ic(pcb->state, "blocked") == 0){
         q = blocked;
     }
-    else if (strcmp_ic(temp->state, "susReady") == 0){
+    else if (strcmp_ic(pcb->state, "susReady") == 0){
         q = susReady;
     }
-    else if (strcmp_ic(temp->state, "susBlocked") == 0){
+    else if (strcmp_ic(pcb->state, "susBlocked") == 0){
         q = susBlocked;
     }
     else{
         return NULL;
     }
 
-    temp = q->head;
+    struct pcb* current = q->head;
+    struct pcb* previous = NULL;
 
-    if(temp == NULL){
-        return NULL;
-    }
+    while(current != NULL){
+        if(strcmp(current->name_ptr, pcb->name_ptr) == 0){
+            
+            if(current == q->head){
+                q->head = current->next;
+            } else {
+                previous->next = current->next;
+            }
 
-    if(temp->next == NULL && temp->name_ptr == pcb->name_ptr){
-        q->head = NULL;
-        q->tail = NULL;
-    }
+            if(current == q->tail){
+                q->tail = previous;
+            }
 
-    while(temp->next != NULL && temp->next->name_ptr != pcb->name_ptr){
-        temp = temp->next;
-    }
-    
-    if(temp->next->name_ptr == pcb->name_ptr){
-        if(temp->next->next == NULL){
-            temp->next = NULL;
-            q->tail=temp;
+            //TODO: Free memory
+
+            return pcb;
         }
-        else {
-            struct pcb* temp2 = temp->next;
-            temp->next = temp->next->next;
-            temp2->next = NULL;
-        }
-            return temp->next;
-    }
-    else return NULL;
 
+        previous = current;
+        current = current->next;
+    }
+
+    return NULL;
 }
 
