@@ -11,27 +11,33 @@ void enqueue(queue* q, pcb* newPCB){
         return;
     }
 
-    if(q->head->priority > newPCB->priority){
-        // newPCB will be head
-        newPCB->next = q->head;
-        q->head = newPCB;
-        return;
-    }
+    if(q->pFlag == 1){
+        if(q->head->priority > newPCB->priority){
+            // newPCB will be head
+            newPCB->next = q->head;
+            q->head = newPCB;
+            return;
+        }
 
-    pcb* temp = q->head;
+        pcb* temp = q->head;
 
-    while(temp->next != NULL && newPCB->priority >= temp->next->priority){
-        temp = temp->next;
-    }
-    
-    if(temp->next == NULL) {
-        // newPCB will be tail
-        q->tail->next = newPCB;
-        q->tail = newPCB;
+        while(temp->next != NULL && newPCB->priority >= temp->next->priority){
+            temp = temp->next;
+        }
+        
+        if(temp->next == NULL) {
+            // newPCB will be tail
+            q->tail->next = newPCB;
+            q->tail = newPCB;
+        }
+        else{
+            newPCB->next = temp->next;
+            temp->next = newPCB;
+        }
     }
     else{
-        newPCB->next = temp->next;
-        temp->next = newPCB;
+        q->tail->next = newPCB;
+        q->tail = newPCB;
     }
     return;
 }

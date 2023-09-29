@@ -108,7 +108,7 @@ void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
 
 void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
-// void resumePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
+void resumePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
 void setPCBPriority(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 

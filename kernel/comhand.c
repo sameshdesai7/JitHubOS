@@ -98,10 +98,10 @@ void comhand()
             suspendPCB(ready, blocked, susReady, susBlocked);
         }
         
-        // //Resume PCB Command
-        // else if ((strcmp_ic(buf, "Resume PCB") == 0) || (strcmp(buf, "11") == 0)){
-        //     resumePCB(ready, blocked, susReady, susBlocked);
-        // }
+        //Resume PCB Command
+        else if ((strcmp_ic(buf, "Resume PCB") == 0) || (strcmp(buf, "11") == 0)){
+            resumePCB(ready, blocked, susReady, susBlocked);
+        }
         
         //Set PCB Priority Command
         else if ((strcmp_ic(buf, "Set PCB Priority") == 0) || (strcmp(buf, "12") == 0)){
@@ -613,7 +613,7 @@ void deletePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     }
     //Remove the PCB and free its memory
     pcb_remove(ready, blocked, susReady, susBlocked, toRemove);
-    pcb_free(toRemove);
+    // pcb_free(toRemove);
     printf("\033[0;32mSuccessfully deleted process \"%s\".\033[0;0m\n", toRemove->name_ptr);
 }
 
@@ -676,20 +676,20 @@ void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
         return;
     }
     //Check to see if the process is already unblocked
-    if (strcmp_ic(toBlock->state, "ready") == 0 || strcmp_ic(toBlock->state, "susReady") == 0 ){
+    if (strcmp_ic(toReady->state, "ready") == 0 || strcmp_ic(toReady->state, "susReady") == 0 ){
         printf("\033[0;31mThe specified PCB is already in the ready state \033[0;0m");
         return;
     }
     //Check to see if the process is suspended, but not blocked
-     pcb_remove(ready, blocked, susReady, susBlocked, toBlock);
-    if (strcmp_ic(toBlock->state, "susBlocked") == 0){
-        toBlock->state = "susReady";
+     pcb_remove(ready, blocked, susReady, susBlocked, toReady);
+    if (strcmp_ic(toReady->state, "susBlocked") == 0){
+        toReady->state = "susReady";
     }
     //remove the pcb from a queue, change the state to blocked and insert it into the blocked queue.
-    if (strcmp_ic(toBlock->state, "susReady") == 0){
-        toBlock->state = "ready";
+    if (strcmp_ic(toReady->state, "blocked") == 0){
+        toReady->state = "ready";
     }
-      pcb_insert(ready, blocked, susReady, susBlocked, toBlock);
+      pcb_insert(ready, blocked, susReady, susBlocked, toReady);
     printf("\033[0;32mSuccessfully unblocked process \"%s\".\033[0;0m\n", toReady->name_ptr);
 }
 
@@ -761,7 +761,7 @@ void resumePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     if (strcmp(toReady->state, "susReady") == 0) toReady->state = "ready";
     else if (strcmp(toReady->state, "susBlocked") == 0) toReady->state = "blocked";
     
-    pcb_insert(ready, blocked, susReady, susBlocked, toSuspend);
+    pcb_insert(ready, blocked, susReady, susBlocked, toReady);
     printf("\033[0;32mSuccessfully resumed process \"%s\".\033[0;0m\n", toReady->name_ptr);
 }
 
@@ -851,16 +851,16 @@ void showBlocked(queue* blocked){
 }
 
 void showAll(queue* ready, queue* blocked, queue* susReady, queue* susBlocked){
-    printf("\033[0;36mReady: ");
+    printf("\033[0;36mReady:-------------");
     printq(ready);
 
-    printf("Blocked: ");
+    printf("Blocked:-----------");
     printq(blocked);
 
-    printf("Suspended Ready: ");
+    printf("Suspended Ready:---");
     printq(susReady);
 
-    printf("Suspended Blocked ");
+    printf("Suspended Blocked:-");
     printq(susBlocked);
     printf("\033[0;0m");
 }
