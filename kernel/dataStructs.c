@@ -117,7 +117,7 @@ pcb* pcb_setup(const char * name, int clas, int priority){
     return newPCB;
 }
 
-pcb* pcb_find(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char * name){
+pcb* pcb_find(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, const char* name){
 
     pcb* temp = ready->head; 
     if(temp != NULL){  
@@ -217,11 +217,18 @@ void pcb_remove(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
     struct pcb* current = q->head;
     struct pcb* previous = NULL;
 
+    if(current->next == NULL){
+        q->head = NULL;
+        q->tail = NULL;
+        return;
+    }
+
     while(current != NULL){
         if(strcmp(current->name_ptr, pcb->name_ptr) == 0){
             
             if(current == q->head){
                 q->head = current->next;
+                current->next = NULL;
             } else {
                 previous->next = current->next;
                 current->next = NULL;

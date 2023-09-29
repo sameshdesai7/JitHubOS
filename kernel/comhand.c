@@ -680,6 +680,11 @@ void blockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked) 
         return;
     }
 
+    if(toBlock->clas == 0){
+        printf("\033[0;31mCannot block system process \"%s\".\033[0;0m\n", name);
+        return;
+    }
+
     //Check to see if the process is already blocked
     if (strcmp_ic(toBlock->state, "blocked") == 0 || strcmp_ic(toBlock->state, "susBlocked") == 0 ){
         printf("\033[0;33mThe specified PCB \"%s\"is already in the blocked state. Nothing will be done.\n\033[0;0m", name);
@@ -695,7 +700,7 @@ void blockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked) 
     else if (strcmp_ic(toBlock->state, "ready") == 0){
         toBlock->state = "blocked";
     }
-    
+
     pcb_insert(ready, blocked, susReady, susBlocked, toBlock);
     printf("\033[0;32mSuccessfully blocked process \"%s\".\033[0;0m\n", toBlock->name_ptr);
 }
@@ -776,6 +781,12 @@ void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
         printf("\033[0;31mCould not find process \"%s\" to suspend.\033[0;0m\n.", name);
         return;
     }
+
+    if(toSuspend->clas == 0){
+        printf("\033[0;31mCannot suspend system process \"%s\".\033[0;0m\n", name);
+        return;
+    }
+
     //check to see if the process is already in the suspended state
     if (strcmp(toSuspend->state, "susReady") == 0 || strcmp(toSuspend->state, "susBlocked") == 0){
         printf("\033[0;33m%s is already in the state of being suspended. Nothing will be done.\n\033m[0;0m", toSuspend->name_ptr);
@@ -869,6 +880,11 @@ void setPCBPriority(queue* ready, queue* blocked, queue* susReady, queue* susBlo
         return;
     }
 
+    if(toSetP->clas == 0){
+        printf("\033[0;31mCannot change priority of system process \"%s\".\n\033[0;0m", name);
+        return;
+    }
+
     getPriority:
     printf("\033[0;36mEnter PCB priority:\033[0;0m\n>> ");
     //read in the priority the user inputted
@@ -893,6 +909,12 @@ void setPCBPriority(queue* ready, queue* blocked, queue* susReady, queue* susBlo
     //Set the priority to the new priority entered in
     int prevPriority = toSetP->priority;
     toSetP->priority = priority;
+
+    if(strcmp(toSetP->state, "ready") == 0 || strcmp(toSetP->state, "susReady") == 0){
+        pcb_remove(ready, blocked, susReady, susBlocked, toSetP);
+        pcb_insert(ready, blocked, susReady, susBlocked, toSetP);
+    }
+
     printf("\033[0;32mSuccessfully changed priority for %s from %d to %d.\033[0;0m\n", toSetP->name_ptr, prevPriority, toSetP->priority);
 }
 
