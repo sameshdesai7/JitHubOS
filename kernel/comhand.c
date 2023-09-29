@@ -641,7 +641,7 @@ void deletePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
         return;
     }
     if (toRemove->clas == 0) {
-        printf("\033[0;31mError: \"%s\" is a system process. Cannot request to delete a system process.\n\033[0;0m\n", name);
+        printf("\033[0;31mError: \"%s\" is a system process. Cannot request to delete a system process.\033[0;0m\n", name);
         return;
     }
     //Remove the PCB and free its memory
