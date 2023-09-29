@@ -9,6 +9,8 @@ typedef struct pcb{
     int clas;
     char* state;
     struct pcb* next;
+    unsigned char stack[1024];
+    char* stack_ptr;
 } pcb;
 
 typedef struct queue{
@@ -33,7 +35,7 @@ pcb* pcb_find(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, 
 
 int pcb_insert(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, pcb* pcb);
 
-pcb* pcb_remove(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, pcb* pcb);
+void pcb_remove(queue* ready, queue* blocked, queue* susReady, queue* susBlocked, pcb* pcb);
 
 
 #endif

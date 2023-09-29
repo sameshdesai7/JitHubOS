@@ -548,6 +548,10 @@ void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
+    if(strcmp_ic(buf,"") == 0){
+        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+        goto getName;
+    }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
     //Check to see if the memory allocation was successful
     if(name == NULL){
@@ -555,9 +559,14 @@ void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
         return;
     }
     str_copy(name, buf, 0, strlen(buf));
+
+    if(strcmp_ic(name,"exit") == 0){
+        return;
+    }
+
     //check to see if the name already exists in a queue
     if (pcb_find(ready, blocked, susReady, susBlocked, name) != NULL) {
-        printf("\033[0;31mInvalid name \"%s\". PCB with that name already exists.\033[0;0m\n", name);
+        printf("\033[0;31mInvalid name \"%s\". PCB with that name already exists. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n", name);
         goto getName;
     }
 
@@ -565,10 +574,17 @@ void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     printf("\033[0;36mEnter PCB class:\033[0;0m\n>> ");
     //Read in the class the user specified in the input
     sys_req(READ, COM1, buf, sizeof(buf));
+    if(strcmp_ic(buf,"exit") == 0){
+        return;
+    }
+    if(strcmp(buf, "0") != 0 && strcmp(buf,"1") != 0){
+        printf("\033[0;31mInvalid class for process \"%s\". Class must be 0 for system or 1 for user. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n", buf);
+        goto getClass;
+    }
     int class = atoi(buf);
-    //Check to see if the class is a valid class
-    if (class < 0 || class > 1) {
-        printf("\033[0;31mInvalid class value for process \"%s\". Class must be either 0 for system process or 1 for user process.\033[0;0m\n", name);
+    //Make sure the priority is valid
+    if (class != 0 && class != 1){
+        printf("\033[0;31mInvalid class for process \"%s\". Class must be 0 for system or 1 for user. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n", name);
         goto getClass;
     }
 
@@ -576,12 +592,20 @@ void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     printf("\033[0;36mEnter PCB priority:\033[0;0m\n>> ");
     //Read in the priority from the user input
     sys_req(READ, COM1, buf, sizeof(buf));
-    int priority = atoi(buf);
-    //Check to make sure the priority is valid
-    if (priority < 0 || priority > 9) {
-        printf("\033[0;31mInvalid priority for process \"%s\". Priority must be valid integer from 0 to 9.\033[0;0m\n", name);
+    if(strcmp_ic(buf,"") == 0){
+        printf("\033[0;31mInvalid priority for process. Priority must be valid integer from 0 to 9. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getPriority;
     }
+    if(strcmp_ic(buf,"exit") == 0){
+        return;
+    }
+    int priority = atoi(buf);
+    //Make sure the priority is valid
+    if (priority < 0 || priority > 9) {
+        printf("\033[0;31mInvalid priority for process \"%s\". Priority must be valid integer from 0 to 9. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n", name);
+        goto getPriority;
+    }
+
     //Actually create the PCB and insert it into the queue
     pcb* newPCB = pcb_setup(name, class, priority);
     pcb_insert(ready, blocked, susReady, susBlocked, newPCB);
@@ -590,25 +614,34 @@ void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
 
 void deletePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked) {
     char buf[100] = {0};
-
-    printf("\033[0;36mEnter PCB name to delete:\033[0;0m\n>> ");
+    
+    getName:
+    printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
+    //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    //Read in the name of the PCB to delete
+    if(strcmp_ic(buf,"") == 0){
+        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+        goto getName;
+    }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
-    //Make sure memory allocation was successful
+    //Check to see if the memory allocation was successful
     if(name == NULL){
-        printf("\033[0;31mMemory allocation failed.\033[0;0m\n");
+        printf("Memory allocation failed.");
         return;
     }
     str_copy(name, buf, 0, strlen(buf));
-    //If the name is in a queue, remove it. If not, write a message to the console. 
+
+    if(strcmp_ic(name,"exit") == 0){
+        return;
+    }
+
     pcb* toRemove = pcb_find(ready, blocked, susReady, susBlocked, name);
     if (toRemove == NULL) {
         printf("\033[0;31mCould not find process \"%s\" to delete.\033[0;0m\n", name);
         return;
     }
     if (toRemove->clas == 0) {
-        printf("\033[0;31mError: \"%s\" is a system process. Cannot request to delete a system process.\033[0;0m\n", name);
+        printf("\033[0;31mError: \"%s\" is a system process. Cannot request to delete a system process.\n\033[0;0m\n", name);
         return;
     }
     //Remove the PCB and free its memory
@@ -618,50 +651,16 @@ void deletePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
 }
 
 void blockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked) {
-    char buf[100] = {0};
-
-    printf("\033[0;36mEnter PCB name to block:\033[0;0m\n>> ");
-    //Read in the name of the PCB to block from the user input
+     char buf[100] = {0};
+    
+    getName:
+    printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
+    //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
-    //Check if the memory allocation was successful
-    if(name == NULL){
-        printf("Memory allocation failed.");
-        return;
+    if(strcmp_ic(buf,"") == 0){
+        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+        goto getName;
     }
-    str_copy(name, buf, 0, strlen(buf));
-    //Check to see if the process is inside of a queue already
-    pcb* toBlock = pcb_find(ready, blocked, susReady, susBlocked, name);
-    if (toBlock == NULL) {
-        printf("\033[0;31mCould not find process \"%s\" to block.\033[0;0m\n", name);
-        return;
-    }
-    //Check to see if the process is already blocked
-    if (strcmp_ic(toBlock->state, "blocked") == 0 || strcmp_ic(toBlock->state, "susBlocked") == 0 ){
-        printf("\033[0;31mThe specified PCB is already in the blocked state\033[0;0m");
-        return;
-    }
-    //Check to see if the process is suspended, but not blocked
-    if (strcmp_ic(toBlock->state, "susReady") == 0){
-        pcb_remove(ready, blocked, susReady, susBlocked, toBlock);
-        toBlock->state = "susBlocked";
-        pcb_insert(ready, blocked, susReady, susBlocked, toBlock);  
-    }
-    //remove the pcb from a queue, change the state to blocked and insert it into the blocked queue.
-    else{
-        pcb_remove(ready, blocked, susReady, susBlocked, toBlock);
-        toBlock->state = "blocked";
-        pcb_insert(ready, blocked, susReady, susBlocked, toBlock);
-    }
-    printf("\033[0;32mSuccessfully blocked process \"%s\".\033[0;0m\n", toBlock->name_ptr);
-}
-
-void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked) {
-    char buf[100] = {0};
-
-    printf("\033[0;36mEnter PCB name to unblock:\033[0;0m\n>> ");
-    //Read in the name of the PCB the user inputted
-    sys_req(READ, COM1, buf, sizeof(buf));
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
     //Check to see if the memory allocation was successful
     if(name == NULL){
@@ -669,6 +668,61 @@ void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
         return;
     }
     str_copy(name, buf, 0, strlen(buf));
+
+    if(strcmp_ic(name,"exit") == 0){
+        return;
+    }
+    
+    //Check to see if the process is inside of a queue already
+    pcb* toBlock = pcb_find(ready, blocked, susReady, susBlocked, name);
+    if (toBlock == NULL) {
+        printf("\033[0;31mCould not find process \"%s\" to block.\033[0;0m\n", name);
+        return;
+    }
+
+    //Check to see if the process is already blocked
+    if (strcmp_ic(toBlock->state, "blocked") == 0 || strcmp_ic(toBlock->state, "susBlocked") == 0 ){
+        printf("\033[0;33mThe specified PCB \"%s\"is already in the blocked state. Nothing will be done.\n\033[0;0m", name);
+        return;
+    }
+    //Check to see if the process is suspended, but not blocked
+    pcb_remove(ready, blocked, susReady, susBlocked, toBlock);
+
+    if (strcmp_ic(toBlock->state, "susReady") == 0){
+        toBlock->state = "susBlocked";
+    }
+    //remove the pcb from a queue, change the state to blocked and insert it into the blocked queue.
+    else if (strcmp_ic(toBlock->state, "ready") == 0){
+        toBlock->state = "blocked";
+    }
+    
+    pcb_insert(ready, blocked, susReady, susBlocked, toBlock);
+    printf("\033[0;32mSuccessfully blocked process \"%s\".\033[0;0m\n", toBlock->name_ptr);
+}
+
+void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked) {
+     char buf[100] = {0};
+    
+    getName:
+    printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
+    //Read in name the user entered
+    sys_req(READ, COM1, buf, sizeof(buf));
+    if(strcmp_ic(buf,"") == 0){
+        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+        goto getName;
+    }
+    char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
+    //Check to see if the memory allocation was successful
+    if(name == NULL){
+        printf("Memory allocation failed.");
+        return;
+    }
+    str_copy(name, buf, 0, strlen(buf));
+
+    if(strcmp_ic(name,"exit") == 0){
+        return;
+    }
+
     //Check to see if the PCB exists in a queue. 
     pcb* toReady = pcb_find(ready, blocked, susReady, susBlocked, name);
     if (toReady == NULL) {
@@ -677,7 +731,7 @@ void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
     }
     //Check to see if the process is already unblocked
     if (strcmp_ic(toReady->state, "ready") == 0 || strcmp_ic(toReady->state, "susReady") == 0 ){
-        printf("\033[0;31mThe specified PCB is already in the ready state \033[0;0m");
+        printf("\033[0;33mThe specified PCB \"%s\" is already in the ready state. Nothing will be done.\n\033[0;0m", name);
         return;
     }
     //Check to see if the process is suspended, but not blocked
@@ -695,10 +749,15 @@ void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
 
 void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked) {
     char buf[100] = {0};
-
-    printf("\033[0;36mEnter PCB name to suspend:\033[0;0m\n>> ");
-    //Read in the name of the PCB the user inputted
+    
+    getName:
+    printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
+    //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
+    if(strcmp_ic(buf,"") == 0){
+        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+        goto getName;
+    }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
     //Check to see if the memory allocation was successful
     if(name == NULL){
@@ -706,6 +765,11 @@ void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
         return;
     }
     str_copy(name, buf, 0, strlen(buf));
+
+    if(strcmp_ic(name,"exit") == 0){
+        return;
+    }
+
     //Check to see if the PCB is in a queue
     pcb* toSuspend = pcb_find(ready, blocked, susReady, susBlocked, name);
     if (toSuspend == NULL) {
@@ -714,7 +778,7 @@ void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
     }
     //check to see if the process is already in the suspended state
     if (strcmp(toSuspend->state, "susReady") == 0 || strcmp(toSuspend->state, "susBlocked") == 0){
-        printf("\033[0;31m%s is already in the state of being suspended.\033m[0;0m\n", toSuspend->name_ptr);
+        printf("\033[0;33m%s is already in the state of being suspended. Nothing will be done.\n\033m[0;0m", toSuspend->name_ptr);
         return;
     }
     //if not remove them, set their approrpriate state and insert them back into the queues. 
@@ -730,11 +794,16 @@ void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
 }
 
 void resumePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked){
-    char buf[100] = {0};
-
-    printf("\033[0;36mEnter PCB name to resume:\033[0;0m\n>> ");
-    //Read in the name of the PCB the user inputted
+     char buf[100] = {0};
+    
+    getName:
+    printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
+    //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
+    if(strcmp_ic(buf,"") == 0){
+        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+        goto getName;
+    }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
     //Check to see if the memory allocation was successful
     if(name == NULL){
@@ -742,6 +811,11 @@ void resumePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
         return;
     }
     str_copy(name, buf, 0, strlen(buf));
+
+    if(strcmp_ic(name,"exit") == 0){
+        return;
+    }
+
     //Check to see if the PCB is in a queue
     pcb* toReady = pcb_find(ready, blocked, susReady, susBlocked, name);
     if (toReady == NULL) {
@@ -750,7 +824,7 @@ void resumePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     }
     //check to see if the process is already in the suspended state
     if (strcmp(toReady->state, "ready") == 0 || strcmp(toReady->state, "blocked") == 0){
-        printf("\033[0;31m%s is already in the resumed state.\033m[0;0m\n", toReady->name_ptr);
+        printf("\033[0;33m%s is already in the resumed state. Nothing will be done.\n\033m[0;0m", toReady->name_ptr);
         return;
     }
     //if not remove them, set their approrpriate state and insert them back into the queues. 
@@ -766,11 +840,16 @@ void resumePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
 }
 
 void setPCBPriority(queue* ready, queue* blocked, queue* susReady, queue* susBlocked){
-    char buf[100] = {0};
-
-    printf("\033[0;36mEnter PCB name to change priority:\033[0;0m\n>> ");
-    //Read in the priority the user inputted
+     char buf[100] = {0};
+    
+    getName:
+    printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
+    //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
+    if(strcmp_ic(buf,"") == 0){
+        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+        goto getName;
+    }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
     //Check to see if the memory allocation was successful
     if(name == NULL){
@@ -778,10 +857,15 @@ void setPCBPriority(queue* ready, queue* blocked, queue* susReady, queue* susBlo
         return;
     }
     str_copy(name, buf, 0, strlen(buf));
+
+    if(strcmp_ic(name,"exit") == 0){
+        return;
+    }
+
     //Check to see if a PCB with the given name exists
     pcb* toSetP = pcb_find(ready, blocked, susReady, susBlocked, name);
     if (toSetP == NULL) {
-        printf("\033[0;31mCould not find process \"%s\" to change priority.\033[0;0m\n.", name);
+        printf("\033[0;31mCould not find process \"%s\" to change priority.\n\033[0;0m", name);
         return;
     }
 
@@ -789,6 +873,10 @@ void setPCBPriority(queue* ready, queue* blocked, queue* susReady, queue* susBlo
     printf("\033[0;36mEnter PCB priority:\033[0;0m\n>> ");
     //read in the priority the user inputted
     sys_req(READ, COM1, buf, sizeof(buf));
+    if(strcmp_ic(buf,"") == 0){
+        printf("\033[0;31mInvalid priority for process \"%s\". Priority must be valid integer from 0 to 9. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n", name);
+        goto getPriority;
+    }
     if(strcmp_ic(buf,"exit") == 0){
         return;
     }
@@ -798,6 +886,10 @@ void setPCBPriority(queue* ready, queue* blocked, queue* susReady, queue* susBlo
         printf("\033[0;31mInvalid priority for process \"%s\". Priority must be valid integer from 0 to 9. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n", name);
         goto getPriority;
     }
+    if(priority == toSetP->priority){
+        printf("\033[0;33mThe priority of the specific PCB \"%s\" is already %d. Nothing will be done.\n\033[0;0m", name, priority);
+        return;
+    }
     //Set the priority to the new priority entered in
     int prevPriority = toSetP->priority;
     toSetP->priority = priority;
@@ -805,19 +897,29 @@ void setPCBPriority(queue* ready, queue* blocked, queue* susReady, queue* susBlo
 }
 
 void showPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked){
-    char buf[100] = {0};
-    char* susStatus = "No";
-
-    printf("\033[0;36mEnter PCB name to show:\033[0;0m\n>> ");
-    //Reads in the PCB name the user entered
+     char buf[100] = {0};
+     char* susStatus = "No";
+    
+    getName:
+    printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
+    //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
+    if(strcmp_ic(buf,"") == 0){
+        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+        goto getName;
+    }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
-    //Check to see if memory allocation was successful
+    //Check to see if the memory allocation was successful
     if(name == NULL){
         printf("Memory allocation failed.");
         return;
     }
     str_copy(name, buf, 0, strlen(buf));
+
+    if(strcmp_ic(name,"exit") == 0){
+        return;
+    }
+
     //check to see if the name of the PCB is a name of a PCB in one of the queues
     pcb* toShow = pcb_find(ready, blocked, susReady, susBlocked, name);
     if (toShow == NULL) {
