@@ -997,7 +997,19 @@ void help(void){
     puts("Type \"set time\" or type ‘3’ to set the system time\n");
     puts("Type \"get date\" or type ‘4’ to retrieve the current system date\n");
     puts("Type \"set date\" or type ‘5’ to set the system date\n");
-    puts("Type \"help\" or type ‘6’ to see a list of commands you can run\n");
-    puts("Type \"shutdown\" or type ‘7’ to exit the operating system\n");
+    puts("Type \"Create PCB\" or type ‘6’ to create a new PCB\n");
+    puts("Type \"Delete PCB\" or type ‘7’ to delete a PCB\n");
+    puts("Type \"Block PCB\" or type ‘8’ to block a PCB\n");
+    puts("Type \"Unblock PCB\" or type ‘9’ to unblock a PCB\n");
+    puts("Type \"Suspend PCB\" or type ‘10’ to suspend a PCB\n");
+    puts("Type \"Resume PCB\" or type ‘11’ to resume PCB\n");
+    puts("Type \"Set PCB Priority\" or type ‘12’ to update a PCB's priority\n");
+    puts("Type \"Show PCB\" or type ‘13’ to show details of a specific PCB\n");
+    puts("Type \"Show Ready\" or type ‘14’ to show PCB's in the ready queue\n");
+    puts("Type \"Show Blocked\" or type ‘15’ to show PCB's in the blocked queue\n");
+    puts("Type \"Show All\" or type ‘16’ to show all PBC's in all the queues\n");
+    puts("Type \"help\" or type ‘17’ to see a list of commands you can run\n");
+    puts("Type \"shutdown\" or type ‘18’ to exit the operating system\n");
     printf("\033[0;0m");
 }
+
