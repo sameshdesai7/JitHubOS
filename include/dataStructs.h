@@ -1,7 +1,11 @@
 #ifndef DATASTRUCTS_H
 #define DATASTRUCTS_H
-
 #include <memory.h>
+
+/**
+ * @file datastructs.h
+ * @brief Data structures associated with processes and the functions to go with them. 
+*/
 
 typedef struct pcb{
     char *name_ptr;
