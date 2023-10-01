@@ -731,7 +731,7 @@ void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
     //Check to see if the PCB exists in a queue. 
     pcb* toReady = pcb_find(ready, blocked, susReady, susBlocked, name);
     if (toReady == NULL) {
-        printf("\033[0;31mCould not find process \"%s\" to unblock.\033[0;0m\n.", name);
+        printf("\033[0;31mCould not find process \"%s\" to unblock.\033[0;0m\n", name);
         return;
     }
     //Check to see if the process is already unblocked
@@ -778,7 +778,7 @@ void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
     //Check to see if the PCB is in a queue
     pcb* toSuspend = pcb_find(ready, blocked, susReady, susBlocked, name);
     if (toSuspend == NULL) {
-        printf("\033[0;31mCould not find process \"%s\" to suspend.\033[0;0m\n.", name);
+        printf("\033[0;31mCould not find process \"%s\" to suspend.\033[0;0m\n", name);
         return;
     }
 
@@ -789,7 +789,7 @@ void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
 
     //check to see if the process is already in the suspended state
     if (strcmp(toSuspend->state, "susReady") == 0 || strcmp(toSuspend->state, "susBlocked") == 0){
-        printf("\033[0;33m%s is already in the state of being suspended. Nothing will be done.\n\033m[0;0m", toSuspend->name_ptr);
+        printf("\033[0;33m%s is already in the state of being suspended. Nothing will be done.\n\033[0;0m", toSuspend->name_ptr);
         return;
     }
     //if not remove them, set their approrpriate state and insert them back into the queues. 
@@ -830,15 +830,15 @@ void resumePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     //Check to see if the PCB is in a queue
     pcb* toReady = pcb_find(ready, blocked, susReady, susBlocked, name);
     if (toReady == NULL) {
-        printf("\033[0;31mCould not find process \"%s\" to resume.\033[0;0m\n.", name);
+        printf("\033[0;31mCould not find process \"%s\" to resume.\033[0;0m\n", name);
         return;
     }
     //check to see if the process is already in the suspended state
     if (strcmp(toReady->state, "ready") == 0 || strcmp(toReady->state, "blocked") == 0){
-        printf("\033[0;33m%s is already in the resumed state. Nothing will be done.\n\033m[0;0m", toReady->name_ptr);
+        printf("\033[0;33mThe specified PCB \"%s\"is already in the resumed state. Nothing will be done.\n\033[0;0m", name);
         return;
     }
-    //if not remove them, set their approrpriate state and insert them back into the queues. 
+    //if not remove them, set their appropriate state and insert them back into the queues. 
     else {
         pcb_remove(ready, blocked, susReady, susBlocked, toReady);
     }
@@ -945,7 +945,7 @@ void showPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked){
     //check to see if the name of the PCB is a name of a PCB in one of the queues
     pcb* toShow = pcb_find(ready, blocked, susReady, susBlocked, name);
     if (toShow == NULL) {
-        printf("\033[0;31mCould not find process \"%s\" to show.\033[0;0m\n.", name);
+        printf("\033[0;31mCould not find process \"%s\" to show.\033[0;0m\n", name);
         return;
     }
     //get the status of the PCB
@@ -975,16 +975,16 @@ void showBlocked(queue* blocked){
 }
 
 void showAll(queue* ready, queue* blocked, queue* susReady, queue* susBlocked){
-    printf("\033[0;36mReady:-------------");
+    printf("\033[0;36mReady:\n");
     printq(ready);
 
-    printf("Blocked:-----------");
+    printf("Blocked:\n");
     printq(blocked);
 
-    printf("Suspended Ready:---");
+    printf("Suspended Ready:\n");
     printq(susReady);
 
-    printf("Suspended Blocked:-");
+    printf("Suspended Blocked:\n");
     printq(susBlocked);
     printf("\033[0;0m");
 }
