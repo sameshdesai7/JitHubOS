@@ -61,63 +61,66 @@ pcb* dequeue(queue* q){
 
 void printq(queue* q){
     if(q->head == NULL){
-        printf(" ___\n| \n| \n| \n| \n|___\n");
+        printf(" |                              |\n"
+               " |        QUEUE IS EMPTY        |\n"
+               " |                              |\n");
         return;
     }
 
     pcb* temp = q->head;
-
-    if(temp->next == NULL){
-        printf(" ___\n
-                |\n
-                |  Name:      %s\n
-                |  Class:     %s\n
-                |  State:     %s\n
-                |  Suspended: %s\n
-                |  Priority:  %s\n
-                |___");
-    }
-
     char* susStatus = "No";
 
-    printf(" ___\n| \n|  ");
-    while(temp->next != NULL){
-        printf("Name: %s ", temp->name_ptr);
-        temp = temp->next;
-    }
+    if(strcmp(temp->state, "susReady") == 0 || strcmp(temp->state, "susBlocked") == 0){
+            susStatus = "Yes";
+        } else susStatus = "No";
     
-    temp = q->head;
-    printf("\n|  ");
     while(temp->next != NULL){
-        printf("Class: %s ", temp->clas);
+        printf(" |\tName:      %s\t\t|", temp->name_ptr);
         temp = temp->next;
     }
+    printf(" |\tName:      %s\t\t|", temp->name_ptr);
 
+    printf("\n");
     temp = q->head;
-    printf("\n|  ");
     while(temp->next != NULL){
-        printf("State: %s ", temp->state);
+        printf(" |\tClass:     %d\t\t|", temp->clas);
         temp = temp->next;
     }
+    printf(" |\tClass:     %d\t\t|", temp->clas);
 
+    printf("\n");
     temp = q->head;
-    printf("\n|  ");
+    while(temp->next != NULL){
+        printf(" |\tState:     %s\t|", temp->state);
+        temp = temp->next;
+    }
+    printf(" |\tState:     %s\t|", temp->state);
+
+    printf("\n");
+    temp = q->head;
     while(temp->next != NULL){
         if(strcmp(temp->state, "susReady") == 0 || strcmp(temp->state, "susBlocked") == 0){
             susStatus = "Yes";
         } else susStatus = "No";
         
-        printf("Suspended: %s ", susStatus);
+        printf(" |\tSuspended: %s\t\t|", susStatus);
         temp = temp->next;
     }
 
+    if(strcmp(temp->state, "susReady") == 0 || strcmp(temp->state, "susBlocked") == 0){
+            susStatus = "Yes";
+        } else susStatus = "No";
+        
+        printf(" |\tSuspended: %s\t\t|", susStatus);
+
+    printf("\n");
     temp = q->head;
-    printf("\n|  ");
     while(temp->next != NULL){
-        printf("Priority: %s, ", temp->priority);
+        printf(" |\tPriority:  %d\t\t|", temp->priority);
         temp = temp->next;
     }
-    printf("%s___\n", temp->name_ptr);
+
+    printf(" |\tPriority:  %d\t\t|", temp->priority);
     return;
 }
 

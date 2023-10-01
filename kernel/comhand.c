@@ -963,13 +963,13 @@ void showPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked){
 }
 
 void showReady(queue* ready){
-    printf("\033[0;36mReady: ");
+    printf("\033[0;36mReady:\n");
     printq(ready);
     printf("\033[0;0m");
 }
 
 void showBlocked(queue* blocked){
-    printf("\033[0;36mBlocked: ");
+    printf("\033[0;36mBlocked:\n");
     printq(blocked);
     printf("\033[0;0m");
 }
@@ -978,13 +978,13 @@ void showAll(queue* ready, queue* blocked, queue* susReady, queue* susBlocked){
     printf("\033[0;36mReady:\n");
     printq(ready);
 
-    printf("Blocked:\n");
+    printf("\nBlocked:\n");
     printq(blocked);
 
-    printf("Suspended Ready:\n");
+    printf("\nSuspended Ready:\n");
     printq(susReady);
 
-    printf("Suspended Blocked:\n");
+    printf("\nSuspended Blocked:\n");
     printq(susBlocked);
     printf("\033[0;0m");
 }
