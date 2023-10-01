@@ -98,26 +98,152 @@ void setDate(void);
  */
 void help(void);
 
+/**
+ * @author Sam Desai
+ * @author Jackson Monk
+ * @author Noah Marner
+ * @author Blake Wagner
+ * @brief Creates a new PCB with the given name
+ * @param ready The ready queue
+ * @param blocked The blocked queue
+ * @param susReady The suspended ready queue
+ * @param susBlocked The suspended blocked queue
+ * @details Creates a new PCB and prompts for its name, priority, and class. The new process is put in the ready queue.
+ */
 void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
+/**
+ * @author Sam Desai
+ * @author Jackson Monk
+ * @author Noah Marner
+ * @author Blake Wagner
+ * @brief Deletes the PCB with the given name
+ * @param ready The ready queue
+ * @param blocked The blocked queue
+ * @param susReady The suspended ready queue
+ * @param susBlocked The suspended blocked queue
+ * @details If the PCB with the given name exists in one of the queues, it will be removed from that queue. System processes cannot be deleted.
+ */
 void deletePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
+/**
+ * @author Sam Desai
+ * @author Jackson Monk
+ * @author Noah Marner
+ * @author Blake Wagner
+ * @brief Blocks the PCB with the given name
+ * @param ready The ready queue
+ * @param blocked The blocked queue
+ * @param susReady The suspended ready queue
+ * @param susBlocked The suspended blocked queue
+ * @details If the PCB with the given name exists in either the ready or the susReady queue, it will be moved to either the blocked or the susBlocked queue respectively. System processes cannot be blocked.
+ */
 void blockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
+/**
+ * @author Sam Desai
+ * @author Jackson Monk
+ * @author Noah Marner
+ * @author Blake Wagner
+ * @brief Unblocks the PCB with the given name
+ * @param ready The ready queue
+ * @param blocked The blocked queue
+ * @param susReady The suspended ready queue
+ * @param susBlocked The suspended blocked queue
+ * @details If the PCB with the given name exists in either the blocked or the susBlocked queue, it will be moved to either the ready or the susReady queue respectively.
+ */
 void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
+/**
+ * @author Sam Desai
+ * @author Jackson Monk
+ * @author Noah Marner
+ * @author Blake Wagner
+ * @brief Suspends the PCB with the given name
+ * @param ready The ready queue
+ * @param blocked The blocked queue
+ * @param susReady The suspended ready queue
+ * @param susBlocked The suspended blocked queue
+ * @details If the PCB with the given name exists in either the ready or the blocked queue, it will be moved to either the susReady or the susBlocked queue respectively. System processes cannot be suspended.
+ */
 void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
+/**
+ * @author Sam Desai
+ * @author Jackson Monk
+ * @author Noah Marner
+ * @author Blake Wagner
+ * @brief Unsuspends the PCB with the given name
+ * @param ready The ready queue
+ * @param blocked The blocked queue
+ * @param susReady The suspended ready queue
+ * @param susBlocked The suspended blocked queue
+ * @details If the PCB with the given name is in either the susReady or the susBlocked queue, it will be moved to either the ready or the blocked queue respectively.
+ */
 void resumePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
+/**
+ * @author Sam Desai
+ * @author Jackson Monk
+ * @author Noah Marner
+ * @author Blake Wagner
+ * @brief Sets the priority of the PCB with the given name to the given priority
+ * @param ready The ready queue
+ * @param blocked The blocked queue
+ * @param susReady The suspended ready queue
+ * @param susBlocked The suspended blocked queue
+ * @details If the PCB with the given name exists in one of the queues and the given priority is a valid integer from 0-9, the priority of the given PCB is changed to the given priority. System processes' priorities can't be changed.
+ */
 void setPCBPriority(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
+/**
+ * @author Sam Desai
+ * @author Jackson Monk
+ * @author Noah Marner
+ * @author Blake Wagner
+ * @brief Lists all the attributes of the PCB with the given name
+ * @param ready The ready queue
+ * @param blocked The blocked queue
+ * @param susReady The suspended ready queue
+ * @param susBlocked The suspended blocked queue
+ * @details If the PCB with the given name exists in one of the queues, its name, priority, class, and state are displayed.
+ */
 void showPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
+/**
+ * @author Sam Desai
+ * @author Jackson Monk
+ * @author Noah Marner
+ * @author Blake Wagner
+ * @brief Shows all the processes in the ready queue
+ * @param ready The ready queue
+ * @details Prints out all the attributes of each process in the ready queue.
+ */
 void showReady(queue* ready);
 
+/**
+ * @author Sam Desai
+ * @author Jackson Monk
+ * @author Noah Marner
+ * @author Blake Wagner
+ * @brief Shows all the processes in the blocked queue
+ * @param blocked The blocked queue
+ * @details Prints out all the attributes of each process in the blocked queue.
+ */
 void showBlocked(queue* blocked);
 
+/**
+ * @author Sam Desai
+ * @author Jackson Monk
+ * @author Noah Marner
+ * @author Blake Wagner
+ * @brief Shows all the processes in all the queues
+ * @param ready The ready queue
+ * @param blocked The blocked queue
+ * @param susReady The suspended ready queue
+ * @param susBlocked The suspended blocked queue
+ * @details Prints out all the attributes of each process in each queue.
+ */
 void showAll(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
 #endif
