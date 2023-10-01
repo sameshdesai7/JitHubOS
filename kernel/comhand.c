@@ -133,41 +133,105 @@ void comhand()
             help();
         }
         //individual help commands
-        else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "6 version") == 0){
+        else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "17 version") == 0){
             printf("\033[0;36m");
             puts("Type \"version\" to retrieve the current version of the operating system\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help help") == 0 || strcmp_ic(buf, "6 help") == 0){
+        else if (strcmp_ic(buf, "help help") == 0 || strcmp_ic(buf, "17 help") == 0){
             printf("\033[0;36m");
             puts("Type \"help\" to see a list of commands you can run\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help shutdown") == 0 || strcmp_ic(buf, "6 shutdown") == 0){
+        else if (strcmp_ic(buf, "help shutdown") == 0 || strcmp_ic(buf, "17 shutdown") == 0){
             printf("\033[0;36m");
             puts("Type \"shutdown\" to exit the operating system\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help get time") == 0 || strcmp_ic(buf, "6 get time") == 0){
+        else if (strcmp_ic(buf, "help get time") == 0 || strcmp_ic(buf, "17 get time") == 0){
             printf("\033[0;36m");
             puts("Type \"get time\" to retrieve the current system time\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help set time") == 0 || strcmp_ic(buf, "6 set time") == 0){
+        else if (strcmp_ic(buf, "help set time") == 0 || strcmp_ic(buf, "17 set time") == 0){
             printf("\033[0;36m");
             puts("Type \"set time\" to set the system time\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help get date") == 0 || strcmp_ic(buf, "6 get date") == 0){
+        else if (strcmp_ic(buf, "help get date") == 0 || strcmp_ic(buf, "17 get date") == 0){
             printf("\033[0;36m");
             puts("Type \"get date\" to retrieve the current system date\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help set date") == 0 || strcmp_ic(buf, "6 set date") == 0){
+        else if (strcmp_ic(buf, "help set date") == 0 || strcmp_ic(buf, "17 set date") == 0){
             printf("\033[0;36m");
             puts("Type \"set date\" to set the system date\n");
             printf("\033[0;0m");
         }
+        else if (strcmp_ic(buf, "help create pcb") == 0 || strcmp_ic(buf, "17 create pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"create pcb\" to create a PCB\n");
+            puts("Names must be between 1 and 12 characters\n");
+            puts("Class 0 for kernel processes, class 1 for user processes\n");
+            puts("Prioirties must be between 0 and 9 with 0 being the highest.\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help delete pcb") == 0 || strcmp_ic(buf, "17 delete pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"delete pcb\" to delete a PCB\n");
+            puts("The name provided must be a PCB that exists\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help block pcb") == 0 || strcmp_ic(buf, "17 block pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"block pcb\" to block a PCB\n");
+            puts("Only user processes can be blocked.\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help unblock pcb") == 0 || strcmp_ic(buf, "17 unblock pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"block pcb\" to unblock a PCB\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help suspend pcb") == 0 || strcmp_ic(buf, "17 suspend pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"block pcb\" to suspend a PCB\n");
+            puts("Only user processes can be suspended.\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help resume pcb") == 0 || strcmp_ic(buf, "17 resume pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"retume pcb\" to resume a PCB\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help set pcb priority") == 0 || strcmp_ic(buf, "17 set pcb priority") == 0){
+            printf("\033[0;36m");
+            puts("Type \"set pcb priority \" to set a pcb priority\n");
+            puts("A priotity must be between 0 and 9 with 0 being the highest priority.");
+            printf("\033[0;0m");
+        }
+         else if (strcmp_ic(buf, "show pcb") == 0 || strcmp_ic(buf, "17 show pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"show pcb\" to show all the information associated with a PCB\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "show ready") == 0 || strcmp_ic(buf, "17 show ready") == 0){
+            printf("\033[0;36m");
+            puts("Type \"show ready\" to show all the PCB's in the ready queue. \n");
+            printf("\033[0;0m");
+        }
+         else if (strcmp_ic(buf, "show blocked ") == 0 || strcmp_ic(buf, "17 show blocked") == 0){
+            printf("\033[0;36m");
+            puts("Type \"show blocked\" to show all the PCB's in the blocked queue. \n");
+            printf("\033[0;0m");
+        }
+         else if (strcmp_ic(buf, "show all") == 0 || strcmp_ic(buf, "17 show all") == 0){
+            printf("\033[0;36m");
+            puts("Type \"show all\" to show all the PCB's and all the queues (Ready, Blocked, SusReady, SusBlocked). \n");
+            printf("\033[0;0m");
+        }
+        
+        
         else
         {
             printf("\033[0;31m");
