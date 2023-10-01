@@ -1,0 +1,52 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Data Structure Index}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Data Structures}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}File Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}File List}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Data Structure Documentation}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}pcb Struct Reference}{5}{section.3.1}%
+\contentsline {section}{\numberline {3.2}queue Struct Reference}{5}{section.3.2}%
+\contentsline {chapter}{\numberline {4}File Documentation}{7}{chapter.4}%
+\contentsline {section}{\numberline {4.1}include/comhand.h File Reference}{7}{section.4.1}%
+\contentsline {section}{\numberline {4.2}include/ctype.h File Reference}{7}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{7}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Function Documentation}{7}{subsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.1}isspace()}{7}{subsubsection.4.2.2.1}%
+\contentsline {section}{\numberline {4.3}include/data\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Structs.h File Reference}{8}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{9}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Function Documentation}{9}{subsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.1}dequeue()}{9}{subsubsection.4.3.2.1}%
+\contentsline {subsubsection}{\numberline {4.3.2.2}enqueue()}{9}{subsubsection.4.3.2.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.3}pcb\_allocate()}{10}{subsubsection.4.3.2.3}%
+\contentsline {subsubsection}{\numberline {4.3.2.4}pcb\_find()}{10}{subsubsection.4.3.2.4}%
+\contentsline {subsubsection}{\numberline {4.3.2.5}pcb\_free()}{11}{subsubsection.4.3.2.5}%
+\contentsline {subsubsection}{\numberline {4.3.2.6}pcb\_insert()}{11}{subsubsection.4.3.2.6}%
+\contentsline {subsubsection}{\numberline {4.3.2.7}pcb\_remove()}{12}{subsubsection.4.3.2.7}%
+\contentsline {subsubsection}{\numberline {4.3.2.8}pcb\_setup()}{13}{subsubsection.4.3.2.8}%
+\contentsline {subsubsection}{\numberline {4.3.2.9}printq()}{13}{subsubsection.4.3.2.9}%
+\contentsline {section}{\numberline {4.4}include/mpx/io.h File Reference}{14}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{14}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Macro Definition Documentation}{14}{subsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.2.1}inb}{14}{subsubsection.4.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.4.2.2}outb}{14}{subsubsection.4.4.2.2}%
+\contentsline {section}{\numberline {4.5}include/mpx/serial.h File Reference}{15}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{15}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Function Documentation}{15}{subsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.2.1}backspace()}{15}{subsubsection.4.5.2.1}%
+\contentsline {subsubsection}{\numberline {4.5.2.2}serial\_init()}{16}{subsubsection.4.5.2.2}%
+\contentsline {subsubsection}{\numberline {4.5.2.3}serial\_out()}{16}{subsubsection.4.5.2.3}%
+\contentsline {subsubsection}{\numberline {4.5.2.4}serial\_poll()}{17}{subsubsection.4.5.2.4}%
+\contentsline {section}{\numberline {4.6}include/stdio.h File Reference}{17}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Detailed Description}{17}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Function Documentation}{17}{subsection.4.6.2}%
+\contentsline {subsubsection}{\numberline {4.6.2.1}printf()}{18}{subsubsection.4.6.2.1}%
+\contentsline {subsubsection}{\numberline {4.6.2.2}putc()}{18}{subsubsection.4.6.2.2}%
+\contentsline {subsubsection}{\numberline {4.6.2.3}puts()}{18}{subsubsection.4.6.2.3}%
+\contentsline {section}{\numberline {4.7}include/stdlib.h File Reference}{19}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Detailed Description}{19}{subsection.4.7.1}%
+\contentsline {subsection}{\numberline {4.7.2}Function Documentation}{19}{subsection.4.7.2}%
+\contentsline {subsubsection}{\numberline {4.7.2.1}atoi()}{19}{subsubsection.4.7.2.1}%
+\contentsline {subsubsection}{\numberline {4.7.2.2}fromBCD()}{20}{subsubsection.4.7.2.2}%
+\contentsline {subsubsection}{\numberline {4.7.2.3}isdigit()}{20}{subsubsection.4.7.2.3}%
+\contentsline {subsubsection}{\numberline {4.7.2.4}itoa()}{21}{subsubsection.4.7.2.4}%
+\contentsline {subsubsection}{\numberline {4.7.2.5}toBCD()}{21}{subsubsection.4.7.2.5}%

@@ -3,7 +3,7 @@
 #include <memory.h>
 
 /**
- * @file datastructs.h
+ * @file dataStructs.h
  * @brief Data structures associated with processes and the functions to go with them. 
 */
 
