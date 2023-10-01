@@ -548,8 +548,8 @@ void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -619,8 +619,8 @@ void deletePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -657,8 +657,8 @@ void blockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked) 
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -712,8 +712,8 @@ void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -759,8 +759,8 @@ void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -811,8 +811,8 @@ void resumePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -857,8 +857,8 @@ void setPCBPriority(queue* ready, queue* blocked, queue* susReady, queue* susBlo
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -926,8 +926,8 @@ void showPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked){
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);

@@ -75,10 +75,21 @@ void printq(queue* q){
         } else susStatus = "No";
     
     while(temp->next != NULL){
-        printf(" |\tName:      %s\t\t|", temp->name_ptr);
+        if(strlen(temp->name_ptr) < 5){
+            printf(" |\tName:      %s\t\t|", temp->name_ptr);
+        }
+        else{
+            printf(" |\tName:      %s\t|", temp->name_ptr);
+        }
         temp = temp->next;
     }
-    printf(" |\tName:      %s\t\t|", temp->name_ptr);
+    
+    if(strlen(temp->name_ptr) < 5){
+            printf(" |\tName:      %s\t\t|", temp->name_ptr);
+        }
+        else{
+            printf(" |\tName:      %s\t|", temp->name_ptr);
+        }
 
     printf("\n");
     temp = q->head;
