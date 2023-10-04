@@ -2,6 +2,7 @@
 #define MPX_SYS_REQ_H
 
 #include <mpx/device.h>
+#include <context.h>
 
 /**
  @file sys_req.h
@@ -27,5 +28,5 @@ typedef enum {
  @return Varies by operation
 */ 
 int sys_req(op_code op, ...);
- 
+
 #endif
