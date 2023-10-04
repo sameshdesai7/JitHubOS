@@ -133,41 +133,105 @@ void comhand()
             help();
         }
         //individual help commands
-        else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "6 version") == 0){
+        else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "17 version") == 0){
             printf("\033[0;36m");
             puts("Type \"version\" to retrieve the current version of the operating system\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help help") == 0 || strcmp_ic(buf, "6 help") == 0){
+        else if (strcmp_ic(buf, "help help") == 0 || strcmp_ic(buf, "17 help") == 0){
             printf("\033[0;36m");
             puts("Type \"help\" to see a list of commands you can run\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help shutdown") == 0 || strcmp_ic(buf, "6 shutdown") == 0){
+        else if (strcmp_ic(buf, "help shutdown") == 0 || strcmp_ic(buf, "17 shutdown") == 0){
             printf("\033[0;36m");
             puts("Type \"shutdown\" to exit the operating system\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help get time") == 0 || strcmp_ic(buf, "6 get time") == 0){
+        else if (strcmp_ic(buf, "help get time") == 0 || strcmp_ic(buf, "17 get time") == 0){
             printf("\033[0;36m");
             puts("Type \"get time\" to retrieve the current system time\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help set time") == 0 || strcmp_ic(buf, "6 set time") == 0){
+        else if (strcmp_ic(buf, "help set time") == 0 || strcmp_ic(buf, "17 set time") == 0){
             printf("\033[0;36m");
             puts("Type \"set time\" to set the system time\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help get date") == 0 || strcmp_ic(buf, "6 get date") == 0){
+        else if (strcmp_ic(buf, "help get date") == 0 || strcmp_ic(buf, "17 get date") == 0){
             printf("\033[0;36m");
             puts("Type \"get date\" to retrieve the current system date\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help set date") == 0 || strcmp_ic(buf, "6 set date") == 0){
+        else if (strcmp_ic(buf, "help set date") == 0 || strcmp_ic(buf, "17 set date") == 0){
             printf("\033[0;36m");
             puts("Type \"set date\" to set the system date\n");
             printf("\033[0;0m");
         }
+        else if (strcmp_ic(buf, "help create pcb") == 0 || strcmp_ic(buf, "17 create pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"create pcb\" to create a PCB\n");
+            puts("Names must be between 1 and 12 characters\n");
+            puts("Class 0 for kernel processes, class 1 for user processes\n");
+            puts("Prioirties must be between 0 and 9 with 0 being the highest.\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help delete pcb") == 0 || strcmp_ic(buf, "17 delete pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"delete pcb\" to delete a PCB\n");
+            puts("The name provided must be a PCB that exists\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help block pcb") == 0 || strcmp_ic(buf, "17 block pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"block pcb\" to block a PCB\n");
+            puts("Only user processes can be blocked.\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help unblock pcb") == 0 || strcmp_ic(buf, "17 unblock pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"block pcb\" to unblock a PCB\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help suspend pcb") == 0 || strcmp_ic(buf, "17 suspend pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"block pcb\" to suspend a PCB\n");
+            puts("Only user processes can be suspended.\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help resume pcb") == 0 || strcmp_ic(buf, "17 resume pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"retume pcb\" to resume a PCB\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "help set pcb priority") == 0 || strcmp_ic(buf, "17 set pcb priority") == 0){
+            printf("\033[0;36m");
+            puts("Type \"set pcb priority \" to set a pcb priority\n");
+            puts("A priotity must be between 0 and 9 with 0 being the highest priority.");
+            printf("\033[0;0m");
+        }
+         else if (strcmp_ic(buf, "show pcb") == 0 || strcmp_ic(buf, "17 show pcb") == 0){
+            printf("\033[0;36m");
+            puts("Type \"show pcb\" to show all the information associated with a PCB\n");
+            printf("\033[0;0m");
+        }
+        else if (strcmp_ic(buf, "show ready") == 0 || strcmp_ic(buf, "17 show ready") == 0){
+            printf("\033[0;36m");
+            puts("Type \"show ready\" to show all the PCB's in the ready queue. \n");
+            printf("\033[0;0m");
+        }
+         else if (strcmp_ic(buf, "show blocked ") == 0 || strcmp_ic(buf, "17 show blocked") == 0){
+            printf("\033[0;36m");
+            puts("Type \"show blocked\" to show all the PCB's in the blocked queue. \n");
+            printf("\033[0;0m");
+        }
+         else if (strcmp_ic(buf, "show all") == 0 || strcmp_ic(buf, "17 show all") == 0){
+            printf("\033[0;36m");
+            puts("Type \"show all\" to show all the PCB's and all the queues (Ready, Blocked, SusReady, SusBlocked). \n");
+            printf("\033[0;0m");
+        }
+        
+        
         else
         {
             printf("\033[0;31m");
@@ -548,8 +612,8 @@ void createPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -619,8 +683,8 @@ void deletePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -657,8 +721,8 @@ void blockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked) 
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -712,8 +776,8 @@ void unblockPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -759,8 +823,8 @@ void suspendPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -811,8 +875,8 @@ void resumePCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked)
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -857,8 +921,8 @@ void setPCBPriority(queue* ready, queue* blocked, queue* susReady, queue* susBlo
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -926,8 +990,8 @@ void showPCB(queue* ready, queue* blocked, queue* susReady, queue* susBlocked){
     printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
     //Read in name the user entered
     sys_req(READ, COM1, buf, sizeof(buf));
-    if(strcmp_ic(buf,"") == 0){
-        printf("\033[0;31mInvalid name for process. Name must be greater than length 0. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
+    if(strlen(buf) < 1 || strlen(buf) > 12){
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
         goto getName;
     }
     char* name = (char*)sys_alloc_mem(strlen(buf) + 1);
@@ -997,7 +1061,19 @@ void help(void){
     puts("Type \"set time\" or type ‘3’ to set the system time\n");
     puts("Type \"get date\" or type ‘4’ to retrieve the current system date\n");
     puts("Type \"set date\" or type ‘5’ to set the system date\n");
-    puts("Type \"help\" or type ‘6’ to see a list of commands you can run\n");
-    puts("Type \"shutdown\" or type ‘7’ to exit the operating system\n");
+    puts("Type \"Create PCB\" or type ‘6’ to create a new PCB\n");
+    puts("Type \"Delete PCB\" or type ‘7’ to delete a PCB\n");
+    puts("Type \"Block PCB\" or type ‘8’ to block a PCB\n");
+    puts("Type \"Unblock PCB\" or type ‘9’ to unblock a PCB\n");
+    puts("Type \"Suspend PCB\" or type ‘10’ to suspend a PCB\n");
+    puts("Type \"Resume PCB\" or type ‘11’ to resume PCB\n");
+    puts("Type \"Set PCB Priority\" or type ‘12’ to update a PCB's priority\n");
+    puts("Type \"Show PCB\" or type ‘13’ to show details of a specific PCB\n");
+    puts("Type \"Show Ready\" or type ‘14’ to show PCB's in the ready queue\n");
+    puts("Type \"Show Blocked\" or type ‘15’ to show PCB's in the blocked queue\n");
+    puts("Type \"Show All\" or type ‘16’ to show all PBC's in all the queues\n");
+    puts("Type \"help\" or type ‘17’ to see a list of commands you can run\n");
+    puts("Type \"shutdown\" or type ‘18’ to exit the operating system\n");
     printf("\033[0;0m");
 }
+
