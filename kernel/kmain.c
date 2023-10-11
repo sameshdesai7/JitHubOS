@@ -25,8 +25,6 @@ static void klogv(device dev, const char *msg)
 
 void kmain(void)
 {
-
-
 	
 	// 0) Serial I/O -- <mpx/serial.h>
 	// If we don't initialize the serial port, we have no way of
@@ -133,6 +131,10 @@ void kmain(void)
     printf(" `6mm9'  .JMML.   .JMML.    .JMML.  .JMML.   `bmmmmd\"'  .JMMmmmd9            `\"bmmd\"'  P\"Ybmmd\"  \n");
     printf("\033[0m                                                                                             \n");
    
+	ready = sys_alloc_mem(sizeof(queue));
+	blocked = sys_alloc_mem(sizeof(queue));
+	susReady = sys_alloc_mem(sizeof(queue));
+	susBlocked = sys_alloc_mem(sizeof(queue));
 	comhand();
 	// R4: __asm__ volatile ("int $0x60" :: "a"(IDLE));
 

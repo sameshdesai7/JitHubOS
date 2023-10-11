@@ -16,14 +16,6 @@
 
 void comhand()
 {
-    queue* ready = sys_alloc_mem(sizeof(queue));
-    queue* blocked = sys_alloc_mem(sizeof(queue));
-    queue* susReady = sys_alloc_mem(sizeof(queue));
-    queue* susBlocked = sys_alloc_mem(sizeof(queue));
-    ready->pFlag = 1;
-    blocked->pFlag = 0;
-    susReady->pFlag = 1;
-    susBlocked->pFlag = 0;
 
     //infinite loop
     for (;;)

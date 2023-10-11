@@ -14,7 +14,7 @@ typedef struct pcb{
     char* state;
     struct pcb* next;
     unsigned char stack[1024];
-    char* stack_ptr;
+    context* stack_ptr;
 } pcb;
 
 typedef struct queue{
@@ -23,6 +23,10 @@ typedef struct queue{
     int pFlag;
 } queue;
 
+queue* ready;
+queue* blocked;
+queue* susReady;
+queue* susBlocked;
 
 /**
  * @author Samesh Desai

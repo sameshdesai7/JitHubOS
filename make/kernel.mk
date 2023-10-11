@@ -19,4 +19,5 @@ KERNEL_OBJECTS=\
 	kernel/kmain.o\
 	kernel/core-c.o\
 	kernel/comhand.o\
-	kernel/dataStructs.o
+	kernel/dataStructs.o\
+	kernel/sys_call.o
