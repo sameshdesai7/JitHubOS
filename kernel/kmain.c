@@ -119,21 +119,6 @@ void kmain(void)
 	outb(0x70, 0x04);
     outb(0x71, toBCD(adjustedHours));
 
-	
-	// printf("\033[94;1;6m                                                                                             \n");
-    // printf("                                                                                             \n");
-    // printf("   `7MMF'`7MMF'MMP\"\"MM\"\"YMM `7MMF'  `7MMF'`7MMF'   `7MF'`7MM\"\"\"Yp,           .g8\"\"8q.    .M\"\"\"bgd \n");
-    // printf("     MM    MM  P'   MM   `7   MM      MM    MM       M    MM    Yb         .dP'    `YM. ,MI    \"Y \n");
-    // printf("     MM    MM       MM        MM      MM    MM       M    MM    dP         dM'      `MM `MMb.     \n");
-    // printf("     MM    MM       MM        MMmmmmmmMM    MM       M    MM\"\"\"bg.         MM        MM   `YMMNq. \n");
-    // printf("     MM    MM       MM        MM      MM    MM       M    MM    `Y         MM.      ,MP .     `MM \n");
-    // printf(" 1   MM    MM       MM        MM      MM    YM.     ,M    MM    ,9         `Mb.    ,dP' Mb     dM \n");
-    // printf(" `6mm9'  .JMML.   .JMML.    .JMML.  .JMML.   `bmmmmd\"'  .JMMmmmd9            `\"bmmd\"'  P\"Ybmmd\"  \n");
-    // printf("\033[0m                                                                                             \n");
-
-	// printf("test");
-   
-
 	//Set flags for queues
 	ready = sys_alloc_mem(sizeof(queue));
 	blocked = sys_alloc_mem(sizeof(queue));
@@ -146,6 +131,7 @@ void kmain(void)
     susBlocked->pFlag = 0;
 
 	klogv(COM1, "Transferring control to commhand...");
+	
 	printf("\033[94;1;6m                                                                                             \n");
     printf("                                                                                             \n");
     printf("   `7MMF'`7MMF'MMP\"\"MM\"\"YMM `7MMF'  `7MMF'`7MMF'   `7MF'`7MM\"\"\"Yp,           .g8\"\"8q.    .M\"\"\"bgd \n");
