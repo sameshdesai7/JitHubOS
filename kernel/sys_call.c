@@ -4,9 +4,6 @@
 #include <sys_req.h>
 #include <dataStructs.h>
 
-pcb* cop = NULL;
-context* cop_context = NULL;
-
 context* sys_call(context* proc_context) {
     sys_req(IDLE);
 
@@ -45,4 +42,7 @@ context* sys_call(context* proc_context) {
             return cop_context;
         }
     }
+
+    //if fall through
+    return NULL;
 }
