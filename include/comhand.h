@@ -246,5 +246,9 @@ void showBlocked(queue* blocked);
  */
 void showAll(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
+void yield();
+
+void loadR3();
+
 #endif
 

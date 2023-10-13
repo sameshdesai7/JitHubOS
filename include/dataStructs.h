@@ -1,11 +1,14 @@
 #ifndef DATASTRUCTS_H
 #define DATASTRUCTS_H
 #include <memory.h>
+#include <context.h>
 
 /**
  * @file dataStructs.h
  * @brief Data structures associated with processes and the functions to go with them. 
 */
+
+
 
 typedef struct pcb{
     char *name_ptr;
@@ -13,8 +16,8 @@ typedef struct pcb{
     int clas;
     char* state;
     struct pcb* next;
-    unsigned char stack[1024];
-    char* stack_ptr;
+    unsigned int stack[1024];
+    context* stack_ptr;
 } pcb;
 
 typedef struct queue{
@@ -22,6 +25,11 @@ typedef struct queue{
     struct pcb* tail;
     int pFlag;
 } queue;
+
+queue* ready;
+queue* blocked;
+queue* susReady;
+queue* susBlocked;
 
 
 /**

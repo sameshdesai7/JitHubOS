@@ -4,8 +4,6 @@
 #include <sys_req.h>
 #include <dataStructs.h>
 
-pcb* cop = NULL;
-context* cop_context = NULL;
 
 context* sys_call(context* proc_context) {
     sys_req(IDLE);
@@ -25,7 +23,7 @@ context* sys_call(context* proc_context) {
         else {
             cop->stack_ptr = cop_context;
             cop->state = "ready";
-            enqueue(cop);
+            enqueue(ready, cop);
             cop = temp;
             cop->state = "running";
             cop_context = temp->stack_ptr;
@@ -45,4 +43,7 @@ context* sys_call(context* proc_context) {
             return cop_context;
         }
     }
+
+    //If fall through
+    return NULL;
 }

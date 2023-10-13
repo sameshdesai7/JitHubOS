@@ -9,6 +9,7 @@
 #include <ctype.h>
 #include <mpx/interrupts.h>
 #include <dataStructs.h>
+#include <processes.h>
 
 //compile constants to be used in version to show when the most recent compilation was
 #define COMPILE_DATE __DATE__
@@ -16,15 +17,8 @@
 
 void comhand()
 {
-    queue* ready = sys_alloc_mem(sizeof(queue));
-    queue* blocked = sys_alloc_mem(sizeof(queue));
-    queue* susReady = sys_alloc_mem(sizeof(queue));
-    queue* susBlocked = sys_alloc_mem(sizeof(queue));
-    ready->pFlag = 1;
-    blocked->pFlag = 0;
-    susReady->pFlag = 1;
-    susBlocked->pFlag = 0;
-
+   
+    
     //infinite loop
     for (;;)
     {
@@ -131,6 +125,16 @@ void comhand()
         else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "17") == 0)
         {
             help();
+        }
+
+         else if ((strcmp_ic(buf, "Yield") == 0) || strcmp(buf, "18") == 0)
+        {
+            yield();
+        }
+
+        else if ((strcmp_ic(buf, "LoadR3") == 0) || strcmp(buf, "19") == 0)
+        {
+            loadR3();
         }
         //individual help commands
         else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "17 version") == 0){
@@ -1075,5 +1079,26 @@ void help(void){
     puts("Type \"help\" or type ‘17’ to see a list of commands you can run\n");
     puts("Type \"shutdown\" or type ‘18’ to exit the operating system\n");
     printf("\033[0;0m");
+}
+
+void yield(){
+    sys_req(IDLE);
+}
+
+void loadR3(){
+   pcb* proc1PCB = pcb_allocate();
+   context proc1Contex = {0};
+   proc1Contex.gs = 0x10;
+   proc1Contex.es = 0x10;
+   proc1Contex.ds = 0x10;
+   proc1Contex.ss = 0x10;
+
+   proc1Contex.EIP = (int)proc1;
+   proc1Contex.CS = 0x08;
+   proc1Contex.EFLAGS = 0x022;
+
+   //push proc to stack ptr
+   proc1PCB -> stack_ptr = &proc1Contex;
+
 }
 
