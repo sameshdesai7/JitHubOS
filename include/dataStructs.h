@@ -26,14 +26,6 @@ typedef struct queue{
     int pFlag;
 } queue;
 
-queue readyQ = {.head = NULL, .tail = NULL, .pFlag = 1};
-queue* ready = &readyQ;
-queue blockedQ = {.head = NULL, .tail = NULL, .pFlag = 1};
-queue* blocked = &blockedQ;
-queue susReadyQ = {.head = NULL, .tail = NULL, .pFlag = 1};
-queue* susReady = &susReadyQ;
-queue susBlockedQ = {.head = NULL, .tail = NULL, .pFlag = 1};
-queue* susBlocked = &susBlockedQ;
 
 
 

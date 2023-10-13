@@ -15,6 +15,11 @@
 #define COMPILE_DATE __DATE__
 #define COMPILE_TIME __TIME__
 
+extern queue* ready;
+extern queue* blocked;
+extern queue* susReady;
+extern queue* susBlocked;
+
 void comhand()
 {
 

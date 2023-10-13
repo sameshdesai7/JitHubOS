@@ -2,7 +2,8 @@
 #include <sys_call.h>
 #include <dataStructs.h>
 #include <sys_req.h>
-#include <dataStructs.h>
+
+extern queue* ready;
 
 context* sys_call(context* proc_context) {
     sys_req(IDLE);

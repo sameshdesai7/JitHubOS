@@ -3,6 +3,16 @@
 #include <string.h>
 #include "../include/stdlib.h"
 
+
+queue readyQ = {.head = NULL, .tail = NULL, .pFlag = 1};
+queue* ready = &readyQ;
+queue blockedQ = {.head = NULL, .tail = NULL, .pFlag = 1};
+queue* blocked = &blockedQ;
+queue susReadyQ = {.head = NULL, .tail = NULL, .pFlag = 1};
+queue* susReady = &susReadyQ;
+queue susBlockedQ = {.head = NULL, .tail = NULL, .pFlag = 1};
+queue* susBlocked = &susBlockedQ;
+
 void enqueue(queue* q, pcb* newPCB){
  
     if(q->head == NULL){
