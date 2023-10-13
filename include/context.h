@@ -9,6 +9,7 @@ typedef struct {
     int ss;
     int EDI;
     int ESI;
+    int ESP;
     int EBP;
     int EBX;
     int EDX;

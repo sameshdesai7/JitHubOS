@@ -23,8 +23,6 @@ extern queue* susBlocked;
 void comhand()
 {
 
-   
-    
     //infinite loop
     for (;;)
     {
@@ -133,12 +131,12 @@ void comhand()
             help();
         }
 
-         else if ((strcmp_ic(buf, "Yield") == 0) || strcmp(buf, "18") == 0)
+         else if ((strcmp_ic(buf, "Yield") == 0) || strcmp(buf, "19") == 0)
         {
             yield();
         }
 
-        else if ((strcmp_ic(buf, "LoadR3") == 0) || strcmp(buf, "19") == 0)
+        else if ((strcmp_ic(buf, "LoadR3") == 0) || strcmp(buf, "20") == 0)
         {
             loadR3();
         }

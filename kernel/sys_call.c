@@ -6,7 +6,6 @@
 extern queue* ready;
 
 context* sys_call(context* proc_context) {
-    sys_req(IDLE);
 
     if (cop_context == NULL) {
         cop_context = proc_context;
@@ -44,7 +43,8 @@ context* sys_call(context* proc_context) {
         }
     }
 
-    //if fall through
-    return NULL;
-    //test push
+    else {
+        proc_context->EAX = -1;
+        return proc_context;
+    }
 }

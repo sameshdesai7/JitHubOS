@@ -9,6 +9,7 @@ sys_call_isr:
 	push edx
 	push ebx
 	push ebp
+	push esp
 	push esi
 	push edi
 	push ss
@@ -26,6 +27,7 @@ sys_call_isr:
 	pop ss
 	pop edi
 	pop esi
+	pop esp
 	pop ebp
 	pop ebx
 	pop edx
