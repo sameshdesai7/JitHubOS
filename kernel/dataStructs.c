@@ -11,7 +11,7 @@ void enqueue(queue* q, pcb* newPCB){
         return;
     }
 
-    if(q->pFlag == 1){
+    if(q == blocked || q == susBlocked){
         if(q->head->priority > newPCB->priority){
             // newPCB will be head
             newPCB->next = q->head;
