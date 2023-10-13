@@ -9,7 +9,6 @@
 #include <../include/comhand.h>
 #include <stdlib.h>
 #include <mpx/io.h>
-#include <dataStructs.h>
 
 // typedef struct pcb {
 //         char *name_ptr;
@@ -118,17 +117,6 @@ void kmain(void)
 	}
 	outb(0x70, 0x04);
     outb(0x71, toBCD(adjustedHours));
-
-	//Set flags for queues
-	ready = sys_alloc_mem(sizeof(queue));
-	blocked = sys_alloc_mem(sizeof(queue));
-	susReady = sys_alloc_mem(sizeof(queue));
-	susBlocked = sys_alloc_mem(sizeof(queue));
-
-	ready->pFlag = 1;
-    blocked->pFlag = 0;
-    susReady->pFlag = 1;
-    susBlocked->pFlag = 0;
 
 	klogv(COM1, "Transferring control to commhand...");
 	
