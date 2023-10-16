@@ -34,7 +34,7 @@ void comhand()
         sys_req(READ, COM1, buf, sizeof(buf));
 
         // Shutdown Command
-        if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "18") == 0))
+        if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "20") == 0))
         {
             //if shutdown is confirmed, exit loop
             if (shutdown(buf))
@@ -126,17 +126,17 @@ void comhand()
         }
 
         //help command
-        else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "17") == 0)
+        else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "19") == 0)
         {
             help();
         }
 
-         else if ((strcmp_ic(buf, "Yield") == 0) || strcmp(buf, "19") == 0)
+         else if ((strcmp_ic(buf, "Yield") == 0) || strcmp(buf, "17") == 0)
         {
             yield();
         }
 
-        else if ((strcmp_ic(buf, "LoadR3") == 0) || strcmp(buf, "20") == 0)
+        else if ((strcmp_ic(buf, "LoadR3") == 0) || strcmp(buf, "18") == 0)
         {
             loadR3();
         }
@@ -269,8 +269,10 @@ void printMenu()
     printf("14. Show Ready\n");
     printf("15. Show Blocked\n");
     printf("16. Show All\n");
-    printf("17. Help\n");
-    printf("18. Shutdown\n");
+    printf("17. Yield\n");
+    printf("18. Load R3\n");
+    printf("19. Help\n");
+    printf("20. Shutdown\n");
     printf("\n");
     printf(">> ");
 }
@@ -1087,6 +1089,9 @@ void help(void){
 
 void yield(){
     sys_req(IDLE);
+    printf("\033[0;32m");
+    printf("Process has changed to idle.\n");
+    printf("\033[0;0m");
 }
 
 void loadR3(){

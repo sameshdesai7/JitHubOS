@@ -17,10 +17,9 @@ context* sys_call(context* proc_context) {
     if (EAX == IDLE) {
         pcb* temp = dequeue(ready);
         if (temp == NULL) {
-            return cop_context;
+            return proc_context;
         }
         else {
-            cop->stack_ptr = cop_context;
             cop->state = "ready";
             enqueue(ready, cop);
             cop = temp;
@@ -34,7 +33,7 @@ context* sys_call(context* proc_context) {
     else if (EAX == EXIT) {
         pcb* temp = dequeue(ready);
         if (temp == NULL) {
-            return cop_context;
+            return proc_context;
         }
         else {
             cop = temp;
