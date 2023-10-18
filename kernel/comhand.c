@@ -1096,18 +1096,32 @@ void yield(){
 
 void loadR3(){
    pcb* proc1PCB = pcb_allocate();
-   context proc1Contex = {0};
-   proc1Contex.gs = 0x10;
-   proc1Contex.es = 0x10;
-   proc1Contex.ds = 0x10;
-   proc1Contex.ss = 0x10;
+   context proc1Context;
+   proc1Context.gs = 0x10;
+   proc1Context.es = 0x10;
+   proc1Context.ds = 0x10;
+   proc1Context.ss = 0x10;
+   proc1Context.fs = 0x10;
 
-   proc1Contex.EIP = (int)proc1;
-   proc1Contex.CS = 0x08;
-   proc1Contex.EFLAGS = 0x022;
+   proc1Context.EIP = (int)proc1;
+   proc1Context.CS = 0x08;
+   proc1Context.EFLAGS = 0x0202;
+
+   //All other registers set to 0
+   proc1Context.EAX = 0;
+   proc1Context.EBX = 0;
+   proc1Context.ECX = 0;
+   proc1Context.EDX = 0;
+   proc1Context.ESI = 0;
+   proc1Context.EDI = 0;
+
+   //Set EBP to be the top of the stack
+   proc1Context.EBP = (int)proc1PCB->stack_ptr;
 
    //push proc to stack ptr
-   proc1PCB -> stack_ptr = &proc1Contex;
+   proc1PCB->stack_ptr = &proc1Context;
+   //enqueue the process
+   enqueue(ready, proc1PCB);
 
 }
 

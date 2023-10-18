@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../include/stdlib.h"
+#include <context.h>
 
 
 queue readyQ = {.head = NULL, .tail = NULL, .pFlag = 1};
@@ -155,6 +156,7 @@ pcb* pcb_allocate(void){
         puts("Error allocating memory for new PCB");
         return NULL;
     }
+    newPCB->stack_ptr = (context*)(&newPCB->stack[1023-sizeof(context)]);
     return newPCB;
 }
 

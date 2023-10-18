@@ -4,7 +4,7 @@
 #include <dataStructs.h>
 
 pcb* cop = NULL;
-context* cop_context = NULL;
+context* original_context = NULL;
 
 context* sys_call(context* proc_context);
 
