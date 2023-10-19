@@ -34,12 +34,12 @@ context* sys_call(context* proc_context) {
         }
     }
 
-    //If EAX is EXIT, meaning the process is terminating, we simply load in the next process
+    //If EAX is EXIT, meaning the process is terminating, we simply load in the next process. If the ready queue is empty, we return the context of the original process
     else if (EAX == EXIT) {
         pcb* temp = dequeue(ready);
         if (temp == NULL) {
             proc_context->EAX = 0;
-            return proc_context;
+            return original_context;
         }
         else {
             cop = temp;

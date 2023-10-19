@@ -1095,31 +1095,33 @@ void yield(){
 }
 
 void loadR3(){
-   pcb* proc1PCB = pcb_allocate();
-   context proc1Context;
-   proc1Context.gs = 0x10;
-   proc1Context.es = 0x10;
-   proc1Context.ds = 0x10;
-   proc1Context.ss = 0x10;
-   proc1Context.fs = 0x10;
+   pcb* proc1PCB = pcb_setup("proc1", 1, 2);
+   //Assign a new context pointer to point to the space in the stack we have reserved for the context
+   context* proc1Context = proc1PCB->stack_ptr;
+   //Initialize segment registers to 0x10
+   proc1Context->gs = 0x10;
+   proc1Context->es = 0x10;
+   proc1Context->ds = 0x10;
+   proc1Context->ss = 0x10;
+   proc1Context->fs = 0x10;
 
-   proc1Context.EIP = (int)proc1;
-   proc1Context.CS = 0x08;
-   proc1Context.EFLAGS = 0x0202;
+   //EIP points to our function name, which is where execution will start when the process is loaded
+   proc1Context->EIP = (int)proc1;
+   proc1Context->CS = 0x08;
+   proc1Context->EFLAGS = 0x0202;
 
    //All other registers set to 0
-   proc1Context.EAX = 0;
-   proc1Context.EBX = 0;
-   proc1Context.ECX = 0;
-   proc1Context.EDX = 0;
-   proc1Context.ESI = 0;
-   proc1Context.EDI = 0;
+   proc1Context->EAX = 0;
+   proc1Context->EBX = 0;
+   proc1Context->ECX = 0;
+   proc1Context->EDX = 0;
+   proc1Context->ESI = 0;
+   proc1Context->EDI = 0;
 
-   //Set EBP to be the top of the stack
-   proc1Context.EBP = (int)proc1PCB->stack_ptr;
-
-   //push proc to stack ptr
-   proc1PCB->stack_ptr = &proc1Context;
+   //Set ESP to be the top of the stack
+   proc1Context->ESP = (int)proc1PCB->stack_ptr;
+   //Set EBP to be the bottom of the stack
+   proc1Context->EBP = (int)(&(proc1PCB->stack[1023]));
    //enqueue the process
    enqueue(ready, proc1PCB);
 
