@@ -27,7 +27,7 @@ sys_call_isr:
 	pop ss
 	pop edi
 	pop esi
-	pop esp
+	add esp, 4
 	pop ebp
 	pop ebx
 	pop edx

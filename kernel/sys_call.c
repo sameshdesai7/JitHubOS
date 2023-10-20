@@ -21,7 +21,7 @@ context* sys_call(context* proc_context) {
         pcb* temp = dequeue(ready);
         if (temp == NULL) {
             proc_context->EAX = 0;
-            return proc_context;
+            return original_context;
         }
         else {
             //If there is already a running process, save its state and add it back to the ready queue
@@ -32,7 +32,7 @@ context* sys_call(context* proc_context) {
             }
             cop = temp;
             cop->state = "running";
-            proc_context->EAX = 0;
+            //proc_context->EAX = 0;
             return (context *)cop->stack_ptr;
         }
     }

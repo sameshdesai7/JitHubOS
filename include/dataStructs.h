@@ -15,9 +15,10 @@ typedef struct pcb{
     int priority;
     int clas;
     char* state;
-    struct pcb* next;
     unsigned char stack[1024];
     unsigned char* stack_ptr;
+    struct pcb* next;
+
 } pcb;
 
 typedef struct queue{

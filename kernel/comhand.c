@@ -136,7 +136,7 @@ void comhand()
             yield();
         }
 
-        else if ((strcmp_ic(buf, "LoadR3") == 0) || strcmp(buf, "18") == 0)
+        else if ((strcmp_ic(buf, "Load R3") == 0) || strcmp(buf, "18") == 0)
         {
             loadR3();
         }
