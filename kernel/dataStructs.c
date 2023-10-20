@@ -7,11 +7,11 @@
 
 queue readyQ = {.head = NULL, .tail = NULL, .pFlag = 1};
 queue* ready = &readyQ;
-queue blockedQ = {.head = NULL, .tail = NULL, .pFlag = 1};
+queue blockedQ = {.head = NULL, .tail = NULL, .pFlag = 0};
 queue* blocked = &blockedQ;
 queue susReadyQ = {.head = NULL, .tail = NULL, .pFlag = 1};
 queue* susReady = &susReadyQ;
-queue susBlockedQ = {.head = NULL, .tail = NULL, .pFlag = 1};
+queue susBlockedQ = {.head = NULL, .tail = NULL, .pFlag = 0};
 queue* susBlocked = &susBlockedQ;
 
 void enqueue(queue* q, pcb* newPCB){
@@ -22,7 +22,7 @@ void enqueue(queue* q, pcb* newPCB){
         return;
     }
 
-    if(q == blocked || q == susBlocked){
+    if(q->pFlag == 0){
         if(q->head->priority > newPCB->priority){
             // newPCB will be head
             newPCB->next = q->head;
