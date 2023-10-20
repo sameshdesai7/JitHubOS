@@ -5,6 +5,9 @@
 
 extern queue* ready;
 
+pcb* cop = NULL;
+context* original_context = NULL;
+
 context* sys_call(context* proc_context) {
 
     if (original_context == NULL) {
@@ -23,14 +26,14 @@ context* sys_call(context* proc_context) {
         else {
             //If there is already a running process, save its state and add it back to the ready queue
             if (cop != NULL) {
-                cop->stack_ptr = proc_context;
+                cop->stack_ptr = (unsigned char *)proc_context;
                 cop->state = "ready";
                 enqueue(ready, cop);
             }
             cop = temp;
             cop->state = "running";
             proc_context->EAX = 0;
-            return cop->stack_ptr;
+            return (context *)cop->stack_ptr;
         }
     }
 
@@ -44,12 +47,14 @@ context* sys_call(context* proc_context) {
         else {
             cop = temp;
             proc_context->EAX = 0;
-            return cop->stack_ptr;
+            return (context *)cop->stack_ptr;
         }
     }
 
     else {
         proc_context->EAX = -1;
+        //Delete this once comhand is a process
+        original_context = NULL;
         return proc_context;
     }
 }

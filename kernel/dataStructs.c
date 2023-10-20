@@ -184,7 +184,7 @@ pcb* pcb_setup(const char * name, int clas, int priority){
     newPCB->state = (char*)"ready";
 
     newPCB->next = NULL;
-    newPCB->stack_ptr = (context*)(&newPCB->stack[1023-sizeof(context)]);
+    newPCB->stack_ptr = (unsigned char*) (newPCB->stack +1024 - sizeof( context));
     
     return newPCB;
 }

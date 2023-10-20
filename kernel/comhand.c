@@ -1097,7 +1097,7 @@ void yield(){
 void loadR3(){
    pcb* proc1PCB = pcb_setup("proc1", 1, 2);
    //Assign a new context pointer to point to the space in the stack we have reserved for the context
-   context* proc1Context = proc1PCB->stack_ptr;
+   context* proc1Context = (context *)proc1PCB->stack_ptr;
    //Initialize segment registers to 0x10
    proc1Context->gs = 0x10;
    proc1Context->es = 0x10;
@@ -1121,7 +1121,7 @@ void loadR3(){
    //Set ESP to be the top of the stack
    proc1Context->ESP = (int)proc1PCB->stack_ptr;
    //Set EBP to be the bottom of the stack
-   proc1Context->EBP = (int)(&(proc1PCB->stack[1023]));
+   proc1Context->EBP = (int)proc1PCB->stack;
    //enqueue the process
    enqueue(ready, proc1PCB);
 
