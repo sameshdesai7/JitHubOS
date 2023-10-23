@@ -1094,6 +1094,7 @@ void yield(){
 }
 
 void loadR3(){
+   //CREATE PROC 1
    pcb* proc1PCB = pcb_setup("proc1", 1, 2);
    //Assign a new context pointer to point to the space in the stack we have reserved for the context
    context* proc1Context = (context *)proc1PCB->stack_ptr;
@@ -1124,6 +1125,7 @@ void loadR3(){
    //enqueue the process
    enqueue(ready, proc1PCB);
 
+    //CREATE PROC2
    pcb* proc2PCB = pcb_setup("proc2", 1, 2);
    //Assign a new context pointer to point to the space in the stack we have reserved for the context
    context* proc2Context = (context *)proc2PCB->stack_ptr;
@@ -1153,5 +1155,35 @@ void loadR3(){
    proc2Context->EBP = (int)proc2PCB->stack;
    //enqueue the process
    enqueue(ready, proc2PCB);
-}
 
+    //CREATE PROC 3
+   pcb* proc3PCB = pcb_setup("proc3", 1, 2);
+   //Assign a new context pointer to point to the space in the stack we have reserved for the context
+   context* proc3Context = (context *)proc3PCB->stack_ptr;
+   //Initialize segment registers to 0x10
+   proc3Context->gs = 0x10;
+   proc3Context->es = 0x10;
+   proc3Context->ds = 0x10;
+   proc3Context->ss = 0x10;
+   proc3Context->fs = 0x10;
+
+   //EIP points to our function name, which is where execution will start when the process is loaded
+   proc3Context->EIP = (int)proc3;
+   proc3Context->CS = 0x08;
+   proc3Context->EFLAGS = 0x0202;
+
+   //All other registers set to 0
+   proc3Context->EAX = 0;
+   proc3Context->EBX = 0;
+   proc3Context->ECX = 0;
+   proc3Context->EDX = 0;
+   proc3Context->ESI = 0;
+   proc3Context->EDI = 0;
+
+   //Set ESP to be the top of the stack
+   proc3Context->ESP = (int)proc3PCB->stack_ptr;
+   //Set EBP to be the bottom of the stack
+   proc3Context->EBP = (int)proc3PCB->stack;
+   //enqueue the process
+   enqueue(ready, proc3PCB);
+}

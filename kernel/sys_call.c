@@ -12,17 +12,18 @@ context* sys_call(context* proc_context) {
 
     int EAX = proc_context->EAX;
     
-
     
     //If EAX is IDLE, meaning the process is only giving up control of the CPU for the time being, we save the context of the current process (if there is one) and put it back in the ready queue
     if (EAX == IDLE) {
-    if (original_context == NULL) {
-        original_context = proc_context;
-    }
+
+        if (original_context == NULL) {
+            original_context = proc_context;
+        }
+
         pcb* temp = dequeue(ready);
         if (temp == NULL) {
             proc_context->EAX = 0;
-            return original_context;
+            return proc_context;
         }
         else {
             //If there is already a running process, save its state and add it back to the ready queue
@@ -33,19 +34,21 @@ context* sys_call(context* proc_context) {
             }
             cop = temp;
             cop->state = "running";
-            //proc_context->EAX = 0;
+            proc_context->EAX = 0;
             return (context *)cop->stack_ptr;
         }
     }
 
     //If EAX is EXIT, meaning the process is terminating, we simply load in the next process. If the ready queue is empty, we return the context of the original process
     else if (EAX == EXIT) {
+        
         pcb* temp = dequeue(ready);
         if (temp == NULL) {
             proc_context->EAX = 0;
             return original_context;
         }
         else {
+            sys_free_mem(cop);
             cop = temp;
             proc_context->EAX = 0;
             return (context *)cop->stack_ptr;
