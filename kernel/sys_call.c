@@ -9,16 +9,16 @@ pcb* cop = NULL;
 context* original_context = NULL;
 
 context* sys_call(context* proc_context) {
+
     int EAX = proc_context->EAX;
     
-    if (original_context == NULL && EAX == IDLE) {
-        original_context = proc_context;
-    }
 
-    
     
     //If EAX is IDLE, meaning the process is only giving up control of the CPU for the time being, we save the context of the current process (if there is one) and put it back in the ready queue
     if (EAX == IDLE) {
+    if (original_context == NULL) {
+        original_context = proc_context;
+    }
         pcb* temp = dequeue(ready);
         if (temp == NULL) {
             proc_context->EAX = 0;

@@ -1123,5 +1123,35 @@ void loadR3(){
    proc1Context->EBP = (int)proc1PCB->stack;
    //enqueue the process
    enqueue(ready, proc1PCB);
+
+   pcb* proc2PCB = pcb_setup("proc2", 1, 2);
+   //Assign a new context pointer to point to the space in the stack we have reserved for the context
+   context* proc2Context = (context *)proc2PCB->stack_ptr;
+   //Initialize segment registers to 0x10
+   proc2Context->gs = 0x10;
+   proc2Context->es = 0x10;
+   proc2Context->ds = 0x10;
+   proc2Context->ss = 0x10;
+   proc2Context->fs = 0x10;
+
+   //EIP points to our function name, which is where execution will start when the process is loaded
+   proc2Context->EIP = (int)proc2;
+   proc2Context->CS = 0x08;
+   proc2Context->EFLAGS = 0x0202;
+
+   //All other registers set to 0
+   proc2Context->EAX = 0;
+   proc2Context->EBX = 0;
+   proc2Context->ECX = 0;
+   proc2Context->EDX = 0;
+   proc2Context->ESI = 0;
+   proc2Context->EDI = 0;
+
+   //Set ESP to be the top of the stack
+   proc2Context->ESP = (int)proc2PCB->stack_ptr;
+   //Set EBP to be the bottom of the stack
+   proc2Context->EBP = (int)proc2PCB->stack;
+   //enqueue the process
+   enqueue(ready, proc2PCB);
 }
 
