@@ -58,8 +58,6 @@ context* sys_call(context* proc_context) {
 
     else {
         proc_context->EAX = -1;
-        //Delete this once comhand is a process
-        if (EAX != WRITE) original_context = NULL;
         return proc_context;
     }
 }
