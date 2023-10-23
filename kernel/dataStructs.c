@@ -54,19 +54,22 @@ void enqueue(queue* q, pcb* newPCB){
 }
 
 pcb* dequeue(queue* q){
+
     if(q->head == NULL){
         return NULL;
     }
 
     pcb* temp = q->head;
 
-    if(q->head->next != NULL){
-        q->head = q->head->next;
+    if(temp->next != NULL){
+        q->head = temp->next;
+        temp->next = NULL;
         return temp;
     }
-
+    
     q->head = NULL;
     q->tail = NULL;
+
     return temp;
 }
 
