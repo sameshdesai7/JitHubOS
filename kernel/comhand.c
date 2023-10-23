@@ -22,7 +22,6 @@ extern queue* susBlocked;
 
 void comhand()
 {
-
     //infinite loop
     for (;;)
     {
@@ -32,7 +31,7 @@ void comhand()
         printMenu();
         //reads in the first input
         sys_req(READ, COM1, buf, sizeof(buf));
-
+    
         // Shutdown Command
         if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "20") == 0))
         {
@@ -1124,6 +1123,5 @@ void loadR3(){
    proc1Context->EBP = (int)proc1PCB->stack;
    //enqueue the process
    enqueue(ready, proc1PCB);
-
 }
 

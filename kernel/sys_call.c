@@ -9,12 +9,13 @@ pcb* cop = NULL;
 context* original_context = NULL;
 
 context* sys_call(context* proc_context) {
-
-    if (original_context == NULL) {
+    int EAX = proc_context->EAX;
+    
+    if (original_context == NULL && EAX == IDLE) {
         original_context = proc_context;
     }
 
-    int EAX = proc_context->EAX;
+    
     
     //If EAX is IDLE, meaning the process is only giving up control of the CPU for the time being, we save the context of the current process (if there is one) and put it back in the ready queue
     if (EAX == IDLE) {
@@ -54,7 +55,7 @@ context* sys_call(context* proc_context) {
     else {
         proc_context->EAX = -1;
         //Delete this once comhand is a process
-        original_context = NULL;
+        if (EAX != WRITE) original_context = NULL;
         return proc_context;
     }
 }
