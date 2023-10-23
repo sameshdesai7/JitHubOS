@@ -33,7 +33,7 @@ void comhand()
         sys_req(READ, COM1, buf, sizeof(buf));
 
         // Shutdown Command
-        if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "20") == 0))
+        if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "19") == 0))
         {
             // if shutdown is confirmed, exit loop
             if (shutdown(buf))
@@ -70,197 +70,182 @@ void comhand()
             setDate();
         }
 
-        // create PCB Command
-        else if ((strcmp_ic(buf, "Create PCB") == 0) || (strcmp(buf, "6") == 0))
-        {
-            createPCB(ready, blocked, susReady, susBlocked);
-        }
-
         // Delete PCB Command
-        else if ((strcmp_ic(buf, "Delete PCB") == 0) || (strcmp(buf, "7") == 0))
+        else if ((strcmp_ic(buf, "Delete PCB") == 0) || (strcmp(buf, "6") == 0))
         {
             deletePCB(ready, blocked, susReady, susBlocked);
         }
 
         // Block PCB Command
-        else if ((strcmp_ic(buf, "Block PCB") == 0) || (strcmp(buf, "8") == 0))
+        else if ((strcmp_ic(buf, "Block PCB") == 0) || (strcmp(buf, "7") == 0))
         {
             blockPCB(ready, blocked, susReady, susBlocked);
         }
 
         // Unblock PCB Command
-        else if ((strcmp_ic(buf, "Unblock PCB") == 0) || (strcmp(buf, "9") == 0))
+        else if ((strcmp_ic(buf, "Unblock PCB") == 0) || (strcmp(buf, "8") == 0))
         {
             unblockPCB(ready, blocked, susReady, susBlocked);
         }
 
         // Suspend PCB Command
-        else if ((strcmp_ic(buf, "Suspend PCB") == 0) || (strcmp(buf, "10") == 0))
+        else if ((strcmp_ic(buf, "Suspend PCB") == 0) || (strcmp(buf, "9") == 0))
         {
             suspendPCB(ready, blocked, susReady, susBlocked);
         }
 
         // Resume PCB Command
-        else if ((strcmp_ic(buf, "Resume PCB") == 0) || (strcmp(buf, "11") == 0))
+        else if ((strcmp_ic(buf, "Resume PCB") == 0) || (strcmp(buf, "10") == 0))
         {
             resumePCB(ready, blocked, susReady, susBlocked);
         }
 
         // Set PCB Priority Command
-        else if ((strcmp_ic(buf, "Set PCB Priority") == 0) || (strcmp(buf, "12") == 0))
+        else if ((strcmp_ic(buf, "Set PCB Priority") == 0) || (strcmp(buf, "11") == 0))
         {
             setPCBPriority(ready, blocked, susReady, susBlocked);
         }
 
         // Show PCB Command
-        else if ((strcmp_ic(buf, "Show PCB") == 0) || (strcmp(buf, "13") == 0))
+        else if ((strcmp_ic(buf, "Show PCB") == 0) || (strcmp(buf, "12") == 0))
         {
             showPCB(ready, blocked, susReady, susBlocked);
         }
 
         // //Show Ready Command
-        else if ((strcmp_ic(buf, "Show Ready") == 0) || (strcmp(buf, "14") == 0))
+        else if ((strcmp_ic(buf, "Show Ready") == 0) || (strcmp(buf, "13") == 0))
         {
             showReady(ready);
         }
 
         // //Show Blocked Command
-        else if ((strcmp_ic(buf, "Show Blocked") == 0) || (strcmp(buf, "15") == 0))
+        else if ((strcmp_ic(buf, "Show Blocked") == 0) || (strcmp(buf, "14") == 0))
         {
             showBlocked(blocked);
         }
         // //Show All command
-        else if ((strcmp_ic(buf, "Show All") == 0) || (strcmp(buf, "16") == 0))
+        else if ((strcmp_ic(buf, "Show All") == 0) || (strcmp(buf, "15") == 0))
         {
             showAll(ready, blocked, susReady, susBlocked);
         }
 
         // help command
-        else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "19") == 0)
+        else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "18") == 0)
         {
             help();
         }
 
-        else if ((strcmp_ic(buf, "Yield") == 0) || strcmp(buf, "17") == 0)
+        else if ((strcmp_ic(buf, "Yield") == 0) || strcmp(buf, "16") == 0)
         {
             yield();
         }
 
-        else if ((strcmp_ic(buf, "Load R3") == 0) || strcmp(buf, "18") == 0)
+        else if ((strcmp_ic(buf, "Load R3") == 0) || strcmp(buf, "17") == 0)
         {
             loadR3();
         }
         // individual help commands
-        else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "17 version") == 0)
+        else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "18 version") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"version\" to retrieve the current version of the operating system\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help help") == 0 || strcmp_ic(buf, "17 help") == 0)
+        else if (strcmp_ic(buf, "help help") == 0 || strcmp_ic(buf, "18 help") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"help\" to see a list of commands you can run\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help shutdown") == 0 || strcmp_ic(buf, "17 shutdown") == 0)
+        else if (strcmp_ic(buf, "help shutdown") == 0 || strcmp_ic(buf, "18 shutdown") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"shutdown\" to exit the operating system\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help get time") == 0 || strcmp_ic(buf, "17 get time") == 0)
+        else if (strcmp_ic(buf, "help get time") == 0 || strcmp_ic(buf, "18 get time") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"get time\" to retrieve the current system time\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help set time") == 0 || strcmp_ic(buf, "17 set time") == 0)
+        else if (strcmp_ic(buf, "help set time") == 0 || strcmp_ic(buf, "18 set time") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"set time\" to set the system time\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help get date") == 0 || strcmp_ic(buf, "17 get date") == 0)
+        else if (strcmp_ic(buf, "help get date") == 0 || strcmp_ic(buf, "18 get date") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"get date\" to retrieve the current system date\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help set date") == 0 || strcmp_ic(buf, "17 set date") == 0)
+        else if (strcmp_ic(buf, "help set date") == 0 || strcmp_ic(buf, "18 set date") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"set date\" to set the system date\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help create pcb") == 0 || strcmp_ic(buf, "17 create pcb") == 0)
-        {
-            printf("\033[0;36m");
-            puts("Type \"create pcb\" to create a PCB\n");
-            puts("Names must be between 1 and 12 characters\n");
-            puts("Class 0 for kernel processes, class 1 for user processes\n");
-            puts("Prioirties must be between 0 and 9 with 0 being the highest.\n");
-            printf("\033[0;0m");
-        }
-        else if (strcmp_ic(buf, "help delete pcb") == 0 || strcmp_ic(buf, "17 delete pcb") == 0)
+        else if (strcmp_ic(buf, "help delete pcb") == 0 || strcmp_ic(buf, "18 delete pcb") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"delete pcb\" to delete a PCB\n");
             puts("The name provided must be a PCB that exists\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help block pcb") == 0 || strcmp_ic(buf, "17 block pcb") == 0)
+        else if (strcmp_ic(buf, "help block pcb") == 0 || strcmp_ic(buf, "18 block pcb") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"block pcb\" to block a PCB\n");
             puts("Only user processes can be blocked.\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help unblock pcb") == 0 || strcmp_ic(buf, "17 unblock pcb") == 0)
+        else if (strcmp_ic(buf, "help unblock pcb") == 0 || strcmp_ic(buf, "18 unblock pcb") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"block pcb\" to unblock a PCB\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help suspend pcb") == 0 || strcmp_ic(buf, "17 suspend pcb") == 0)
+        else if (strcmp_ic(buf, "help suspend pcb") == 0 || strcmp_ic(buf, "18 suspend pcb") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"block pcb\" to suspend a PCB\n");
             puts("Only user processes can be suspended.\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help resume pcb") == 0 || strcmp_ic(buf, "17 resume pcb") == 0)
+        else if (strcmp_ic(buf, "help resume pcb") == 0 || strcmp_ic(buf, "18 resume pcb") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"retume pcb\" to resume a PCB\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "help set pcb priority") == 0 || strcmp_ic(buf, "17 set pcb priority") == 0)
+        else if (strcmp_ic(buf, "help set pcb priority") == 0 || strcmp_ic(buf, "18 set pcb priority") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"set pcb priority \" to set a pcb priority\n");
             puts("A priotity must be between 0 and 9 with 0 being the highest priority.");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "show pcb") == 0 || strcmp_ic(buf, "17 show pcb") == 0)
+        else if (strcmp_ic(buf, "show pcb") == 0 || strcmp_ic(buf, "18 show pcb") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"show pcb\" to show all the information associated with a PCB\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "show ready") == 0 || strcmp_ic(buf, "17 show ready") == 0)
+        else if (strcmp_ic(buf, "show ready") == 0 || strcmp_ic(buf, "18 show ready") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"show ready\" to show all the PCB's in the ready queue. \n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "show blocked ") == 0 || strcmp_ic(buf, "17 show blocked") == 0)
+        else if (strcmp_ic(buf, "show blocked ") == 0 || strcmp_ic(buf, "18 show blocked") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"show blocked\" to show all the PCB's in the blocked queue. \n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "show all") == 0 || strcmp_ic(buf, "17 show all") == 0)
+        else if (strcmp_ic(buf, "show all") == 0 || strcmp_ic(buf, "18 show all") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"show all\" to show all the PCB's and all the queues (Ready, Blocked, SusReady, SusBlocked). \n");
@@ -285,21 +270,20 @@ void printMenu()
     printf("3. Set Time\n");
     printf("4. Get Date\n");
     printf("5. Set Date\n");
-    printf("6. Create PCB\n");
-    printf("7. Delete PCB\n");
-    printf("8. Block PCB\n");
-    printf("9. Unblock PCB\n");
-    printf("10. Suspend PCB\n");
-    printf("11. Resume PCB\n");
-    printf("12. Set PCB Priority\n");
-    printf("13. Show PCB\n");
-    printf("14. Show Ready\n");
-    printf("15. Show Blocked\n");
-    printf("16. Show All\n");
-    printf("17. Yield\n");
-    printf("18. Load R3\n");
-    printf("19. Help\n");
-    printf("20. Shutdown\n");
+    printf("6. Delete PCB\n");
+    printf("7. Block PCB\n");
+    printf("8. Unblock PCB\n");
+    printf("9. Suspend PCB\n");
+    printf("10. Resume PCB\n");
+    printf("11. Set PCB Priority\n");
+    printf("12. Show PCB\n");
+    printf("13. Show Ready\n");
+    printf("14. Show Blocked\n");
+    printf("15. Show All\n");
+    printf("16. Yield\n");
+    printf("17. Load R3\n");
+    printf("18. Help\n");
+    printf("19. Shutdown\n");
     printf("\n");
     printf(">> ");
 }
@@ -643,88 +627,6 @@ void setDate(void)
         puts("Invalid date format");
         printf("\033[0;0m");
     }
-}
-
-void createPCB(queue *ready, queue *blocked, queue *susReady, queue *susBlocked)
-{
-    char buf[100] = {0};
-
-getName:
-    printf("\033[0;36mEnter PCB name:\033[0;0m\n>> ");
-    // Read in name the user entered
-    sys_req(READ, COM1, buf, sizeof(buf));
-    if (strlen(buf) < 1 || strlen(buf) > 12)
-    {
-        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
-        goto getName;
-    }
-    char *name = (char *)sys_alloc_mem(strlen(buf) + 1);
-    // Check to see if the memory allocation was successful
-    if (name == NULL)
-    {
-        printf("Memory allocation failed.");
-        return;
-    }
-    str_copy(name, buf, 0, strlen(buf));
-
-    if (strcmp_ic(name, "exit") == 0)
-    {
-        return;
-    }
-
-    // check to see if the name already exists in a queue
-    if (pcb_find(ready, blocked, susReady, susBlocked, name) != NULL)
-    {
-        printf("\033[0;31mInvalid name \"%s\". PCB with that name already exists. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n", name);
-        goto getName;
-    }
-
-getClass:
-    printf("\033[0;36mEnter PCB class:\033[0;0m\n>> ");
-    // Read in the class the user specified in the input
-    sys_req(READ, COM1, buf, sizeof(buf));
-    if (strcmp_ic(buf, "exit") == 0)
-    {
-        return;
-    }
-    if (strcmp(buf, "0") != 0 && strcmp(buf, "1") != 0)
-    {
-        printf("\033[0;31mInvalid class for process \"%s\". Class must be 0 for system or 1 for user. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n", buf);
-        goto getClass;
-    }
-    int class = atoi(buf);
-    // Make sure the priority is valid
-    if (class != 0 && class != 1)
-    {
-        printf("\033[0;31mInvalid class for process \"%s\". Class must be 0 for system or 1 for user. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n", name);
-        goto getClass;
-    }
-
-getPriority:
-    printf("\033[0;36mEnter PCB priority:\033[0;0m\n>> ");
-    // Read in the priority from the user input
-    sys_req(READ, COM1, buf, sizeof(buf));
-    if (strcmp_ic(buf, "") == 0)
-    {
-        printf("\033[0;31mInvalid priority for process. Priority must be valid integer from 0 to 9. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n");
-        goto getPriority;
-    }
-    if (strcmp_ic(buf, "exit") == 0)
-    {
-        return;
-    }
-    int priority = atoi(buf);
-    // Make sure the priority is valid
-    if (priority < 0 || priority > 9)
-    {
-        printf("\033[0;31mInvalid priority for process \"%s\". Priority must be valid integer from 0 to 9. \nEnter \"EXIT\" to exit to main menu.\033[0;0m\n", name);
-        goto getPriority;
-    }
-
-    // Actually create the PCB and insert it into the queue
-    pcb *newPCB = pcb_setup(name, class, priority);
-    pcb_insert(ready, blocked, susReady, susBlocked, newPCB);
-    printf("\033[0;32mSuccessfully inserted process \"%s\".\033[0;0m\n", newPCB->name_ptr);
 }
 
 void deletePCB(queue *ready, queue *blocked, queue *susReady, queue *susBlocked)
@@ -1175,7 +1077,6 @@ void help(void)
     puts("Type \"set time\" or type ‘3’ to set the system time\n");
     puts("Type \"get date\" or type ‘4’ to retrieve the current system date\n");
     puts("Type \"set date\" or type ‘5’ to set the system date\n");
-    puts("Type \"Create PCB\" or type ‘6’ to create a new PCB\n");
     puts("Type \"Delete PCB\" or type ‘7’ to delete a PCB\n");
     puts("Type \"Block PCB\" or type ‘8’ to block a PCB\n");
     puts("Type \"Unblock PCB\" or type ‘9’ to unblock a PCB\n");
