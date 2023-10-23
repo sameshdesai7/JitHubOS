@@ -44,6 +44,7 @@ context* sys_call(context* proc_context) {
         if (temp == NULL) {
             proc_context->EAX = 0;
             context* temporary = original_context;
+            cop = NULL;
             original_context = NULL;
             return temporary;
         }

@@ -137,6 +137,12 @@ pcb* pcb_setup(const char * name, int clas, int priority){
         puts("Priority must be between [0-9]");
         return NULL;
     }
+
+    if (pcb_find(ready, blocked, susReady, susBlocked, name) != NULL) {
+        printf("\033[0;31mInvalid name \"%s\". PCB with that name already exists. \n\033[0;0m", name);
+        return NULL;
+    }
+
     pcb* newPCB = pcb_allocate();
 
     newPCB->name_ptr = sys_alloc_mem(sizeof(char)*10);
