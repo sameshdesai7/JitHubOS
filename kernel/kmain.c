@@ -7,8 +7,15 @@
 #include <stdio.h>
 #include <memory.h>
 #include <../include/comhand.h>
+#include <dataStructs.h>
+#include <processes.h>
 #include <stdlib.h>
-#include <mpx/io.h>	
+#include <mpx/io.h>
+
+extern queue *ready;
+extern queue *blocked;
+extern queue *susReady;
+extern queue *susBlocked;
 
 static void klogv(device dev, const char *msg)
 {
@@ -127,8 +134,51 @@ void kmain(void)
     printf(" `6mm9'  .JMML.   .JMML.    .JMML.  .JMML.   `bmmmmd\"'  .JMMmmmd9            `\"bmmd\"'   \"Ybmmd\"  \n");
     printf("\033[0m                                                                                             \n");
    
-	comhand();
-	// R4: __asm__ volatile ("int $0x60" :: "a"(IDLE));
+	//Removed call to command handler to start running it as a process instead
+	//Create comhand as a system process running at the highest priority (0)
+	pcb* comhandPCB = pcb_setup("comhand", 0, 0);
+	context* comhandContext = (context*)comhandPCB->stack_ptr;
+	comhandContext->gs = 0x10;
+    comhandContext->es = 0x10;
+    comhandContext->ds = 0x10;
+    comhandContext->ss = 0x10;
+    comhandContext->fs = 0x10;
+    comhandContext->EIP = (int)comhand;
+    comhandContext->CS = 0x08;
+    comhandContext->EFLAGS = 0x0202;
+    comhandContext->EAX = 0;
+    comhandContext->EBX = 0;
+    comhandContext->ECX = 0;
+    comhandContext->EDX = 0;
+    comhandContext->ESI = 0;
+    comhandContext->EDI = 0;
+    comhandContext->ESP = (int)comhandPCB->stack_ptr;
+    comhandContext->EBP = (int)comhandPCB->stack;
+    enqueue(ready, comhandPCB);
+
+	//Create the system idle process running at the lowest priority
+	pcb* idlePCB = pcb_setup("idle", 0, 9);
+	context* idleContext = (context*)idlePCB->stack_ptr;
+	idleContext->gs = 0x10;
+    idleContext->es = 0x10;
+    idleContext->ds = 0x10;
+    idleContext->ss = 0x10;
+    idleContext->fs = 0x10;
+    idleContext->EIP = (int)sys_idle_process;
+    idleContext->CS = 0x08;
+    idleContext->EFLAGS = 0x0202;
+    idleContext->EAX = 0;
+    idleContext->EBX = 0;
+    idleContext->ECX = 0;
+    idleContext->EDX = 0;
+    idleContext->ESI = 0;
+    idleContext->EDI = 0;
+    idleContext->ESP = (int)idlePCB->stack_ptr;
+    idleContext->EBP = (int)idlePCB->stack;
+    enqueue(ready, idlePCB);
+
+	//Calling the assembly to start dispatching processes
+	__asm__ volatile ("int $0x60" :: "a"(IDLE));
 
 	// 10) System Shutdown -- *headers to be determined by your design*
 	// After your command handler returns, take care of any clean up that
