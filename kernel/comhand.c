@@ -1364,11 +1364,6 @@ void alarm()
     // Assign a new context pointer to point to the space in the stack we have reserved for the context
     context *alarmContext = (context *)alarmPCB->stack_ptr;
 
-    alarmPCB->alarm_ptr->hours = hours;
-    alarmPCB->alarm_ptr->minutes = minutes;
-    alarmPCB->alarm_ptr->seconds = seconds;
-    alarmPCB->alarm_ptr->message = message;
-
     // Initialize segment registers to 0x10
     alarmContext->gs = 0x10;
     alarmContext->es = 0x10;
@@ -1395,8 +1390,15 @@ void alarm()
     alarmContext->EBP = (int)alarmPCB->stack;
 
     //Initialize an alarm struct with the values input by the user
-    alarm_struct newAlarm = {.hours = hours, .minutes = minutes, .seconds = seconds, .message = message};
-    alarmPCB->alarm_ptr = &newAlarm;
+    //ISSUE LIKELY CAUSED BY LOCAL DEFINITION OF STRUCT
+    alarm_struct* newAlarm = sys_alloc_mem(sizeof(alarm_struct));
+    newAlarm->hours = hours;
+    newAlarm->minutes = minutes;
+    newAlarm->seconds = seconds;
+    newAlarm->message = message;
+
+    //Have the alarm pcb's alarm_ptr point to the struct we just made
+    alarmPCB->alarm_ptr = newAlarm;
     // enqueue the process
     enqueue(ready, alarmPCB); 
 }
