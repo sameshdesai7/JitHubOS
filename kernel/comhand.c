@@ -37,8 +37,10 @@ void comhand()
         if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "18") == 0))
         {
             // if shutdown is confirmed, empty the ready queue and exit comhand
-            if (shutdown(buf)) {
-                while (ready->head != NULL) {
+            if (shutdown(buf))
+            {
+                while (ready->head != NULL)
+                {
                     dequeue(ready);
                 }
                 sys_req(EXIT);
@@ -1291,52 +1293,115 @@ void loadR3()
     enqueue(ready, proc5PCB);
 }
 
-void alarm(){
+void alarm()
+{
 
-    printf("Enter a time for the alarm");
-    // buffer for input
+    // Ask for user input
+    printf("\033[0;36m");
+    printf("Enter the time for the alarm. (hh:mm:ss)\n");
+    printf("\033[0;0m");
+    printf(">> ");
     char buf[100] = {0};
-    // reads in the time for the alarm
     sys_req(READ, COM1, buf, sizeof(buf));
-    char* time = buf;
 
-    printf("Time: %s", time);
-
-    pcb *alarmPCB = pcb_setup("alarm", 1, 2);
-    if (alarmPCB == NULL)
+    // checks to see hours are only 1 digit and will replace with the equivalent 2 digits
+    if (buf[1] == ':')
     {
-        return;
+        buf[1] = buf[0];
+        buf[0] = '0';
+        for (int i = 7; i > 2; i--)
+        {
+            buf[i] = buf[i - 1];
+        }
+        buf[2] = ':';
     }
-    // Assign a new context pointer to point to the space in the stack we have reserved for the context
-    context *alarmContext = (context *)alarmPCB->stack_ptr;
-    // Initialize segment registers to 0x10
-    alarmContext->gs = 0x10;
-    alarmContext->es = 0x10;
-    alarmContext->ds = 0x10;
-    alarmContext->ss = 0x10;
-    alarmContext->fs = 0x10;
 
-    // EIP points to our function name, which is where execution will start when the process is loaded
-    alarmContext->EIP = (int)alarmExecution;
-    alarmContext->CS = 0x08;
-    alarmContext->EFLAGS = 0x0202;
+    if (!(isdigit(buf[6]) && isdigit(buf[7])))
+    {
+        printf("\033[0;31m");
+        printf("Error. Did not enter seconds. Please use the hh:mm:ss format.");
+        printf("\033[0;0m");
+    }
 
-    // All other registers set to 0
-    alarmContext->EAX = 0;
-    alarmContext->EBX = 0;
-    alarmContext->ECX = 0;
-    alarmContext->EDX = 0;
-    alarmContext->ESI = 0;
-    alarmContext->EDI = 0;
+    if (isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7]))
+    {
 
-    // Set ESP to be the top of the stack
-    alarmContext->ESP = (int)alarmPCB->stack_ptr;
-    // Set EBP to be the bottom of the stack
-    alarmContext->EBP = (int)alarmPCB->stack;
+        // Set Hours
+        int hours = atoi(&buf[0]);
+        int minutes = atoi(&buf[3]);
+        int seconds = atoi(&buf[6]);
 
+        // verifies input
+        if (hours > 23 || minutes > 59 || seconds > 59)
+        {
+            printf("\033[0;31m");
+            if (hours > 23)
+            {
+                printf("Invalid time format. Hours must be 1-23.\n");
+            }
 
-    // enqueue the process
-    enqueue(ready, alarmPCB);
+            if (minutes > 59)
+            {
+                printf("Invalid time format. Minutes must be 1-59.\n");
+            }
 
-    
+            if (seconds > 59)
+            {
+                printf("Invalid time format. Seconds must be 1-59.\n");
+            }
+            printf("\033[0;0m");
+            return;
+        }
+
+        // Ask for user input
+        printf("\033[0;36m");
+        printf("Enter a message for the alarm.\n");
+        printf("\033[0;0m");
+        printf(">> ");
+        char buf[100] = {0};
+        sys_req(READ, COM1, buf, sizeof(buf));
+
+        char* message = buf;
+
+        pcb *alarmPCB = pcb_setup("alarm", 1, 2);
+        if (alarmPCB == NULL)
+        {
+            return;
+        }
+        // Assign a new context pointer to point to the space in the stack we have reserved for the context
+        context *alarmContext = (context *)alarmPCB->stack_ptr;
+
+        alarmPCB->alarm_ptr->hours = hours;
+        alarmPCB->alarm_ptr->minutes = minutes;
+        alarmPCB->alarm_ptr->seconds = seconds;
+        alarmPCB->alarm_ptr->message = message;
+
+        // Initialize segment registers to 0x10
+        alarmContext->gs = 0x10;
+        alarmContext->es = 0x10;
+        alarmContext->ds = 0x10;
+        alarmContext->ss = 0x10;
+        alarmContext->fs = 0x10;
+
+        // EIP points to our function name, which is where execution will start when the process is loaded
+        alarmContext->EIP = (int)alarmExecution;
+        alarmContext->CS = 0x08;
+        alarmContext->EFLAGS = 0x0202;
+
+        // All other registers set to 0
+        alarmContext->EAX = 0;
+        alarmContext->EBX = 0;
+        alarmContext->ECX = 0;
+        alarmContext->EDX = 0;
+        alarmContext->ESI = 0;
+        alarmContext->EDI = 0;
+
+        // Set ESP to be the top of the stack
+        alarmContext->ESP = (int)alarmPCB->stack_ptr;
+        // Set EBP to be the bottom of the stack
+        alarmContext->EBP = (int)alarmPCB->stack;
+
+        // enqueue the process
+        enqueue(ready, alarmPCB);
+    }
 }
