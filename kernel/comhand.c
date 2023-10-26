@@ -1293,14 +1293,64 @@ void loadR3()
 
 void alarm(){
 
-    printf("Enter a time for the alarm");
+    printf("Enter a time for the alarm:\n");
+    printf(">> ");
     // buffer for input
     char buf[100] = {0};
+    int hours = 0;
+    int minutes = 0;
+    int seconds = 0;
+    char message[100] = {0};
     // reads in the time for the alarm
     sys_req(READ, COM1, buf, sizeof(buf));
-    char* time = buf;
+    
+    if (isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7]))
+    {
 
-    printf("Time: %s", time);
+        // Set Hours
+        hours = atoi(&buf[0]);
+        minutes = atoi(&buf[3]);
+        seconds = atoi(&buf[6]);
+        int isInvalid = 0;
+
+        // verifies input
+        if (hours > 23 || minutes > 59 || seconds > 59)
+        {
+            printf("\033[0;31m");
+            if (hours > 23)
+            {
+                printf("Invalid time format. Hours must be 1-23.\n");
+            }
+
+            if (minutes > 59)
+            {
+                printf("Invalid time format. Minutes must be 1-59.\n");
+            }
+
+            if (seconds > 59)
+            {
+                printf("Invalid time format. Seconds must be 1-59.\n");
+            }
+            printf("\033[0;0m");
+            isInvalid = 1;
+        }
+
+        if (isInvalid)
+        {
+            printf("Entered time was invalid. Exiting command...\n");
+            return;
+        }
+    }
+
+    else {
+        printf("Did not enter a time in the valid format hh:mm:ss. Exiting command...\n");
+        return;
+    }
+
+    //Reading in the message for the alarm
+    printf("Enter a message for the alarm to display when the timer goes off (100 character limit):\n");
+    printf(">> ");
+    sys_req(READ, COM1, message, sizeof(message));
 
     pcb *alarmPCB = pcb_setup("alarm", 1, 2);
     if (alarmPCB == NULL)
@@ -1334,9 +1384,9 @@ void alarm(){
     // Set EBP to be the bottom of the stack
     alarmContext->EBP = (int)alarmPCB->stack;
 
-
+    //Initialize an alarm struct with the values input by the user
+    alarm_struct newAlarm = {.hours = hours, .minutes = minutes, .seconds = seconds, .message = message};
+    alarmPCB->alarm_ptr = &newAlarm;
     // enqueue the process
-    enqueue(ready, alarmPCB);
-
-    
+    enqueue(ready, alarmPCB); 
 }
