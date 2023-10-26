@@ -37,8 +37,10 @@ void comhand()
         if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "18") == 0))
         {
             // if shutdown is confirmed, empty the ready queue and exit comhand
-            if (shutdown(buf)) {
-                while (ready->head != NULL) {
+            if (shutdown(buf))
+            {
+                while (ready->head != NULL)
+                {
                     dequeue(ready);
                 }
                 sys_req(EXIT);
@@ -1291,7 +1293,8 @@ void loadR3()
     enqueue(ready, proc5PCB);
 }
 
-void alarm(){
+void alarm()
+{
 
     printf("Enter a time for the alarm:\n");
     printf(">> ");
@@ -1355,10 +1358,17 @@ void alarm(){
     pcb *alarmPCB = pcb_setup("alarm", 1, 2);
     if (alarmPCB == NULL)
     {
-        return;
+       return; 
     }
+
     // Assign a new context pointer to point to the space in the stack we have reserved for the context
     context *alarmContext = (context *)alarmPCB->stack_ptr;
+
+    alarmPCB->alarm_ptr->hours = hours;
+    alarmPCB->alarm_ptr->minutes = minutes;
+    alarmPCB->alarm_ptr->seconds = seconds;
+    alarmPCB->alarm_ptr->message = message;
+
     // Initialize segment registers to 0x10
     alarmContext->gs = 0x10;
     alarmContext->es = 0x10;
