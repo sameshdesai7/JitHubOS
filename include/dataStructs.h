@@ -8,7 +8,12 @@
  * @brief Data structures associated with processes and the functions to go with them. 
 */
 
-
+typedef struct alarm {
+    int hours;
+    int minutes;
+    int seconds;
+    char* message; 
+} alarm_struct;
 
 typedef struct pcb{
     char *name_ptr;
@@ -17,6 +22,7 @@ typedef struct pcb{
     char* state;
     unsigned char stack[1024];
     unsigned char* stack_ptr;
+    alarm_struct* alarm_ptr;
     struct pcb* next;
 
 } pcb;

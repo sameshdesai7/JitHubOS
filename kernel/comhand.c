@@ -10,6 +10,7 @@
 #include <mpx/interrupts.h>
 #include <dataStructs.h>
 #include <processes.h>
+#include <alarm.h>
 
 // compile constants to be used in version to show when the most recent compilation was
 #define COMPILE_DATE __DATE__
@@ -143,6 +144,10 @@ void comhand()
         {
             loadR3();
         }
+        else if ((strcmp_ic(buf, "Alarm") == 0) || strcmp(buf, "19") == 0)
+        {
+            alarm();
+        }
         // individual help commands
         else if (strcmp_ic(buf, "help version") == 0 || strcmp_ic(buf, "17 version") == 0)
         {
@@ -264,6 +269,8 @@ void comhand()
             puts("Invalid query\n");
             printf("\033[0;0m");
         }
+
+        sys_req(IDLE);
     }
 }
 
@@ -289,6 +296,7 @@ void printMenu()
     printf("16. Load R3\n");
     printf("17. Help\n");
     printf("18. Shutdown\n");
+    printf("19. Alarm\n");
     printf("\n");
     printf(">> ");
 }
@@ -1281,4 +1289,54 @@ void loadR3()
     proc5Context->EBP = (int)proc5PCB->stack;
     // enqueue the process
     enqueue(ready, proc5PCB);
+}
+
+void alarm(){
+
+    printf("Enter a time for the alarm");
+    // buffer for input
+    char buf[100] = {0};
+    // reads in the time for the alarm
+    sys_req(READ, COM1, buf, sizeof(buf));
+    char* time = buf;
+
+    printf("Time: %s", time);
+
+    pcb *alarmPCB = pcb_setup("alarm", 1, 2);
+    if (alarmPCB == NULL)
+    {
+        return;
+    }
+    // Assign a new context pointer to point to the space in the stack we have reserved for the context
+    context *alarmContext = (context *)alarmPCB->stack_ptr;
+    // Initialize segment registers to 0x10
+    alarmContext->gs = 0x10;
+    alarmContext->es = 0x10;
+    alarmContext->ds = 0x10;
+    alarmContext->ss = 0x10;
+    alarmContext->fs = 0x10;
+
+    // EIP points to our function name, which is where execution will start when the process is loaded
+    alarmContext->EIP = (int)alarmExecution;
+    alarmContext->CS = 0x08;
+    alarmContext->EFLAGS = 0x0202;
+
+    // All other registers set to 0
+    alarmContext->EAX = 0;
+    alarmContext->EBX = 0;
+    alarmContext->ECX = 0;
+    alarmContext->EDX = 0;
+    alarmContext->ESI = 0;
+    alarmContext->EDI = 0;
+
+    // Set ESP to be the top of the stack
+    alarmContext->ESP = (int)alarmPCB->stack_ptr;
+    // Set EBP to be the bottom of the stack
+    alarmContext->EBP = (int)alarmPCB->stack;
+
+
+    // enqueue the process
+    enqueue(ready, alarmPCB);
+
+    
 }

@@ -156,6 +156,8 @@ pcb* pcb_setup(const char * name, int clas, int priority){
 
     newPCB->next = NULL;
     newPCB->stack_ptr = (unsigned char*) (newPCB->stack +1024 - sizeof( context));
+
+    newPCB->alarm_ptr = NULL;
     
     return newPCB;
 }

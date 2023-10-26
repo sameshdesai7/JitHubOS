@@ -250,5 +250,7 @@ void yield();
 
 void loadR3();
 
+void alarm();
+
 #endif
 
