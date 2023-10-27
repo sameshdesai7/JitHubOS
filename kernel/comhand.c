@@ -1295,8 +1295,30 @@ void loadR3()
 
 void alarm()
 {
+    printf("\033[0;36mEnter alarm name:\033[0;0m\n>> ");
+    // Read in name the user entered
+    char name[15] = {0};
+    sys_req(READ, COM1, name, sizeof(name));
+    if (strlen(name) < 1 || strlen(name) > 12)
+    {
+        printf("\033[0;31mInvalid name for process. Name must be 1 - 12 characters long.\033[0;0m\n");
 
-    printf("Enter a time for the alarm:\n");
+    }
+
+    if (strcmp_ic(name, "exit") == 0)
+    {
+        return;
+    }
+
+    // Check to see if the PCB is in a queue
+    pcb *toCreate = pcb_find(ready, blocked, susReady, susBlocked, name);
+    if (toCreate != NULL)
+    {   
+        printf("\033[0;31mAlarm '%s' already exists.\033[0;0m\n", name);
+        return;
+    }
+
+    printf("Enter a time for the alarm (hh:mm:ss):\n");
     printf(">> ");
     // buffer for input
     char buf[100] = {0};
@@ -1306,7 +1328,7 @@ void alarm()
     char message[100] = {0};
     // reads in the time for the alarm
     sys_req(READ, COM1, buf, sizeof(buf));
-    
+
     if (isdigit(buf[0]) && isdigit(buf[1]) && isdigit(buf[3]) && isdigit(buf[4]) && isdigit(buf[6]) && isdigit(buf[7]))
     {
 
@@ -1345,20 +1367,21 @@ void alarm()
         }
     }
 
-    else {
+    else
+    {
         printf("Did not enter a time in the valid format hh:mm:ss. Exiting command...\n");
         return;
     }
 
-    //Reading in the message for the alarm
+    // Reading in the message for the alarm
     printf("Enter a message for the alarm to display when the timer goes off (100 character limit):\n");
     printf(">> ");
     sys_req(READ, COM1, message, sizeof(message));
 
-    pcb *alarmPCB = pcb_setup("alarm", 1, 2);
+    pcb *alarmPCB = pcb_setup(name, 1, 2);
     if (alarmPCB == NULL)
     {
-       return; 
+        return;
     }
 
     // Assign a new context pointer to point to the space in the stack we have reserved for the context
@@ -1389,17 +1412,17 @@ void alarm()
     // Set EBP to be the bottom of the stack
     alarmContext->EBP = (int)alarmPCB->stack;
 
-    //Initialize an alarm struct with the values input by the user
-    //ISSUE LIKELY CAUSED BY LOCAL DEFINITION OF STRUCT
-    alarm_struct* newAlarm = sys_alloc_mem(sizeof(alarm_struct));
+    // Initialize an alarm struct with the values input by the user
+    // ISSUE LIKELY CAUSED BY LOCAL DEFINITION OF STRUCT
+    alarm_struct *newAlarm = sys_alloc_mem(sizeof(alarm_struct));
     newAlarm->hours = hours;
     newAlarm->minutes = minutes;
     newAlarm->seconds = seconds;
-    printf("%d",strlen(message));
-    str_copy(newAlarm->message, message, 0, strlen(message)-1);
+    newAlarm->message = sys_alloc_mem(sizeof(message));
+    str_copy(newAlarm->message, message, 0, strlen(message));
 
-    //Have the alarm pcb's alarm_ptr point to the struct we just made
+    // Have the alarm pcb's alarm_ptr point to the struct we just made
     alarmPCB->alarm_ptr = newAlarm;
     // enqueue the process
-    enqueue(ready, alarmPCB); 
+    enqueue(ready, alarmPCB);
 }

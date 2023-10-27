@@ -146,7 +146,7 @@ pcb* pcb_setup(const char * name, int clas, int priority){
     pcb* newPCB = pcb_allocate();
 
     newPCB->name_ptr = sys_alloc_mem(sizeof(char)*10);
-    newPCB->name_ptr = (char*)name;
+    str_copy(newPCB->name_ptr, (char*)name, 0, strlen(name));
 
     newPCB->priority = priority;
     newPCB->clas = clas;

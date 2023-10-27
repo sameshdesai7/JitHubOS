@@ -11,15 +11,12 @@ extern pcb* cop;
 void alarmExecution() {
 
     while(1){
-        printf("Entered alarm\n");
 
     // Attaching the hours register to port 70
     outb(0x70, 0x04);
     // Reading the data from the hours register through port 71
     int hours = inb(0x71);
     int formattedHours = fromBCD(hours);
-
-
 
     // Attaching the minutes register to port 70
     outb(0x70, 0x02);
@@ -32,10 +29,6 @@ void alarmExecution() {
     // Reading the data from the seconds register through port 71
     int seconds = inb(0x71);
     int formattedSeconds = fromBCD(seconds);
-
-    printf("Current Time: %d:%d:%d\n",formattedHours, formattedMinutes,formattedSeconds);
-    printf("Alarm   Time: %d:%d:%d\n",cop->alarm_ptr->hours,cop->alarm_ptr->minutes,cop->alarm_ptr->seconds);
-    printf("Alarm message: %s\n", cop->alarm_ptr->message);
 
     //Checking to see if the timer has gone off
     //If it has, we display the message and exit the process
@@ -55,7 +48,6 @@ void alarmExecution() {
 
     //If it hasn't, we yield back to the other processes in the ready queue
     else {
-        printf("Idle Case");
         sys_req(IDLE);
     }
 
