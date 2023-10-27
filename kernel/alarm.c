@@ -10,7 +10,8 @@ extern pcb* cop;
 //The process that executes the alarm. This will trigger when the "time" parameter is greater than or equal to the current time
 void alarmExecution() {
 
-    printf("Entered alarm\n");
+    while(1){
+        printf("Entered alarm\n");
 
     // Attaching the hours register to port 70
     outb(0x70, 0x04);
@@ -34,6 +35,7 @@ void alarmExecution() {
 
     printf("Current Time: %d:%d:%d\n",formattedHours, formattedMinutes,formattedSeconds);
     printf("Alarm   Time: %d:%d:%d\n",cop->alarm_ptr->hours,cop->alarm_ptr->minutes,cop->alarm_ptr->seconds);
+    printf("Alarm message: %s\n", cop->alarm_ptr->message);
 
     //Checking to see if the timer has gone off
     //If it has, we display the message and exit the process
@@ -55,6 +57,8 @@ void alarmExecution() {
     else {
         printf("Idle Case");
         sys_req(IDLE);
+    }
+
     }
     
 }

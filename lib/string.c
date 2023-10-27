@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdio.h>
 
 /* memcpy() and memset() are in core.c */
 
@@ -90,7 +91,7 @@ char *strtok(char * restrict s1, const char * restrict s2)
 }
 
 void str_copy(char* dest, char* source, int start, size_t length) {
-    for (size_t i = 0; i < length && source[start + i] != '\0'; i++) {
+    for (size_t i = 0; i < length && source[start + i]!= '\0'; i++) {
         dest[i] = source[start + i];
     }
     //Insert null terminator

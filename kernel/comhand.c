@@ -1395,7 +1395,8 @@ void alarm()
     newAlarm->hours = hours;
     newAlarm->minutes = minutes;
     newAlarm->seconds = seconds;
-    newAlarm->message = message;
+    printf("%d",strlen(message));
+    str_copy(newAlarm->message, message, 0, strlen(message)-1);
 
     //Have the alarm pcb's alarm_ptr point to the struct we just made
     alarmPCB->alarm_ptr = newAlarm;
