@@ -33,22 +33,8 @@ void comhand()
         // reads in the first input
         sys_req(READ, COM1, buf, sizeof(buf));
 
-        // Shutdown Command
-        if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "18") == 0))
-        {
-            // if shutdown is confirmed, empty the ready queue and exit comhand
-            if (shutdown(buf))
-            {
-                while (ready->head != NULL)
-                {
-                    dequeue(ready);
-                }
-                sys_req(EXIT);
-            }
-        }
-
         // Version Command
-        else if ((strcmp_ic(buf, "version") == 0) || (strcmp(buf, "1") == 0))
+        if ((strcmp_ic(buf, "version") == 0) || (strcmp(buf, "1") == 0))
         {
             version();
         }
@@ -136,16 +122,30 @@ void comhand()
             showAll(ready, blocked, susReady, susBlocked);
         }
 
+        else if ((strcmp_ic(buf, "Load R3") == 0) || strcmp(buf, "16") == 0)
+        {
+            loadR3();
+        }
         // help command
         else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "17") == 0)
         {
             help();
         }
 
-        else if ((strcmp_ic(buf, "Load R3") == 0) || strcmp(buf, "16") == 0)
+        // Shutdown Command
+        else if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "18") == 0))
         {
-            loadR3();
+            // if shutdown is confirmed, empty the ready queue and exit comhand
+            if (shutdown(buf))
+            {
+                while (ready->head != NULL)
+                {
+                    dequeue(ready);
+                }
+                sys_req(EXIT);
+            }
         }
+
         else if ((strcmp_ic(buf, "Alarm") == 0) || strcmp(buf, "19") == 0)
         {
             alarm();
@@ -233,35 +233,42 @@ void comhand()
             puts("A priotity must be between 0 and 9 with 0 being the highest priority.");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "show pcb") == 0 || strcmp_ic(buf, "17 show pcb") == 0)
+        else if (strcmp_ic(buf, "help show pcb") == 0 || strcmp_ic(buf, "17 show pcb") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"show pcb\" to show all the information associated with a PCB\n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "show ready") == 0 || strcmp_ic(buf, "17 show ready") == 0)
+        else if (strcmp_ic(buf, "help show ready") == 0 || strcmp_ic(buf, "17 show ready") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"show ready\" to show all the PCB's in the ready queue. \n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "show blocked ") == 0 || strcmp_ic(buf, "17 show blocked") == 0)
+        else if (strcmp_ic(buf, "help show blocked ") == 0 || strcmp_ic(buf, "17 show blocked") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"show blocked\" to show all the PCB's in the blocked queue. \n");
             printf("\033[0;0m");
         }
-        else if (strcmp_ic(buf, "show all") == 0 || strcmp_ic(buf, "17 show all") == 0)
+        else if (strcmp_ic(buf, "help show all") == 0 || strcmp_ic(buf, "17 show all") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"show all\" to show all the PCB's and all the queues (Ready, Blocked, SusReady, SusBlocked). \n");
             printf("\033[0;0m");
         }
 
-        else if (strcmp_ic(buf, "show all") == 0 || strcmp_ic(buf, "17 load r3") == 0)
+        else if (strcmp_ic(buf, "help load r3") == 0 || strcmp_ic(buf, "17 load r3") == 0)
         {
             printf("\033[0;36m");
             puts("Type \"load r3\" to load the test processes into the ready queue. \n");
+            printf("\033[0;0m");
+        }
+
+        else if (strcmp_ic(buf, "help alarm") == 0 || strcmp_ic(buf, "17 alarm") == 0)
+        {
+            printf("\033[0;36m");
+            puts("Type \"alarm\" to create a new alarm process with a set time and message. \n");
             printf("\033[0;0m");
         }
 
