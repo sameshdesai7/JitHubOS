@@ -1,0 +1,49 @@
+\hypertarget{sys__call_8h}{}\doxysection{include/sys\+\_\+call.h File Reference}
+\label{sys__call_8h}\index{include/sys\_call.h@{include/sys\_call.h}}
+
+
+Header file for the sys\+\_\+call function.  
+
+
+{\ttfamily \#include $<$context.\+h$>$}\newline
+{\ttfamily \#include $<$data\+Structs.\+h$>$}\newline
+Include dependency graph for sys\+\_\+call.\+h\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structcontext}{context}} $\ast$ \mbox{\hyperlink{sys__call_8h_aa19434e2b5ede374778e826a48ce9986}{sys\+\_\+call}} (\mbox{\hyperlink{structcontext}{context}} $\ast$proc\+\_\+context)
+\begin{DoxyCompactList}\small\item\em Based on process\textquotesingle{}s opcode, changes the context of the system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file for the sys\+\_\+call function. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{sys__call_8h_aa19434e2b5ede374778e826a48ce9986}\label{sys__call_8h_aa19434e2b5ede374778e826a48ce9986}} 
+\index{sys\_call.h@{sys\_call.h}!sys\_call@{sys\_call}}
+\index{sys\_call@{sys\_call}!sys\_call.h@{sys\_call.h}}
+\doxysubsubsection{\texorpdfstring{sys\_call()}{sys\_call()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structcontext}{context}}$\ast$ sys\+\_\+call (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcontext}{context}} $\ast$}]{proc\+\_\+context }\end{DoxyParamCaption})}
+
+
+
+Based on process\textquotesingle{}s opcode, changes the context of the system. 
+
+\begin{DoxyAuthor}{Author}
+Jackson Monk 
+
+Sam Desai 
+
+Noah Marner 
+
+Blake Wagner 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em proc\+\_\+context} & process context\\
+\hline
+\end{DoxyParams}
+Takes in a process\textquotesingle{}s context, reads the value of the E\+AX register to determine the opcode. Then breaks into idle, exit, or other (write/read). Upon first idle, sets original context to return to later. If there is a process in the ready queue, dequeue. If there is a currently operating process save its context, add it back to the ready queue, and set the currently operating process to the process recently dequeued. Return a context pointer to the currently operating process\textquotesingle{}s stack pointer. If ready queue is empty, return the process\textquotesingle{}s context. If opcode is exit, dequeue from the ready queue. If there is nothing in the ready queue, return to original context and refresh original context variable to N\+U\+LL. Otherwise, free the currently operating process from memory and return the pointer to the current operating process\textquotesingle{}s stack. Otherwise, if performing a read/write, set the E\+AX to -\/1 and return the process\textquotesingle{}s context. 

@@ -1,6 +1,16 @@
 #ifndef CONTEXT_H
 #define CONTEXT_H
 
+/**
+ * @file context.h
+ * @brief Header file that holds the context struct
+*/
+
+/**
+ * @author Noah Marner
+ * @author Jackson Monk
+ * @brief Defines the registers in a context struct
+*/
 typedef struct {
     int gs;
     int fs;

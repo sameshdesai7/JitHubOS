@@ -6,7 +6,6 @@
 
 extern pcb* cop;
 
-
 //The process that executes the alarm. This will trigger when the "time" parameter is greater than or equal to the current time
 void alarmExecution() {
 

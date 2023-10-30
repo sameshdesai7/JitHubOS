@@ -246,10 +246,35 @@ void showBlocked(queue* blocked);
  */
 void showAll(queue* ready, queue* blocked, queue* susReady, queue* susBlocked);
 
+/**
+ * @author Jackson Monk
+ * @brief Yields control of the current process back to the system by calling sys_req(idle)
+*/
 void yield();
 
+/**
+ * @author Sam Desai
+ * @author Noah Marner
+ * @author Blake Wagner
+ * @author Jackson Monk
+ * @brief Creates and loads processes for the 5 premade R3 processes defined in core.c.
+ * @details For all 5 processes: creates a pcb, creates a context pointer to point to the pcb stack,
+ * sets the segment registers to 0x10, sets the EIP to point to the corresponding function in core.c,
+ * sets the CS register to 0x08, the EFLAGS to 0x0202, all other registers to 0, sets ESP to the top of 
+ * the stack and EBP to the bottom of the stack, and enqueues the process to the ready queue.
+*/
 void loadR3();
 
+/**
+ * @author Jackson Monk
+ * @author Noah Marner
+ * @author Sam Desai
+ * @author Blake Wagner
+ * @brief Creates an alarm to display a message at the specified time.
+ * @details Prompts user for alarm name, time, and message. Validates input and if successful,
+ * creates a PCB with the alarm details stored in the alarm struct pointer. Correctly sets registers and pointers as done in loadR3 and sets the
+ * EIP to point to the alarmExecution function defined in alarm.c. Enqueues the process.
+*/
 void alarm();
 
 #endif
