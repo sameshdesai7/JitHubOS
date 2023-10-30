@@ -127,13 +127,13 @@ void comhand()
             loadR3();
         }
         // help command
-        else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "17") == 0)
+        else if ((strcmp_ic(buf, "help") == 0) || strcmp(buf, "18") == 0)
         {
             help();
         }
 
         // Shutdown Command
-        else if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "18") == 0))
+        else if ((strcmp_ic(buf, "shutdown") == 0) || (strcmp(buf, "19") == 0))
         {
             // if shutdown is confirmed, empty the ready queue and exit comhand
             if (shutdown(buf))
@@ -146,7 +146,7 @@ void comhand()
             }
         }
 
-        else if ((strcmp_ic(buf, "Alarm") == 0) || strcmp(buf, "19") == 0)
+        else if ((strcmp_ic(buf, "Alarm") == 0) || strcmp(buf, "17") == 0)
         {
             alarm();
         }
@@ -303,9 +303,9 @@ void printMenu()
     printf("14. Show Blocked\n");
     printf("15. Show All\n");
     printf("16. Load R3\n");
-    printf("17. Help\n");
-    printf("18. Shutdown\n");
-    printf("19. Alarm\n");
+    printf("17. Alarm\n");
+    printf("18. Help\n");
+    printf("19. Shutdown\n");
     printf("\n");
     printf(">> ");
 }
@@ -1099,18 +1099,20 @@ void help(void)
     puts("Type \"set time\" or type ‘3’ to set the system time\n");
     puts("Type \"get date\" or type ‘4’ to retrieve the current system date\n");
     puts("Type \"set date\" or type ‘5’ to set the system date\n");
-    puts("Type \"Delete PCB\" or type ‘7’ to delete a PCB\n");
-    puts("Type \"Block PCB\" or type ‘8’ to block a PCB\n");
-    puts("Type \"Unblock PCB\" or type ‘9’ to unblock a PCB\n");
-    puts("Type \"Suspend PCB\" or type ‘10’ to suspend a PCB\n");
-    puts("Type \"Resume PCB\" or type ‘11’ to resume PCB\n");
-    puts("Type \"Set PCB Priority\" or type ‘12’ to update a PCB's priority\n");
-    puts("Type \"Show PCB\" or type ‘13’ to show details of a specific PCB\n");
-    puts("Type \"Show Ready\" or type ‘14’ to show PCB's in the ready queue\n");
-    puts("Type \"Show Blocked\" or type ‘15’ to show PCB's in the blocked queue\n");
-    puts("Type \"Show All\" or type ‘16’ to show all PBC's in all the queues\n");
-    puts("Type \"help\" or type ‘17’ to see a list of commands you can run\n");
-    puts("Type \"shutdown\" or type ‘18’ to exit the operating system\n");
+    puts("Type \"Delete PCB\" or type ‘6’ to delete a PCB\n");
+    puts("Type \"Block PCB\" or type ‘7’ to block a PCB\n");
+    puts("Type \"Unblock PCB\" or type ‘8’ to unblock a PCB\n");
+    puts("Type \"Suspend PCB\" or type ‘9’ to suspend a PCB\n");
+    puts("Type \"Resume PCB\" or type ‘10’ to resume PCB\n");
+    puts("Type \"Set PCB Priority\" or type ‘11’ to update a PCB's priority\n");
+    puts("Type \"Show PCB\" or type ‘12’ to show details of a specific PCB\n");
+    puts("Type \"Show Ready\" or type ‘13’ to show PCB's in the ready queue\n");
+    puts("Type \"Show Blocked\" or type ‘14’ to show PCB's in the blocked queue\n");
+    puts("Type \"Show All\" or type ‘15’ to show all PBC's in all the queues\n");
+    puts("Type \"Load R3\" or type ‘16’ to load the processes created to test R3 into the ready queue\n");
+    puts("Type \"Alarm\" or type ‘17’ to set an alarm that prints a message at a given time\n");
+    puts("Type \"help\" or type ‘18’ to see a list of commands you can run\n");
+    puts("Type \"shutdown\" or type ‘19’ to exit the operating system\n");
     printf("\033[0;0m");
 }
 
