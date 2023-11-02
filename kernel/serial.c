@@ -2,6 +2,7 @@
 #include <mpx/serial.h>
 #include <sys_req.h>
 #include <stdio.h>
+#include <dataStructs.h>
 
 enum uart_registers
 {
@@ -186,4 +187,14 @@ void backspace(int *pos, int* end, char* buffer, device dev){
 		}
 	}
 	return;	
+}
+
+int serial_open(device dev, int speed) {
+	serial_init(dev);
+	dcb* newDCB = sys_alloc_mem(sizeof(dcb));
+
+}
+
+int serial_close(device dev) {
+	
 }

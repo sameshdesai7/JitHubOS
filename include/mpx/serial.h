@@ -55,4 +55,8 @@ int serial_poll(device dev, char *buffer, size_t len);
 */
 void backspace(int *pos, int* end, char* buffer, device dev);
 
+int serial_open(device dev, int speed);
+
+int serial_close(device dev);
+
 #endif
