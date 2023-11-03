@@ -16,7 +16,7 @@ typedef struct alarm {
 } alarm_struct;
 
 typedef struct pcb{
-    char *name_ptr;
+    char* name_ptr;
     int priority;
     int clas;
     char* state;
@@ -24,7 +24,6 @@ typedef struct pcb{
     unsigned char* stack_ptr;
     alarm_struct* alarm_ptr;
     struct pcb* next;
-
 } pcb;
 
 typedef struct queue{
@@ -33,8 +32,33 @@ typedef struct queue{
     int pFlag;
 } queue;
 
+typedef struct iocbQueue{
+    struct iocb* head;
+    struct iocb* tail;
+} iocbQueue;
 
 
+typedef struct dcb{
+    // 1 for in use, 0 for not in use
+    int status;
+    int op;
+    // 1 for event, 0 for no event
+    int eFlag;
+    int size;
+    char* beginning;
+    char* end;
+    iocbQueue* iocbQ;
+} dcb;
+
+typedef struct iocb{
+    pcb* pcb;
+    dcb* dcb;
+    int op;
+    char* buffa;
+    int buffaSize;
+    struct iocb* next;
+    char* state;
+} iocb;
 
 /**
  * @author Samesh Desai
@@ -51,8 +75,9 @@ typedef struct queue{
  * the last PCB with the same priority.
 */
 void enqueue(queue* q, pcb* newPCB);
- 
 
+void iocbEnqueue(iocbQueue* q, iocb* newIOCB);
+ 
 /**
  * @author Samesh Desai
  * @author Noah Marner
@@ -68,6 +93,7 @@ void enqueue(queue* q, pcb* newPCB);
 */
 pcb* dequeue(queue* q);
 
+iocb* iocbDequeue(iocbQueue* q);
 
 /**
  * @author Samesh Desai
