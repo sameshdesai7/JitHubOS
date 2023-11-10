@@ -56,7 +56,13 @@ context* sys_call(context* proc_context) {
         }
     }
 
-    else {
+    else{
+        iocb* iocb = sys_alloc_mem(sizeof(iocb));
+        iocb->op = EAX;
+        iocb->dcb = EBX;
+        iocb->buffa = ECX;
+        iocb->buffaSize = EDX;
+        ioSchedule(iocb, proc->ebx);
         proc_context->EAX = -1;
         return proc_context;
     }

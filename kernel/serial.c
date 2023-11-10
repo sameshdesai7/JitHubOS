@@ -3,6 +3,12 @@
 #include <sys_req.h>
 #include <stdio.h>
 #include <dataStructs.h>
+#include <mpx/interrupts.h>
+
+dcb* com1DCB = sys_alloc_mem(sizeof(dcb));
+dcb* com2DCB = sys_alloc_mem(sizeof(dcb));
+dcb* com3DCB = sys_alloc_mem(sizeof(dcb));
+dcb* com4DCB = sys_alloc_mem(sizeof(dcb));
 
 enum uart_registers
 {
@@ -189,9 +195,51 @@ void backspace(int *pos, int* end, char* buffer, device dev){
 	return;	
 }
 
-int serial_open(device dev, int speed) {
+int serial_open(device dev, int baudRate) {
 	serial_init(dev);
-	dcb* newDCB = sys_alloc_mem(sizeof(dcb));
+	if(dev == COM1){
+		if(com1DCB->eFlag == 1){
+			//0 for open 1 for closed
+			com1DCB->eFlag = 0;
+			//0 for idle 1 for in use
+			com1DCB->status = 0; 
+			//Needs vector and pointer to function to call
+			idt_install(0x24, serial_isr);
+
+			//Compute baud rate divisor
+			int baudRateDiv = 115200 / (long)baudRate; //find baud rate
+    		int remainder = 115200 % (long)baudRate;
+
+			//disabel interupts
+			outb(dev + IER, 0x00);
+
+			//store 0x80 in line control register
+			outb(dev + LCR, 0x80);
+
+			//store baud rate div high bits in MSB
+			outb(dev + DLL, (int)divisor);
+			outb(dev + DLM, remainder);
+
+			//store 0x03 in line control register
+			outb(dev + LCR, 0x03);
+
+			//set pic mask register ????????????
+			outb(dev + 0x21, 0x04);
+			
+			//enable overall serial port interrupts
+			outb(dev + MCR, 0x08);
+
+			//Enable input ready interrupts 
+			outb(dev + IER, 0x01);
+
+		}
+	} else if(dev == COM2){
+
+	} else if(dev == COM3){
+
+	} else if(dev ==COM4){
+
+	}
 
 }
 
