@@ -37,7 +37,6 @@ typedef struct iocbQueue{
     struct iocb* tail;
 } iocbQueue;
 
-
 typedef struct dcb{
     // 1 for in use, 0 for not in use
     int status;
@@ -48,6 +47,7 @@ typedef struct dcb{
     char* beginning;
     char* end;
     iocbQueue* iocbQ;
+    int numTransferred;
 } dcb;
 
 typedef struct iocb{
