@@ -59,10 +59,29 @@ context* sys_call(context* proc_context) {
     else{
         iocb* iocb = sys_alloc_mem(sizeof(iocb));
         iocb->op = EAX;
-        iocb->dcb = EBX;
-        iocb->buffa = ECX;
-        iocb->buffaSize = EDX;
+        iocb->pcb = cop;
+        iocb->dcb = proc_context->ebx;
+        iocb->buffa = proc_context->ecx;
+        iocb->buffaSize = proc_context->edx;
+
+        //Save context of current process and block it
+        cop->stack_ptr = proc_context;
+        cop->state = "blocked";
+        enqueue(blocked, cop);
+
         ioSchedule(iocb, proc->ebx);
+
+        pcb* temp = dequeue(ready);
+        if (temp == NULL) {
+            return proc_context;
+        }
+        else {
+            cop = temp;
+            cop->state = "running";
+            proc_context->EAX = 0;
+            return (context *)cop->stack_ptr;
+        }
+
         proc_context->EAX = -1;
         return proc_context;
     }

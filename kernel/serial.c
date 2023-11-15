@@ -5,10 +5,10 @@
 #include <dataStructs.h>
 #include <mpx/interrupts.h>
 
-dcb* com1DCB = sys_alloc_mem(sizeof(dcb));
-dcb* com2DCB = sys_alloc_mem(sizeof(dcb));
-dcb* com3DCB = sys_alloc_mem(sizeof(dcb));
-dcb* com4DCB = sys_alloc_mem(sizeof(dcb));
+extern dcb* com1DCB;
+extern dcb* com2DCB;
+extern dcb* com3DCB;
+extern dcb* com4DCB;
 
 enum uart_registers
 {

@@ -3,11 +3,7 @@
 
 #include <stddef.h>
 #include <mpx/device.h>
-
-extern dcb* com1DCB;
-extern dcb* com2DCB;
-extern dcb* com3DCB;
-extern dcb* com4DCB;
+#include <dataStructs.h>
 
 /**
  @file mpx/serial.h
