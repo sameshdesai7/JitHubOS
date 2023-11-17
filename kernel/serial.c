@@ -204,7 +204,7 @@ int serial_open(device dev, int baudRate) {
 			//0 for idle 1 for in use
 			com1DCB->status = 0; 
 			//Needs vector and pointer to function to call
-			idt_install(0x24, serial_isr);
+			idt_install(0x24, (int)serial_isr);
 
 			//Compute baud rate divisor
 			int baudRateDiv = 115200 / (long)baudRate; //find baud rate
@@ -217,7 +217,7 @@ int serial_open(device dev, int baudRate) {
 			outb(dev + LCR, 0x80);
 
 			//store baud rate div high bits in MSB
-			outb(dev + DLL, (int)divisor);
+			outb(dev + DLL, (int)baudRateDiv);
 			outb(dev + DLM, remainder);
 
 			//store 0x03 in line control register
