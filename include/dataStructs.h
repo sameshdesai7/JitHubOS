@@ -48,6 +48,7 @@ typedef struct dcb{
     char* end;
     iocbQueue* iocbQ;
     int numTransferred;
+    char ringBuffer[100];
 } dcb;
 
 typedef struct iocb{

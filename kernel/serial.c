@@ -224,7 +224,11 @@ int serial_open(device dev, int baudRate) {
 			outb(dev + LCR, 0x03);
 
 			//set pic mask register ????????????
-			outb(dev + 0x21, 0x04);
+			cli();
+			int mask = inb(0x21);
+			mask &= (0b11101111);
+			outb(0x21, mask);
+			sti();
 			
 			//enable overall serial port interrupts
 			outb(dev + MCR, 0x08);
@@ -241,8 +245,85 @@ int serial_open(device dev, int baudRate) {
 
 	}
 
+
+	return 0;
+
 }
 
 int serial_close(device dev) {
 	
+	if(dev == COM1){
+		if(com1DCB -> eFlag == 0){
+			com1DCB -> eFlag = 1;
+		}
+
+		//Disable pic
+		cli();
+		int mask = inb(0x21);
+		mask |= (0b00010000);
+		outb(0x21, mask);
+		sti();
+
+		//Disble interupts
+		outb(dev + MSR, 0x00);
+		outb(dev + IER, 0x00);
+
+	} else if(dev == COM2){
+
+	} else if(dev == COM3){
+
+	} else if(dev ==COM4){
+
+	}
+
+	return 0;
+
+
 }
+
+int serial_read(device dev, char* buf, size_t len){
+
+	if(dev == COM1){
+		if(com1DCB == NULL){
+			return 1;
+		}
+		if(com1DCB -> status == 1){
+			return 1;
+		}
+		com1DCB -> size = len;
+		//intialIze input buffer var??
+		com1DCB -> eFlag = 0;
+
+		char* tempBuf = buf;
+		int currentSize = 0;
+		int ringBufferSize = 0;
+		cli();
+		//Copy contents of ring buffer to requestors buffer
+		while(com1DCB->beginning != com1DCB->end){
+
+			if(com1DCB->ringBuffer[ringBufferSize] == '\n' || com1DCB->ringBuffer[ringBufferSize] == '\r'){
+				tempBuf++;
+				currentSize++;
+				ringBufferSize++;
+				com1DCB->eFlag = 1;
+				break;
+			}
+			if(currentSize == len){
+				com1DCB->eFlag = 1;
+				break;
+			}
+			if (ringBufferSize == com1DCB->size) {
+				ringBufferSize %= com1DCB->size;
+			}
+			*tempBuf = com1DCB->ringBuffer[ringBufferSize];
+			tempBuf++;
+			ringBufferSize++;
+			currentSize++;
+
+		}
+		sti();
+
+	}
+
+}
+
