@@ -362,3 +362,49 @@ int serial_write(device dev, char* buf, size_t len){
 
 }
 
+
+void serial_interrupt(void){
+	cli();
+		if(com1DCB == NULL){
+			return 401;
+		}
+		int mask = inb(dev + IIR);
+		if (mask & 0b1 == 0b1){
+			//add return code
+			sti();
+			return; 
+		}
+
+		else {
+			if (mask == 0b000){
+				//ask nate
+				//inb(LSR, )
+			}
+			else if(mask == 0b010){
+				serial_output_interrupt();
+			}
+			else if(mask == 0b100){
+				serial_input_interrupt();
+			}
+			else if(mask == 0b110){
+				//also ask nate
+			}
+			outb(0x21, 0x20);
+		}
+	}
+
+void serial_input_interrupt(struct dcb *dcb){
+	if (dcb -> status == 0){
+		char character = inb(COM1);
+		dcb -> ringBuffer = //whatever char you read in 
+		if (size != 100){
+			ringbuffer[size] = character;
+			size++;
+		}
+	}
+
+}
+
+void serial_output_interrupt(struct dcb *dcb){
+	
+}
