@@ -40,8 +40,8 @@ typedef struct iocbQueue{
 typedef struct dcb{
     // 1 for in use, 0 for not in use
     int status;
-    int op;
-    // 1 for event, 0 for no event
+
+    int op;    // 1 for event, 0 for no event
     int eFlag;
     int size;
     char* beginning;

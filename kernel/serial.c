@@ -285,10 +285,14 @@ int serial_read(device dev, char* buf, size_t len){
 
 	if(dev == COM1){
 		if(com1DCB == NULL){
-			return 1;
+			return 301;
 		}
+		if(buf == NULL){
+			return 302;
+		}
+		// CHECK FOR INVALID COUNT ADDRESS OR COUNT VALUE?? PAGE 14/15 OF DOCUMENT
 		if(com1DCB -> status == 1){
-			return 1;
+			return 304;
 		}
 		com1DCB -> size = len;
 		//intialIze input buffer var??
@@ -322,6 +326,37 @@ int serial_read(device dev, char* buf, size_t len){
 
 		}
 		sti();
+
+	}
+
+}
+
+int serial_write(device dev, char* buf, size_t len){
+	
+	if(dev == COM1){
+		if(com1DCB == NULL){
+			return 401;
+		}
+		if(buf == NULL){
+			return 402;
+		}
+		// CHECK FOR INVALID COUNT ADDRESS OR COUNT VALUE?? PAGE 14/15 OF DOCUMENT
+		if(com1DCB -> status == 1){
+			return 404;
+		}
+
+	// INSTALL BUFFER POINTER AND COUNTERS
+	com1DCB->status = 1;
+	com1DCB->beginning = buf;
+	com1DCB->end = buf[len-1];
+
+	com1DCB->numTransferred = len;
+	com1DCB->eFlag = 0;
+	outb(COM1, *com1DCB->beginning)
+
+	int mask = inb(dev + IER);
+	mask |= (0b00000010);
+	outb(dev + IER, mask);
 
 	}
 

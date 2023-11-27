@@ -60,4 +60,8 @@ int serial_open(device dev, int speed);
 
 int serial_close(device dev);
 
+int serial_read(device dev, char* buf, size_t len);
+
+int serial_write(device dev, char* buf, size_t len);
+
 #endif
