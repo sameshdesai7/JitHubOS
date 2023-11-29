@@ -38,17 +38,19 @@ typedef struct iocbQueue{
 } iocbQueue;
 
 typedef struct dcb{
-    // 1 for in use, 0 for not in use
+    // 1 for in use (closed), 0 for not in use (open)
     int status;
-
-    int op;    // 1 for event, 0 for no event
+    //current operation happening on the device (read, write, idle)
+    int op;
+    // 1 when operation is complete, 0 at the beginning of the operation
     int eFlag;
-    int size;
-    char* beginning;
-    char* end;
+    char* buffer;
+    int count;
     iocbQueue* iocbQ;
-    int numTransferred;
-    char ringBuffer[100];
+    char ringBuffer[16];
+    int ringCount;
+    int inIndex;
+    int outIndex;
 } dcb;
 
 typedef struct iocb{

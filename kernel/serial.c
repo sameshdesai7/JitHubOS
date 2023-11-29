@@ -198,11 +198,15 @@ void backspace(int *pos, int* end, char* buffer, device dev){
 int serial_open(device dev, int baudRate) {
 	serial_init(dev);
 	if(dev == COM1){
-		if(com1DCB->eFlag == 1){
+		if(com1DCB->status == 1){
 			//0 for open 1 for closed
-			com1DCB->eFlag = 0;
-			//0 for idle 1 for in use
-			com1DCB->status = 0; 
+			com1DCB -> status = 0;
+			com1DCB -> op = IDLE;
+			com1DCB -> eFlag = 0; 
+			com1DCB -> ringCount = 0; 
+			com1DCB -> inIndex = 0;
+			com1DCB -> outIndex = 0;
+
 			//Needs vector and pointer to function to call
 			idt_install(0x24, (int)serial_isr);
 
@@ -237,15 +241,7 @@ int serial_open(device dev, int baudRate) {
 			outb(dev + IER, 0x01);
 
 		}
-	} else if(dev == COM2){
-
-	} else if(dev == COM3){
-
-	} else if(dev ==COM4){
-
-	}
-
-
+	} 
 	return 0;
 
 }
@@ -253,9 +249,10 @@ int serial_open(device dev, int baudRate) {
 int serial_close(device dev) {
 	
 	if(dev == COM1){
-		if(com1DCB -> eFlag == 0){
-			com1DCB -> eFlag = 1;
+		if(com1DCB -> status == 1){
+			return 201;
 		}
+		com1DCB -> status = 1;
 
 		//Disable pic
 		cli();
@@ -267,13 +264,6 @@ int serial_close(device dev) {
 		//Disble interupts
 		outb(dev + MSR, 0x00);
 		outb(dev + IER, 0x00);
-
-	} else if(dev == COM2){
-
-	} else if(dev == COM3){
-
-	} else if(dev ==COM4){
-
 	}
 
 	return 0;
@@ -284,49 +274,44 @@ int serial_close(device dev) {
 int serial_read(device dev, char* buf, size_t len){
 
 	if(dev == COM1){
-		if(com1DCB == NULL){
+		if(com1DCB -> status == 1){
 			return 301;
 		}
 		if(buf == NULL){
 			return 302;
 		}
 		// CHECK FOR INVALID COUNT ADDRESS OR COUNT VALUE?? PAGE 14/15 OF DOCUMENT
-		if(com1DCB -> status == 1){
+		if(com1DCB -> op != IDLE){
 			return 304;
 		}
-		com1DCB -> size = len;
-		//intialIze input buffer var??
-		com1DCB -> eFlag = 0;
 
-		char* tempBuf = buf;
-		int currentSize = 0;
-		int ringBufferSize = 0;
+		com1DCB -> inCount = 0;
+		com1DCB -> op = READ;
+		com1DCB -> eFlag = 0;
 		cli();
 		//Copy contents of ring buffer to requestors buffer
-		while(com1DCB->beginning != com1DCB->end){
+		while(com1DCB-> inIndex != com1DCB-> outIndex){
 
-			if(com1DCB->ringBuffer[ringBufferSize] == '\n' || com1DCB->ringBuffer[ringBufferSize] == '\r'){
-				tempBuf++;
-				currentSize++;
-				ringBufferSize++;
-				com1DCB->eFlag = 1;
+			if(com1DCB->ringBuffer[outIndex] == '\n' || com1DCB->ringBuffer[outIndex] == '\r'){
+				outIndex++;
+				outIndex %= sizeof(com1DCB -> ringBuffer);
+				ringCount++;
 				break;
 			}
-			if(currentSize == len){
-				com1DCB->eFlag = 1;
+			if(ringCount == len){
 				break;
 			}
-			if (ringBufferSize == com1DCB->size) {
-				ringBufferSize %= com1DCB->size;
-			}
-			*tempBuf = com1DCB->ringBuffer[ringBufferSize];
-			tempBuf++;
-			ringBufferSize++;
-			currentSize++;
-
+			*buf = com1DCB ->ringBuffer[outIndex];
+			outIndex++;
+			outIndex %= sizeof(com1DCB -> ringBuffer);
+			ringCount++;
+			buf++;
 		}
+		com1DCB -> op = IDLE;
+		com1DCB -> eFlag = 1;
 		sti();
 
+		return 0;
 	}
 
 }
@@ -406,5 +391,12 @@ void serial_input_interrupt(struct dcb *dcb){
 }
 
 void serial_output_interrupt(struct dcb *dcb){
-	
+	if (dcb -> op != WRITE){
+		return;
+	}
+	else{
+		if (count < size){
+
+		}
+	}
 }
