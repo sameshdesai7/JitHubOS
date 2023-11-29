@@ -319,30 +319,25 @@ int serial_read(device dev, char* buf, size_t len){
 int serial_write(device dev, char* buf, size_t len){
 	
 	if(dev == COM1){
-		if(com1DCB == NULL){
+		if(com1DCB  -> status == 1){
 			return 401;
 		}
 		if(buf == NULL){
 			return 402;
 		}
 		// CHECK FOR INVALID COUNT ADDRESS OR COUNT VALUE?? PAGE 14/15 OF DOCUMENT
-		if(com1DCB -> status == 1){
+		if(com1DCB -> op != IDLE){
 			return 404;
 		}
+		com1DCB -> op = WRITE;
+		com1DCB -> buffer = buf;
+		com1DCB -> count = len;
+		com1DCB->eFlag = 1;
+		outb(COM1, *com1DCB-> buffer)
 
-	// INSTALL BUFFER POINTER AND COUNTERS
-	com1DCB->status = 1;
-	com1DCB->beginning = buf;
-	com1DCB->end = buf[len-1];
-
-	com1DCB->numTransferred = len;
-	com1DCB->eFlag = 0;
-	outb(COM1, *com1DCB->beginning)
-
-	int mask = inb(dev + IER);
-	mask |= (0b00000010);
-	outb(dev + IER, mask);
-
+		int mask = inb(dev + IER);
+		mask |= (0b00000010);
+		outb(dev + IER, mask);
 	}
 
 }
@@ -369,7 +364,7 @@ void serial_interrupt(void){
 				serial_output_interrupt();
 			}
 			else if(mask == 0b100){
-				serial_input_interrupt();
+				//serial_input_interrupt();
 			}
 			else if(mask == 0b110){
 				//also ask nate
