@@ -3,7 +3,12 @@
 #include <dataStructs.h>
 #include <sys_req.h>
 #include <stdio.h>
+#include <scheduler.h>
+#include <string.h>
+
 extern queue* ready;
+extern queue* blocked;
+
 
 pcb* cop = NULL;
 context* original_context = NULL;
@@ -56,20 +61,22 @@ context* sys_call(context* proc_context) {
         }
     }
 
+    //else should be read or write 
     else{
         iocb* iocb = sys_alloc_mem(sizeof(iocb));
         iocb->op = EAX;
         iocb->pcb = cop;
-        iocb->dcb = proc_context->ebx;
-        iocb->buffa = proc_context->ecx;
-        iocb->buffaSize = proc_context->edx;
+
+        str_copy(iocb->buffa, (char*)proc_context->ECX, 0, sizeof(proc_context->ECX));
+
+        iocb->buffaSize = (int)proc_context->EDX;
 
         //Save context of current process and block it
-        cop->stack_ptr = proc_context;
+        cop->stack_ptr = (unsigned char*)proc_context;
         cop->state = "blocked";
         enqueue(blocked, cop);
 
-        ioSchedule(iocb, proc->ebx);
+        ioSchedule(iocb, (dcb*)proc_context->EBX);
 
         pcb* temp = dequeue(ready);
         if (temp == NULL) {
