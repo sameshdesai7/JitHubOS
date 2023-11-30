@@ -6,9 +6,6 @@
 #include <mpx/interrupts.h>
 
 extern dcb* com1DCB;
-extern dcb* com2DCB;
-extern dcb* com3DCB;
-extern dcb* com4DCB;
 
 enum uart_registers
 {
@@ -208,7 +205,7 @@ int serial_open(device dev, int baudRate) {
 			com1DCB -> outIndex = 0;
 
 			//Needs vector and pointer to function to call
-			idt_install(0x24, (int)serial_isr);
+			//idt_install(0x24, (int)serial_isr());
 
 			//Compute baud rate divisor
 			int baudRateDiv = 115200 / (long)baudRate; //find baud rate
@@ -285,26 +282,28 @@ int serial_read(device dev, char* buf, size_t len){
 			return 304;
 		}
 
-		com1DCB -> inCount = 0;
+		com1DCB -> count = 0;
 		com1DCB -> op = READ;
 		com1DCB -> eFlag = 0;
 		cli();
 		//Copy contents of ring buffer to requestors buffer
 		while(com1DCB-> inIndex != com1DCB-> outIndex){
 
-			if(com1DCB->ringBuffer[outIndex] == '\n' || com1DCB->ringBuffer[outIndex] == '\r'){
-				outIndex++;
-				outIndex %= sizeof(com1DCB -> ringBuffer);
-				ringCount++;
+			if(com1DCB->ringBuffer[com1DCB->outIndex] == '\n' || com1DCB->ringBuffer[com1DCB->outIndex] == '\r'){
+				com1DCB->count++;
+				com1DCB->outIndex++;
+				com1DCB->outIndex %= sizeof(com1DCB -> ringBuffer);
+				com1DCB->ringCount++;
 				break;
 			}
-			if(ringCount == len){
+			if(com1DCB->ringCount == len){
 				break;
 			}
-			*buf = com1DCB ->ringBuffer[outIndex];
-			outIndex++;
-			outIndex %= sizeof(com1DCB -> ringBuffer);
-			ringCount++;
+			com1DCB->count++;
+			*buf = com1DCB ->ringBuffer[com1DCB->outIndex];
+			com1DCB->outIndex++;
+			com1DCB->outIndex %= sizeof(com1DCB -> ringBuffer);
+			com1DCB->ringCount++;
 			buf++;
 		}
 		com1DCB -> op = IDLE;
@@ -313,6 +312,8 @@ int serial_read(device dev, char* buf, size_t len){
 
 		return 0;
 	}
+
+	return 0;
 
 }
 
@@ -333,23 +334,23 @@ int serial_write(device dev, char* buf, size_t len){
 		com1DCB -> buffer = buf;
 		com1DCB -> count = len;
 		com1DCB->eFlag = 1;
-		outb(COM1, *com1DCB-> buffer)
+		outb(COM1, *com1DCB-> buffer);
 
 		int mask = inb(dev + IER);
 		mask |= (0b00000010);
 		outb(dev + IER, mask);
+
 	}
+
+	return 0;
 
 }
 
 
 void serial_interrupt(void){
 	cli();
-		if(com1DCB == NULL){
-			return 401;
-		}
-		int mask = inb(dev + IIR);
-		if (mask & 0b1 == 0b1){
+		int mask = inb(COM1 + IIR);
+		if ((mask & 0b1) == 0b1){
 			//add return code
 			sti();
 			return; 
@@ -361,7 +362,7 @@ void serial_interrupt(void){
 				//inb(LSR, )
 			}
 			else if(mask == 0b010){
-				serial_output_interrupt();
+				serial_output_interrupt(com1DCB);
 			}
 			else if(mask == 0b100){
 				//serial_input_interrupt();
@@ -374,24 +375,60 @@ void serial_interrupt(void){
 	}
 
 void serial_input_interrupt(struct dcb *dcb){
-	if (dcb -> status == 0){
-		char character = inb(COM1);
-		dcb -> ringBuffer = //whatever char you read in 
-		if (size != 100){
-			ringbuffer[size] = character;
-			size++;
+
+	char character = inb(COM1);
+	if (dcb -> op != READ){
+
+
+		if(dcb->ringCount > sizeof(dcb->ringBuffer)){
+			dcb -> ringBuffer[dcb->ringCount] = character;
+
 		}
+
+		return;
+
+	}
+	*(dcb->buffer + dcb->count) = character;
+	dcb->count++;
+
+	if(dcb->count < dcb->buffer_len && character != '\n' && character != '\r'){
+		return;
 	}
 
+	dcb->op = IDLE;
+	dcb->eFlag = 1;
+
+	//return dcb->count;
+
 }
+
+
 
 void serial_output_interrupt(struct dcb *dcb){
 	if (dcb -> op != WRITE){
 		return;
 	}
 	else{
-		if (count < size){
+		if (com1DCB->count != 0 ){
 
+			outb(COM1,*com1DCB -> buffer);
+			com1DCB->buffer++;
+			com1DCB->count--;
+
+			return;
+
+		}
+		else{
+			com1DCB ->op = IDLE;
+			com1DCB->eFlag = 1;
+
+			int mask = inb(COM1 + IER);
+			mask |= (0b00000000);
+			outb(COM1 + IER, mask);
+
+			//return com1DCB -> count;
 		}
 	}
 }
+
+

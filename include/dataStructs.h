@@ -45,10 +45,11 @@ typedef struct dcb{
     // 1 when operation is complete, 0 at the beginning of the operation
     int eFlag;
     char* buffer;
-    int count;
+    size_t count;
+    size_t buffer_len;
     iocbQueue* iocbQ;
     char ringBuffer[16];
-    int ringCount;
+    size_t ringCount;
     int inIndex;
     int outIndex;
 } dcb;

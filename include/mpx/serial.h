@@ -64,4 +64,8 @@ int serial_read(device dev, char* buf, size_t len);
 
 int serial_write(device dev, char* buf, size_t len);
 
+void serial_input_interrupt(struct dcb *dcb);
+
+void serial_output_interrupt(struct dcb *dcb);
+
 #endif
