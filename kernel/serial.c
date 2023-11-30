@@ -227,7 +227,7 @@ int serial_open(device dev, int baudRate) {
 			//set pic mask register ????????????
 			cli();
 			int mask = inb(0x21);
-			mask &= (0b11101111);
+			mask &= (0xEF);
 			outb(0x21, mask);
 			sti();
 			
@@ -254,7 +254,7 @@ int serial_close(device dev) {
 		//Disable pic
 		cli();
 		int mask = inb(0x21);
-		mask |= (0b00010000);
+		mask |= (0x10);
 		outb(0x21, mask);
 		sti();
 
@@ -337,7 +337,7 @@ int serial_write(device dev, char* buf, size_t len){
 		outb(COM1, *com1DCB-> buffer);
 
 		int mask = inb(dev + IER);
-		mask |= (0b00000010);
+		mask |= (0x02);
 		outb(dev + IER, mask);
 
 	}
@@ -350,24 +350,24 @@ int serial_write(device dev, char* buf, size_t len){
 void serial_interrupt(void){
 	cli();
 		int mask = inb(COM1 + IIR);
-		if ((mask & 0b1) == 0b1){
+		if ((mask & 0x01) == 0x01){
 			//add return code
 			sti();
 			return; 
 		}
 
 		else {
-			if (mask == 0b000){
+			if (mask == 0x00){
 				//ask nate
 				//inb(LSR, )
 			}
-			else if(mask == 0b010){
+			else if(mask == 0x02){
 				serial_output_interrupt(com1DCB);
 			}
-			else if(mask == 0b100){
+			else if(mask == 0x04){
 				//serial_input_interrupt();
 			}
-			else if(mask == 0b110){
+			else if(mask == 0x06){
 				//also ask nate
 			}
 			outb(0x21, 0x20);
@@ -423,7 +423,7 @@ void serial_output_interrupt(struct dcb *dcb){
 			com1DCB->eFlag = 1;
 
 			int mask = inb(COM1 + IER);
-			mask |= (0b00000000);
+			mask |= (0x00);
 			outb(COM1 + IER, mask);
 
 			//return com1DCB -> count;

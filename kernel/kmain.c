@@ -18,9 +18,7 @@ extern queue *susReady;
 extern queue *susBlocked;
 
 extern dcb* com1DCB;
-extern dcb* com2DCB;
-extern dcb* com3DCB;
-extern dcb* com4DCB;
+
 
 static void klogv(device dev, const char *msg)
 {
@@ -104,9 +102,7 @@ void kmain(void)
 	// Pass execution to your command handler so the user can interact with
 	// the system.
 	dcb* com1DCB = sys_alloc_mem(sizeof(dcb));
-	dcb* com2DCB = sys_alloc_mem(sizeof(dcb));
-	dcb* com3DCB = sys_alloc_mem(sizeof(dcb));
-	dcb* com4DCB = sys_alloc_mem(sizeof(dcb));
+
 	
 	// Adjusting time back 4 hours to account for system time
 	// This technically should adjust the month back if hours < 4 and day is = 1, and then year...
