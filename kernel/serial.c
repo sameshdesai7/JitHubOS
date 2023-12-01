@@ -6,6 +6,7 @@
 #include <mpx/interrupts.h>
 
 extern dcb* com1DCB;
+extern void serial_isr(void*);
 
 enum uart_registers
 {
@@ -205,7 +206,7 @@ int serial_open(device dev, int baudRate) {
 			com1DCB -> outIndex = 0;
 
 			//Needs vector and pointer to function to call
-			//idt_install(0x24, (int)serial_isr());
+			idt_install(0x24, serial_isr);
 
 			//Compute baud rate divisor
 			int baudRateDiv = 115200 / (long)baudRate; //find baud rate
@@ -365,7 +366,7 @@ void serial_interrupt(void){
 				serial_output_interrupt(com1DCB);
 			}
 			else if(mask == 0x04){
-				//serial_input_interrupt();
+				serial_input_interrupt(com1DCB);
 			}
 			else if(mask == 0x06){
 				//also ask nate

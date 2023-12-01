@@ -102,7 +102,11 @@ void kmain(void)
 	// Pass execution to your command handler so the user can interact with
 	// the system.
 	dcb* com1DCB = sys_alloc_mem(sizeof(dcb));
-	com1DCB ->count = 0;
+	com1DCB -> count = 0;
+
+	char* test = "test";
+
+	serial_write(COM1, test, sizeof(test));
 
 	
 	// Adjusting time back 4 hours to account for system time
