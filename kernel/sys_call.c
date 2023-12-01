@@ -8,7 +8,7 @@
 
 extern queue* ready;
 extern queue* blocked;
-
+extern dcb* com1DCB;
 
 pcb* cop = NULL;
 context* original_context = NULL;
@@ -67,10 +67,14 @@ context* sys_call(context* proc_context) {
         iocb->op = EAX;
         iocb->pcb = cop;
         iocb->dcb = NULL;
-        iocb->buffa = NULL;
+        iocb->buffa = sys_alloc_mem(100 * sizeof(char));
         iocb->buffaSize = 0;
         iocb->next = NULL;
         iocb->state = NULL;
+
+        if (original_context == NULL) {
+            original_context = proc_context;
+        }
 
         str_copy(iocb->buffa, (char*)proc_context->ECX, 0, sizeof(proc_context->ECX));
 
@@ -81,7 +85,7 @@ context* sys_call(context* proc_context) {
         cop->state = "blocked";
         enqueue(blocked, cop);
 
-        ioSchedule(iocb, (dcb*)proc_context->EBX);
+        ioSchedule(iocb, com1DCB);
 
         pcb* temp = dequeue(ready);
         if (temp == NULL) {
