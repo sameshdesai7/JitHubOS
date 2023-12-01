@@ -6,6 +6,7 @@
 #include <scheduler.h>
 #include <string.h>
 #include <memory.h> 
+#include <mpx/serial.h>
 
 extern queue* ready;
 extern queue* blocked;
@@ -87,6 +88,14 @@ context* sys_call(context* proc_context) {
         enqueue(blocked, cop);
 
         ioSchedule(iocb, com1DCB);
+
+
+        if (com1DCB -> op == WRITE){
+            serial_write(COM1, (char*)proc_context->ECX, proc_context->EDX);
+        }
+        if (com1DCB -> op == READ){
+
+        }
 
         pcb* temp = dequeue(ready);
         if (temp == NULL) {

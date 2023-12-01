@@ -8,7 +8,7 @@ extern queue* blocked;
 
 int ioSchedule(iocb* request, dcb* device){
 
-    if(!(request->op == READ || request->op == WRITE)){
+    if(request->op == IDLE){
         //Maybe add error code?
         return -1;
     }
