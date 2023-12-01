@@ -17,7 +17,7 @@ extern queue *blocked;
 extern queue *susReady;
 extern queue *susBlocked;
 
-extern dcb* com1DCB;
+dcb* com1DCB;
 
 
 static void klogv(device dev, const char *msg)
