@@ -17,8 +17,8 @@ extern queue *blocked;
 extern queue *susReady;
 extern queue *susBlocked;
 
-dcb* com1DCB;
-
+dcb com1DCBStatic = {.status = 0, .op = IDLE, .eFlag = 0, .buffer = NULL, .count = 0, .buffer_len = 0, .iocbQ = NULL, .ringCount = 0, .inIndex = 0, .outIndex = 0};
+dcb* com1DCB = &com1DCBStatic;
 
 static void klogv(device dev, const char *msg)
 {
@@ -102,16 +102,22 @@ void kmain(void)
 	// Pass execution to your command handler so the user can interact with
 	// the system.
 	dcb* com1DCB = sys_alloc_mem(sizeof(dcb));
-	com1DCB -> status = 0;
-	com1DCB -> op = IDLE;
-	com1DCB -> eFlag = 0;
-	com1DCB -> buffer = NULL;
-	com1DCB -> count = 0;
-	com1DCB -> buffer_len = 0;
-	com1DCB -> iocbQ = sys_alloc_mem(sizeof(iocbQueue));
-	com1DCB -> ringCount = 0;
-	com1DCB -> inIndex = 0;
-	com1DCB -> outIndex = 0; 
+	if(com1DCB == NULL){
+		klogv(COM1, "mem_alloc failed!");
+	}
+	else {
+		klogv(COM1, "hip hip hooray");
+	}
+	// com1DCB -> status = 0;
+	// com1DCB -> op = IDLE;
+	// com1DCB -> eFlag = 0;
+	// com1DCB -> buffer = NULL;
+	// com1DCB -> count = 0;
+	// com1DCB -> buffer_len = 0;
+	// com1DCB -> iocbQ = sys_alloc_mem(sizeof(iocbQueue));
+	// com1DCB -> ringCount = 0;
+	// com1DCB -> inIndex = 0;
+	// com1DCB -> outIndex = 0; 
 
 	serial_open(COM1, 1843200);
 	// Adjusting time back 4 hours to account for system time
