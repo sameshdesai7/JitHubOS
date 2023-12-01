@@ -39,6 +39,9 @@ char* itoa(int i, char* buffer);
     @param c The character to compare to a digit
     @return An integer indicating whether or not the character is a digit. Non-zero if true, 0 if false
 */
+
+int htoi (const char* hex);
+
 int isdigit(char c);
 
 /**

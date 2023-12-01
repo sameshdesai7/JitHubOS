@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <scheduler.h>
 #include <string.h>
+#include <memory.h> 
 
 extern queue* ready;
 extern queue* blocked;

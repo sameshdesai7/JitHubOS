@@ -67,6 +67,46 @@ char* itoa(int i, char* buffer)
 	return buffer;
 }
 
+int htoi(const char *hex) {
+    if (hex[0] == '\0') {
+        // Handle invalid input
+        return 0;
+    }
+
+    int result = 0;
+    int i = 0;
+
+    // Skip any leading "0x" or "0X"
+    if (hex[0] == '0' && (hex[1] == 'x' || hex[1] == 'X')) {
+        i += 2;
+    }
+
+    while (hex[i] != '\0') {
+        char currentChar = hex[i];
+
+        // Convert hexadecimal character to integer
+        int digit;
+        if (currentChar >= '0' && currentChar <= '9') {
+            digit = currentChar - '0';
+        } else if (currentChar >= 'a' && currentChar <= 'f') {
+            digit = 10 + (currentChar - 'a');
+        } else if (currentChar >= 'A' && currentChar <= 'F') {
+            digit = 10 + (currentChar - 'A');
+        } else {
+            // Invalid character encountered
+            return 0;
+        }
+
+        // Update the result
+        result = result * 16 + digit;
+
+        // Move to the next character
+        i++;
+    }
+
+    return result;
+}
+
 int isdigit(char c){
 	switch(c){
 		case '0': 
