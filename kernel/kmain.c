@@ -102,13 +102,18 @@ void kmain(void)
 	// Pass execution to your command handler so the user can interact with
 	// the system.
 	dcb* com1DCB = sys_alloc_mem(sizeof(dcb));
+	com1DCB -> status = 0;
+	com1DCB -> op = IDLE;
+	com1DCB -> eFlag = 0;
+	com1DCB -> buffer = NULL;
 	com1DCB -> count = 0;
+	com1DCB -> buffer_len = 0;
+	com1DCB -> iocbQ = sys_alloc_mem(sizeof(iocbQueue));
+	com1DCB -> ringCount = 0;
+	com1DCB -> inIndex = 0;
+	com1DCB -> outIndex = 0; 
 
-	char* test = "test";
-
-	serial_write(COM1, test, sizeof(test));
-
-	
+	serial_open(COM1, 1843200);
 	// Adjusting time back 4 hours to account for system time
 	// This technically should adjust the month back if hours < 4 and day is = 1, and then year...
 	outb(0x70, 0x04);
@@ -189,7 +194,7 @@ void kmain(void)
 
 	//Calling the assembly to start dispatching processes
 	__asm__ volatile ("int $0x60" :: "a"(IDLE));
-
+	serial_close(COM1);
 	// 10) System Shutdown -- *headers to be determined by your design*
 	// After your command handler returns, take care of any clean up that
 	// is necessary.
