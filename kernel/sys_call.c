@@ -66,6 +66,11 @@ context* sys_call(context* proc_context) {
         iocb* iocb = sys_alloc_mem(sizeof(iocb));
         iocb->op = EAX;
         iocb->pcb = cop;
+        iocb->dcb = NULL;
+        iocb->buffa = NULL;
+        iocb->buffaSize = 0;
+        iocb->next = NULL;
+        iocb->state = NULL;
 
         str_copy(iocb->buffa, (char*)proc_context->ECX, 0, sizeof(proc_context->ECX));
 
