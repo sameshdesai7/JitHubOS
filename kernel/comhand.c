@@ -286,7 +286,10 @@ void comhand()
 void printMenu()
 {
     // printf("\n");
-    sys_req(WRITE,"Hello buddies" ,14);
+    char* t_buf = sys_alloc_mem(15);
+    str_copy(t_buf,"Hello buddies",0,15);
+    t_buf[14] = 0;
+    sys_req(WRITE,COM1, t_buf,14);
     printf("Enter one of the following:\n");
     printf("1. Version\n");
     printf("2. Get Time\n");

@@ -85,8 +85,8 @@ context* sys_call(context* proc_context) {
             original_context = proc_context;
         }
 
-        str_copy(iocb->buffa, (char*)proc_context->ECX, 0, sizeof(proc_context->ECX));
-
+        // str_copy(iocb->buffa, (char*)proc_context->ECX, 0, proc_context->EDX);
+        iocb->buffa = (char*) proc_context->ECX;
         iocb->buffaSize = (int)proc_context->EDX;
 
         //Save context of current process and block it

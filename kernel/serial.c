@@ -10,7 +10,7 @@ extern void serial_isr(void*);
 
 enum uart_registers
 {
-	RBR = 0, // Receive Buffer
+	RBR = 0, // Receive Buffers
 	THR = 0, // Transmitter Holding
 	DLL = 0, // Divisor Latch LSB
 	IER = 1, // Interrupt Enable
@@ -227,17 +227,17 @@ int serial_open(device dev, int baudRate) {
 
 			outb(dev + FCR, 0xC7);
 
-			outb(dev+ IER, 0x01);
 			//set pic mask register ????????????
 			cli();
 			int mask = inb(0x21);
 			mask &= ~0x10;
 			outb(0x21, mask);
-			outb(dev + MCR, 0x0B);
+			outb(dev + MCR, 0x08);
 			sti();
-			inb(COM1);
 			//enable overall serial port interrupts
-
+			outb(dev+ IER, 0x01);
+			inb(COM1);
+			
 
 		}
 	} 
@@ -339,7 +339,7 @@ int serial_write(device dev, char* buf, size_t len){
 		outb(COM1, *com1DCB-> buffer);
 
 		cli();
-		int mask = inb(dev + IER);
+		unsigned char mask = inb(dev + IER);
 		mask |= (0x02);
 		outb(dev + IER, mask);
 		sti();
