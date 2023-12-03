@@ -328,9 +328,9 @@ int serial_write(device dev, char* buf, size_t len){
 			return 402;
 		}
 		// CHECK FOR INVALID COUNT ADDRESS OR COUNT VALUE?? PAGE 14/15 OF DOCUMENT
-		if(com1DCB -> op != IDLE){
-			return 404;
-		}
+		// if(com1DCB -> op != IDLE){
+		// 	return 404;
+		// }
 		com1DCB -> op = WRITE;
 		com1DCB -> buffer = buf;
 		com1DCB -> count = len;
