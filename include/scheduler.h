@@ -4,6 +4,6 @@
 
 int ioSchedule(iocb* request, dcb* device);
 
-int ioComplete(dcb* device);
+void ioComplete(dcb* device);
 
 #endif

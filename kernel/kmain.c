@@ -119,7 +119,7 @@ void kmain(void)
 	// com1DCB -> inIndex = 0;
 	// com1DCB -> outIndex = 0; 
 
-	serial_open(COM1, 1843200);
+	serial_open(COM1, 19200);
 	// Adjusting time back 4 hours to account for system time
 	// This technically should adjust the month back if hours < 4 and day is = 1, and then year...
 	outb(0x70, 0x04);

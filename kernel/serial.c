@@ -225,18 +225,19 @@ int serial_open(device dev, int baudRate) {
 			//store 0x03 in line control register
 			outb(dev + LCR, 0x03);
 
+			outb(dev + FCR, 0xC7);
+
+			outb(dev+ IER, 0x01);
 			//set pic mask register ????????????
 			cli();
 			int mask = inb(0x21);
-			mask &= (0xEF);
+			mask &= ~0x10;
 			outb(0x21, mask);
+			outb(dev + MCR, 0x0B);
 			sti();
-			
+			inb(COM1);
 			//enable overall serial port interrupts
-			outb(dev + MCR, 0x08);
 
-			//Enable input ready interrupts 
-			outb(dev + IER, 0x01);
 
 		}
 	} 
@@ -334,33 +335,34 @@ int serial_write(device dev, char* buf, size_t len){
 		com1DCB -> op = WRITE;
 		com1DCB -> buffer = buf;
 		com1DCB -> count = len;
-		com1DCB->eFlag = 1;
+		com1DCB->eFlag = 0;
 		outb(COM1, *com1DCB-> buffer);
 
+		cli();
 		int mask = inb(dev + IER);
 		mask |= (0x02);
 		outb(dev + IER, mask);
+		sti();
+
 
 	}
 
-	return 0;
+	return 1;
 
 }
 
 
 void serial_interrupt(void){
-	cli();
+	
 		int mask = inb(COM1 + IIR);
-		if ((mask & 0x01) == 0x01){
-			//add return code
-			sti();
-			return; 
+		serial_out(COM1,"hi from the interrrupt handler\0",31);
+		if(!com1DCB){
+			return;
 		}
-
 		else {
 			if (mask == 0x00){
 				//ask nate
-				//inb(LSR, )
+				inb(COM1 + MSR);
 			}
 			else if(mask == 0x02){
 				serial_output_interrupt(com1DCB);
@@ -370,6 +372,7 @@ void serial_interrupt(void){
 			}
 			else if(mask == 0x06){
 				//also ask nate
+				inb(COM1 + LSR);
 			}
 			outb(0x21, 0x20);
 		}

@@ -19,7 +19,13 @@ context* original_context = NULL;
 context* sys_call(context* proc_context) {
 
     int EAX = proc_context->EAX;
-    
+    while(!ready->head){
+            ioComplete(com1DCB);
+            sti();
+            
+        }
+    cli();
+
     //If EAX is IDLE, meaning the process is only giving up control of the CPU for the time being, we save the context of the current process (if there is one) and put it back in the ready queue
     if (EAX == IDLE) {
 
@@ -98,12 +104,6 @@ context* sys_call(context* proc_context) {
 
         }
 
-
-        do{
-            ioComplete(com1DCB);
-            sti();
-        }while(!ready->head);
-        cli();
 
         pcb* temp = dequeue(ready);
         if (temp == NULL) {
