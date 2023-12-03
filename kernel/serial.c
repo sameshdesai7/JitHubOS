@@ -357,33 +357,33 @@ int serial_write(device dev, char* buf, size_t len){
 
 void serial_interrupt(void){
 	
-		serial_out(COM1,"hi from the interrrupt handler",31);
+		// serial_out(COM1,"hi from the interrrupt handler",31);
 		int mask = inb(COM1 + IIR);
 		if(com1DCB->status == 1){
-			serial_out(COM1, "a",1);
+			// serial_out(COM1, "a",1);
 			return;
 		}
 		else {
 			if ((mask & 0x06) == 0x00){
-				serial_out(COM1, "1",1);
+				// serial_out(COM1, "1",1);
 				//ask nate
 				inb(COM1 + MSR);
 			}
 			else if((mask & 0x06) == 0x02){
-				serial_out(COM1, "2",1);
+				// serial_out(COM1, "2",1);
 				serial_output_interrupt(com1DCB);
 			}
 			else if((mask & 0x06) == 0x04){
-				serial_out(COM1, "3",1);
+				// serial_out(COM1, "3",1);
 				serial_input_interrupt(com1DCB);
 			}
 			else if((mask & 0x06) == 0x06){
-				serial_out(COM1, "4",1);
+				// serial_out(COM1, "4",1);
 				//also ask nate
 				inb(COM1 + LSR);
 			}
 			else{
-				serial_out(COM1, "5",1);
+				// serial_out(COM1, "5",1);
 			}
 			outb(0x20, 0x20);
 		}
@@ -423,20 +423,20 @@ void serial_input_interrupt(struct dcb *dcb){
 
 void serial_output_interrupt(struct dcb *dcb){
 
-	serial_out(COM1, "o",1);
-
+	// serial_out(COM1, "o",1);
+	
 	iocb* iocbPtr = dcb->iocbQ->head;
-	serial_out(COM1, "i",1);
+	// serial_out(COM1, "i",1);
 	if (dcb -> op != WRITE){
-		serial_out(COM1, "1",1);
+		// serial_out(COM1, "1",1);
 		return;
 	}
 
 	else{
 
-		serial_out(COM1, "2",1);
+		// serial_out(COM1, "2",1);
 		if (iocbPtr->buffaSize != 0 ){
-			serial_out(COM1, "3",1);
+			// serial_out(COM1, "3",1);
 			iocbPtr->buffa++;
 			outb(COM1,*iocbPtr -> buffa);
 			iocbPtr->buffaSize--;
@@ -444,7 +444,7 @@ void serial_output_interrupt(struct dcb *dcb){
 
 		}
 		else{
-			serial_out(COM1, "4",1);
+			// serial_out(COM1, "4",1);
 			com1DCB ->op = IDLE;
 			com1DCB->eFlag = 1;
 
