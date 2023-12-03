@@ -2,6 +2,7 @@
 #include <string.h>
 #include <sys_req.h>
 #include <stdlib.h>
+#include <memory.h> 
 
 void putc(char c){
     sys_req(WRITE, COM1, &c, strlen(&c));
@@ -13,6 +14,9 @@ void puts(const char* s){
 
 
 void printf(const char* format, ...){
+
+    char* stringBuild = (char*)sys_alloc_mem(512);
+    
 
     int* argumentPta = (int*)&format;
     argumentPta++;
@@ -40,7 +44,7 @@ void printf(const char* format, ...){
             argumentPta++;
         }
         else{
-            putc(*format);
+            stringBuild+=*format;
         }
         format++;
     }
