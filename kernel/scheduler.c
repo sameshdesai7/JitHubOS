@@ -19,15 +19,16 @@ int ioSchedule(iocb* request, dcb* device){
     }
     
     // if device is busy
-    if (device->status == 1){
-        iocbEnqueue(device->iocbQ, request);
-        return 0;
-    } else{
+    
+    if (device->iocbQ->head == NULL){
+        
         device->op = request->op;
         device->buffer_len = request->buffaSize;
         device->buffer = request->buffa;
-        return 0;
+        
     }
+
+    iocbEnqueue(device->iocbQ, request);
 
     return 0;
 }

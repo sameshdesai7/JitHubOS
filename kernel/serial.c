@@ -204,6 +204,8 @@ int serial_open(device dev, int baudRate) {
 			com1DCB -> inIndex = 0;
 			com1DCB -> outIndex = 0;
 
+			com1DCB->iocbQ = sys_alloc_mem(sizeof(iocbQueue));
+
 			//Needs vector and pointer to function to call
 			idt_install(0x24, serial_isr);
 
@@ -389,6 +391,7 @@ void serial_interrupt(void){
 
 void serial_input_interrupt(struct dcb *dcb){
 
+
 	char character = inb(COM1);
 	if (dcb -> op != READ){
 
@@ -401,6 +404,7 @@ void serial_input_interrupt(struct dcb *dcb){
 		return;
 
 	}
+
 	*(dcb->buffer + dcb->count) = character;
 	dcb->count++;
 
@@ -421,14 +425,18 @@ void serial_output_interrupt(struct dcb *dcb){
 
 	serial_out(COM1, "o",1);
 
-	iocb* iocbPtr = dcb->iocbQ-> head ;
+	iocb* iocbPtr = dcb->iocbQ->head;
+	serial_out(COM1, "i",1);
 	if (dcb -> op != WRITE){
+		serial_out(COM1, "1",1);
 		return;
 	}
 
 	else{
-		if (iocbPtr->buffaSize != 0 ){
 
+		serial_out(COM1, "2",1);
+		if (iocbPtr->buffaSize != 0 ){
+			serial_out(COM1, "3",1);
 			iocbPtr->buffa++;
 			outb(COM1,*iocbPtr -> buffa);
 			iocbPtr->buffaSize--;
@@ -436,6 +444,7 @@ void serial_output_interrupt(struct dcb *dcb){
 
 		}
 		else{
+			serial_out(COM1, "4",1);
 			com1DCB ->op = IDLE;
 			com1DCB->eFlag = 1;
 

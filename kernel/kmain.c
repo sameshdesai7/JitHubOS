@@ -115,6 +115,7 @@ void kmain(void)
 
 	// Adjusting time back 4 hours to account for system time
 	serial_open(COM1, 19200);
+	
 	// This technically should adjust the month back if hours < 4 and day is = 1, and then year...
 	outb(0x70, 0x04);
     int hours = inb(0x71);
