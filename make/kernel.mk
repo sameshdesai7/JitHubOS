@@ -22,5 +22,4 @@ KERNEL_OBJECTS=\
 	kernel/dataStructs.o\
 	kernel/sys_call.o\
 	kernel/alarm.o\
-	kernel/scheduler.o\
-	kernel/serial_isr.o
+	kernel/scheduler.o

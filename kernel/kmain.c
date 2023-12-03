@@ -102,12 +102,7 @@ void kmain(void)
 	// Pass execution to your command handler so the user can interact with
 	// the system.
 	dcb* com1DCB = sys_alloc_mem(sizeof(dcb));
-	if(com1DCB == NULL){
-		klogv(COM1, "mem_alloc failed!");
-	}
-	else {
-		klogv(COM1, "hip hip hooray");
-	}
+	if(com1DCB){}
 	// com1DCB -> status = 0;
 	// com1DCB -> op = IDLE;
 	// com1DCB -> eFlag = 0;

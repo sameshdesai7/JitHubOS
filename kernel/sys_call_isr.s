@@ -1,5 +1,6 @@
 bits 32
 global sys_call_isr
+global serial_isr
 
 ;;; System call interrupt handler. To be implemented in Module R3.
 extern sys_call			; The C function that sys_call_isr will call
@@ -34,3 +35,12 @@ sys_call_isr:
 	pop ecx
 	pop eax
 	iret
+
+extern serial_interrupt		
+serial_isr:
+	cli
+	call serial_interrupt
+	sti
+	iret
+	
+	

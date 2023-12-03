@@ -12,6 +12,8 @@
 #include <stdint.h>
 #include <mpx/gdt.h>
 
+extern void serial_isr(void*);
+
 struct gdt_entry {
         uint16_t limit_low;     /** first 16 bits of limit */
         uint16_t base_low;      /** first 16 bits of base */

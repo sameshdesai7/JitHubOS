@@ -335,6 +335,9 @@ int serial_write(device dev, char* buf, size_t len){
 		com1DCB -> buffer = buf;
 		com1DCB -> count = len;
 		com1DCB->eFlag = 0;
+
+   		while((inb(dev + LSR) & (1 << 5)) == 0);
+
 		outb(COM1, *com1DCB-> buffer);
 
 		cli();
@@ -342,7 +345,6 @@ int serial_write(device dev, char* buf, size_t len){
 		mask |= (0x02);
 		outb(dev + IER, mask);
 		sti();
-
 
 	}
 
@@ -353,8 +355,8 @@ int serial_write(device dev, char* buf, size_t len){
 
 void serial_interrupt(void){
 	
-		int mask = inb(COM1 + IIR);
 		serial_out(COM1,"hi from the interrrupt handler",31);
+		int mask = inb(COM1 + IIR);
 		if(com1DCB->status == 0){
 			return;
 		}
