@@ -7,6 +7,7 @@
 #include <string.h>
 #include <memory.h> 
 #include <mpx/serial.h>
+#include <mpx/interrupts.h>
 
 extern queue* ready;
 extern queue* blocked;
@@ -96,6 +97,13 @@ context* sys_call(context* proc_context) {
         if (com1DCB -> op == READ){
 
         }
+
+
+        do{
+            ioComplete(com1DCB);
+            sti();
+        }while(!ready->head);
+        cli();
 
         pcb* temp = dequeue(ready);
         if (temp == NULL) {
