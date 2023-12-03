@@ -17,7 +17,7 @@ extern queue *blocked;
 extern queue *susReady;
 extern queue *susBlocked;
 
-dcb com1DCBStatic = {.status = 0, .op = IDLE, .eFlag = 0, .buffer = NULL, .count = 0, .buffer_len = 0, .iocbQ = NULL, .ringCount = 0, .inIndex = 0, .outIndex = 0};
+dcb com1DCBStatic = {.status = 1, .op = IDLE, .eFlag = 0, .buffer = NULL, .count = 0, .buffer_len = 0, .iocbQ = NULL, .ringCount = 0, .inIndex = 0, .outIndex = 0};
 dcb* com1DCB = &com1DCBStatic;
 
 static void klogv(device dev, const char *msg)
@@ -101,8 +101,7 @@ void kmain(void)
 	// 9) YOUR command handler -- *create and #include an appropriate .h file*
 	// Pass execution to your command handler so the user can interact with
 	// the system.
-	dcb* com1DCB = sys_alloc_mem(sizeof(dcb));
-	if(com1DCB){}
+	
 	// com1DCB -> status = 0;
 	// com1DCB -> op = IDLE;
 	// com1DCB -> eFlag = 0;
@@ -196,7 +195,6 @@ void kmain(void)
 	//Calling the assembly to start dispatching processes
 	// __asm__ volatile ("int $0x24");
 	__asm__ volatile ("int $0x60" :: "a"(IDLE));
-	serial_close(COM1);
 	// 10) System Shutdown -- *headers to be determined by your design*
 	// After your command handler returns, take care of any clean up that
 	// is necessary.
