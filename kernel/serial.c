@@ -194,7 +194,6 @@ void backspace(int *pos, int* end, char* buffer, device dev){
 }
 
 int serial_open(device dev, int baudRate) {
-	serial_init(dev);
 	if(dev == COM1){
 		if(com1DCB->status == 1){
 			//0 for open 1 for closed
@@ -210,7 +209,7 @@ int serial_open(device dev, int baudRate) {
 
 			//Compute baud rate divisor
 			int baudRateDiv = 115200 / (long)baudRate; //find baud rate
-    		int remainder = 115200 % (long)baudRate;
+    		// int remainder = 115200 % (long)baudRate;
 
 			//disabel interupts
 			outb(dev + IER, 0x00);
@@ -219,21 +218,21 @@ int serial_open(device dev, int baudRate) {
 			outb(dev + LCR, 0x80);
 
 			//store baud rate div high bits in MSB
-			outb(dev + DLL, (int)baudRateDiv);
-			outb(dev + DLM, remainder);
+			outb(dev + DLL, (int)baudRateDiv & 0x00FF);
+			outb(dev + DLM, ((int)baudRateDiv & 0xFF00)>>8);
 
 			//store 0x03 in line control register
 			outb(dev + LCR, 0x03);
 
-			outb(dev + FCR, 0xC7);
+			// outb(dev + FCR, 0xC7);
 
 			//set pic mask register ????????????
 			cli();
 			int mask = inb(0x21);
 			mask &= ~0x10;
 			outb(0x21, mask);
-			outb(dev + MCR, 0x08);
 			sti();
+			outb(dev + MCR, 0x08);
 			//enable overall serial port interrupts
 			outb(dev+ IER, 0x01);
 			inb(COM1);
@@ -355,26 +354,26 @@ int serial_write(device dev, char* buf, size_t len){
 void serial_interrupt(void){
 	
 		int mask = inb(COM1 + IIR);
-		serial_out(COM1,"hi from the interrrupt handler\0",31);
-		if(!com1DCB){
+		serial_out(COM1,"hi from the interrrupt handler",31);
+		if(com1DCB->status == 0){
 			return;
 		}
 		else {
-			if (mask == 0x00){
+			if ((mask & 0x06) == 0x00){
 				//ask nate
 				inb(COM1 + MSR);
 			}
-			else if(mask == 0x02){
+			else if((mask & 0x06) == 0x02){
 				serial_output_interrupt(com1DCB);
 			}
-			else if(mask == 0x04){
+			else if((mask & 0x06) == 0x04){
 				serial_input_interrupt(com1DCB);
 			}
-			else if(mask == 0x06){
+			else if((mask & 0x06) == 0x06){
 				//also ask nate
 				inb(COM1 + LSR);
 			}
-			outb(0x21, 0x20);
+			outb(0x20, 0x20);
 		}
 	}
 
@@ -409,16 +408,18 @@ void serial_input_interrupt(struct dcb *dcb){
 
 
 void serial_output_interrupt(struct dcb *dcb){
+
+	iocb* iocbPtr = dcb->iocbQ-> head ;
 	if (dcb -> op != WRITE){
 		return;
 	}
+
 	else{
-		if (com1DCB->count != 0 ){
+		if (iocbPtr->buffaSize != 0 ){
 
-			outb(COM1,*com1DCB -> buffer);
-			com1DCB->buffer++;
-			com1DCB->count--;
-
+			iocbPtr->buffa++;
+			outb(COM1,*iocbPtr -> buffa);
+			iocbPtr->buffaSize--;
 			return;
 
 		}
@@ -427,7 +428,7 @@ void serial_output_interrupt(struct dcb *dcb){
 			com1DCB->eFlag = 1;
 
 			int mask = inb(COM1 + IER);
-			mask |= (0x00);
+			mask &= ~(0x02);
 			outb(COM1 + IER, mask);
 
 			//return com1DCB -> count;

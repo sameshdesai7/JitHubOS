@@ -119,8 +119,8 @@ void kmain(void)
 	// com1DCB -> inIndex = 0;
 	// com1DCB -> outIndex = 0; 
 
-	serial_open(COM1, 19200);
 	// Adjusting time back 4 hours to account for system time
+	serial_open(COM1, 19200);
 	// This technically should adjust the month back if hours < 4 and day is = 1, and then year...
 	outb(0x70, 0x04);
     int hours = inb(0x71);
@@ -199,6 +199,7 @@ void kmain(void)
     enqueue(ready, idlePCB);
 
 	//Calling the assembly to start dispatching processes
+	// __asm__ volatile ("int $0x24");
 	__asm__ volatile ("int $0x60" :: "a"(IDLE));
 	serial_close(COM1);
 	// 10) System Shutdown -- *headers to be determined by your design*
