@@ -16,8 +16,7 @@ void puts(const char* s){
 void printf(const char* format, ...){
 
     char* stringBuild = (char*)sys_alloc_mem(512);
-    
-
+    char* builder = stringBuild;
     int* argumentPta = (int*)&format;
     argumentPta++;
 
@@ -33,7 +32,8 @@ void printf(const char* format, ...){
                     break;
                 } case 's':
                 {
-                    stringBuild+=*argumentPta;
+                    *builder = *argumentPta;
+                    builder++;
                     break;
                 } case 'c':
                 {
@@ -44,7 +44,8 @@ void printf(const char* format, ...){
             argumentPta++;
         }
         else{
-            stringBuild+=*argumentPta;
+            *builder = *format;
+            builder++;
         }
         format++;
     }
