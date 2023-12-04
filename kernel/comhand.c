@@ -279,7 +279,7 @@ void comhand()
         else
         {
             printf("\033[0;31m");
-            puts("Invalid query\n");
+            printf("Invalid query\n: |%s|", buf);
             printf("\033[0;0m");
         }
 

@@ -286,6 +286,7 @@ int serial_read(device dev, char* buf, size_t len){
 		com1DCB -> op = READ;
 		com1DCB -> eFlag = INCOMPLETE;
 		cli();
+
 		//Copy contents of ring buffer to requestors buffer
 		while(com1DCB-> inIndex != com1DCB-> outIndex){
 
@@ -390,7 +391,7 @@ void serial_interrupt(void){
 	}
 
 void serial_input_interrupt(struct dcb *dcb){
-
+	
 	char character = inb(COM1);
 	if (dcb -> op != READ){
 
@@ -411,7 +412,7 @@ void serial_input_interrupt(struct dcb *dcb){
 	if(dcb->count < dcb->buffer_len && character != '\n' && character != '\r'){
 		return;
 	}
-
+	
 	dcb->op = IDLE;
 	dcb->eFlag = COMPLETE;
 
