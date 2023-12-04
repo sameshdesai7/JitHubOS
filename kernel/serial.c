@@ -397,6 +397,7 @@ void serial_input_interrupt(struct dcb *dcb){
 
 
 		if(dcb->ringCount > sizeof(dcb->ringBuffer)){
+		
 			dcb -> ringBuffer[dcb->ringCount] = character;
 
 		}
@@ -404,12 +405,29 @@ void serial_input_interrupt(struct dcb *dcb){
 		return;
 
 	}
-   
+
+	if(character == '\r'){
+		outb(COM1, '\r');
+		outb(COM1, '\n');
+		*(dcb->buffer + dcb->count) = '\0';
+	} else{
+
 	*(dcb->buffer + dcb->count) = character;
-	dcb->count++;
-	outb(COM1, character);
+		dcb->count++;
+		outb(COM1, character);
+	}
+   
+
 
 	if(dcb->count < dcb->buffer_len && character != '\n' && character != '\r'){
+		if(character == 127){
+
+		}
+		else if(character == '\033'){
+			character = inb(COM1);
+			character = inb(COM1);
+		}
+		
 		return;
 	}
 	
