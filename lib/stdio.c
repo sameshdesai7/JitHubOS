@@ -33,7 +33,7 @@ void printf(const char* format, ...){
                     break;
                 } case 's':
                 {
-                    puts((char*) *argumentPta);
+                    stringBuild+=*argumentPta;
                     break;
                 } case 'c':
                 {
@@ -44,8 +44,10 @@ void printf(const char* format, ...){
             argumentPta++;
         }
         else{
-            stringBuild+=*format;
+            stringBuild+=*argumentPta;
         }
         format++;
     }
+
+    sys_req(WRITE, COM1, stringBuild, strlen(stringBuild));
 }
