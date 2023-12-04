@@ -37,10 +37,10 @@ void ioComplete(dcb* device){
 
     if(com1DCB){
         if(com1DCB ->eFlag == 1){
-           pcb* temp = device->iocbQ->head->pcb;
-           temp -> state = "ready";
-            enqueue(ready, temp);
+            pcb* temp = device->iocbQ->head->pcb;
             pcb_remove(ready,blocked, susReady, susBlocked, temp);
+            temp -> state = "ready";
+            enqueue(ready, temp);
             ((context*)(device->iocbQ->head->pcb->stack_ptr))->EAX = device->count;
 
             iocb* temp1 = device->iocbQ->head;
