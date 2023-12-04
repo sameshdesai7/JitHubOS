@@ -391,7 +391,6 @@ void serial_interrupt(void){
 
 void serial_input_interrupt(struct dcb *dcb){
 
-
 	char character = inb(COM1);
 	if (dcb -> op != READ){
 
@@ -404,9 +403,10 @@ void serial_input_interrupt(struct dcb *dcb){
 		return;
 
 	}
-
+   
 	*(dcb->buffer + dcb->count) = character;
 	dcb->count++;
+	outb(COM1, character);
 
 	if(dcb->count < dcb->buffer_len && character != '\n' && character != '\r'){
 		return;
@@ -414,6 +414,8 @@ void serial_input_interrupt(struct dcb *dcb){
 
 	dcb->op = IDLE;
 	dcb->eFlag = COMPLETE;
+
+	
 
 	//return dcb->count;
 
