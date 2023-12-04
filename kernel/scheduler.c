@@ -36,7 +36,7 @@ int ioSchedule(iocb* request, dcb* device){
 void ioComplete(dcb* device){
 
     if(com1DCB){
-        if(com1DCB ->eFlag == 1){
+        if(com1DCB ->eFlag == COMPLETE){
             if (!device->iocbQ->head){
                 return;
             }

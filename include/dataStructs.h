@@ -8,6 +8,16 @@
  * @brief Data structures associated with processes and the functions to go with them. 
 */
 
+typedef enum{
+    OPEN,
+    CLOSED
+} status;
+
+typedef enum{
+    INCOMPLETE,
+    COMPLETE
+} eflag;
+
 typedef struct alarm {
     int hours;
     int minutes;

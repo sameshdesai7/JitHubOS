@@ -195,11 +195,11 @@ void backspace(int *pos, int* end, char* buffer, device dev){
 
 int serial_open(device dev, int baudRate) {
 	if(dev == COM1){
-		if(com1DCB->status == 1){
+		if(com1DCB->status == CLOSED){
 			//0 for open 1 for closed
-			com1DCB -> status = 0;
+			com1DCB -> status = OPEN;
 			com1DCB -> op = IDLE;
-			com1DCB -> eFlag = 0; 
+			com1DCB -> eFlag = INCOMPLETE; 
 			com1DCB -> ringCount = 0; 
 			com1DCB -> inIndex = 0;
 			com1DCB -> outIndex = 0;
@@ -249,10 +249,10 @@ int serial_open(device dev, int baudRate) {
 int serial_close(device dev) {
 	
 	if(dev == COM1){
-		if(com1DCB -> status == 1){
+		if(com1DCB -> status == CLOSED){
 			return 201;
 		}
-		com1DCB -> status = 1;
+		com1DCB -> status = CLOSED;
 
 		//Disable pic
 		cli();
@@ -274,7 +274,7 @@ int serial_close(device dev) {
 int serial_read(device dev, char* buf, size_t len){
 
 	if(dev == COM1){
-		if(com1DCB -> status == 1){
+		if(com1DCB -> status == CLOSED){
 			return 301;
 		}
 		if(buf == NULL){
@@ -284,7 +284,7 @@ int serial_read(device dev, char* buf, size_t len){
 
 		com1DCB -> count = 0;
 		com1DCB -> op = READ;
-		com1DCB -> eFlag = 0;
+		com1DCB -> eFlag = INCOMPLETE;
 		cli();
 		//Copy contents of ring buffer to requestors buffer
 		while(com1DCB-> inIndex != com1DCB-> outIndex){
@@ -307,7 +307,7 @@ int serial_read(device dev, char* buf, size_t len){
 			buf++;
 		}
 		com1DCB -> op = IDLE;
-		com1DCB -> eFlag = 1;
+		com1DCB -> eFlag = COMPLETE;
 		sti();
 
 		return 0;
@@ -320,7 +320,7 @@ int serial_read(device dev, char* buf, size_t len){
 int serial_write(device dev, char* buf, size_t len){
 	
 	if(dev == COM1){
-		if(com1DCB  -> status == 1){
+		if(com1DCB  -> status == CLOSED){
 			return 401;
 		}
 		if(buf == NULL){
@@ -333,7 +333,7 @@ int serial_write(device dev, char* buf, size_t len){
 		com1DCB -> op = WRITE;
 		com1DCB -> buffer = buf;
 		com1DCB -> count = len;
-		com1DCB->eFlag = 0;
+		com1DCB->eFlag = INCOMPLETE;
 
    		while((inb(dev + LSR) & (1 << 5)) == 0);
 
@@ -356,7 +356,7 @@ void serial_interrupt(void){
 	
 		// serial_out(COM1,"hi from the interrrupt handler",31);
 		int mask = inb(COM1 + IIR);
-		if(com1DCB->status == 1){
+		if(com1DCB->status == CLOSED){
 			// serial_out(COM1, "a",1);
 			return;
 		}
@@ -410,7 +410,7 @@ void serial_input_interrupt(struct dcb *dcb){
 	}
 
 	dcb->op = IDLE;
-	dcb->eFlag = 1;
+	dcb->eFlag = COMPLETE;
 
 	//return dcb->count;
 
@@ -443,7 +443,7 @@ void serial_output_interrupt(struct dcb *dcb){
 		else{
 			// serial_out(COM1, "4",1);
 			com1DCB ->op = IDLE;
-			com1DCB->eFlag = 1;
+			com1DCB->eFlag = COMPLETE;
 
 			int mask = inb(COM1 + IER);
 			mask &= ~(0x02);
