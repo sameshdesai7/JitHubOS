@@ -285,7 +285,7 @@ void comhand()
 
 void printMenu()
 {
-
+    printf("\n");
     printf("Enter one of the following:\n");
     printf("1. Version\n");
     printf("2. Get Time\n");

@@ -27,17 +27,22 @@ void printf(const char* format, ...){
                 case 'd':
                 {
                     char buffa[12] = {0};
-                    itoa(*argumentPta, buffa);
-                    puts(buffa);
+                    *builder = *itoa(*argumentPta, buffa);
+                    builder++;
                     break;
                 } case 's':
-                {
-                    *builder = *argumentPta;
-                    builder++;
+                {   
+                    char* strPta = (char*)*argumentPta;
+                    while(*strPta != '\0'){
+                        *builder = *strPta;
+                        builder++;
+                        strPta++;
+                    }
                     break;
                 } case 'c':
                 {
-                    putc(*argumentPta);
+                    *builder = *argumentPta;
+                    builder++;
                     break;
                 }
             }
