@@ -294,9 +294,13 @@ int serial_read(device dev, char* buf, size_t len){
 				com1DCB->outIndex++;
 				com1DCB->outIndex %= sizeof(com1DCB -> ringBuffer);
 				com1DCB->ringCount++;
+				com1DCB -> op = IDLE;
+				com1DCB -> eFlag = COMPLETE;
 				break;
 			}
 			if(com1DCB->ringCount == len){
+				com1DCB -> op = IDLE;
+				com1DCB -> eFlag = COMPLETE;
 				break;
 			}
 			com1DCB->count++;
@@ -306,8 +310,7 @@ int serial_read(device dev, char* buf, size_t len){
 			com1DCB->ringCount++;
 			buf++;
 		}
-		com1DCB -> op = IDLE;
-		com1DCB -> eFlag = COMPLETE;
+		
 		sti();
 
 		return 0;
