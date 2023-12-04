@@ -271,6 +271,10 @@ void comhand()
             puts("Type \"alarm\" to create a new alarm process with a set time and message. \n");
             printf("\033[0;0m");
         }
+        else if (strcmp_ic(buf, "clear") == 0){
+            const char* clearScreen = "\033[H\033[J";
+            sys_req(WRITE, COM1, clearScreen, 12);
+        }
 
         else
         {
