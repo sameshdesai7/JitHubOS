@@ -281,9 +281,6 @@ int serial_read(device dev, char* buf, size_t len){
 			return 302;
 		}
 		// CHECK FOR INVALID COUNT ADDRESS OR COUNT VALUE?? PAGE 14/15 OF DOCUMENT
-		if(com1DCB -> op != IDLE){
-			return 304;
-		}
 
 		com1DCB -> count = 0;
 		com1DCB -> op = READ;

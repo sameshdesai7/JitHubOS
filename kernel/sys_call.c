@@ -101,7 +101,7 @@ context* sys_call(context* proc_context) {
             serial_write(COM1, (char*)proc_context->ECX, proc_context->EDX);
         }
         if (com1DCB -> op == READ){
-
+            serial_read(COM1, (char*)proc_context->ECX, proc_context->EDX);
         }
 
 
