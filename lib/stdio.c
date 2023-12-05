@@ -3,6 +3,7 @@
 #include <sys_req.h>
 #include <stdlib.h>
 #include <memory.h> 
+#include <string.h>
 
 void putc(char c){
     sys_req(WRITE, COM1, &c, strlen(&c));
@@ -27,13 +28,17 @@ void printf(const char* format, ...){
                 case 'd':
                 {
                     char buffa[12] = {0};
-                    *builder = *itoa(*argumentPta, buffa);
-                    builder++;
+                    char* intPta = itoa(*argumentPta, buffa);
+                    while(*intPta){
+                        *builder = *intPta;
+                        builder++;
+                        intPta++;
+                    }
                     break;
                 } case 's':
                 {   
                     char* strPta = (char*)*argumentPta;
-                    while(*strPta != '\0'){
+                    while(*strPta){
                         *builder = *strPta;
                         builder++;
                         strPta++;

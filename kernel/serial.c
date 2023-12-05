@@ -444,7 +444,7 @@ void serial_input_interrupt(struct dcb *dcb)
 		outb(COM1, '\n');
 		*(dcb->buffer + dcb->count) = '\0';
 	}
-	else
+	else if(character != 127)
 	{
 		*(dcb->buffer + dcb->count) = character;
 		dcb->count++;
@@ -455,12 +455,12 @@ void serial_input_interrupt(struct dcb *dcb)
 	{
 		if (character == 127)
 		{
-				if(com1DCB->count>0){
-                    com1DCB->buffer[--(com1DCB->count)] = ' ';
-                    outb(COM1,'\b');
-                }
-                outb(COM1,' ');
-                outb(COM1,'\b');
+			if(com1DCB->count>0){
+				com1DCB->buffer[--(com1DCB->count)] = ' ';
+				outb(COM1,'\b');
+			}
+			outb(COM1,' ');
+			outb(COM1,'\b');
 		}
 
 	return;

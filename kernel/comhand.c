@@ -287,7 +287,7 @@ void comhand()
             printf("\033[0;0m");
         }
         else if (strcmp_ic(buf, "clear") == 0){
-            const char* clearScreen = "\033[H\n\033[J";
+            const char* clearScreen = "\033[H\033[J";
             sys_req(WRITE, COM1, clearScreen, 14);
             printf("\033[0;0m");
         }
