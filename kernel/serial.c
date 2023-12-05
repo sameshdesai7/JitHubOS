@@ -5,8 +5,8 @@
 #include <dataStructs.h>
 #include <mpx/interrupts.h>
 
-extern dcb* com1DCB;
-extern void serial_isr(void*);
+extern dcb *com1DCB;
+extern void serial_isr(void *);
 
 enum uart_registers
 {
@@ -90,53 +90,65 @@ int serial_poll(device dev, char *buffer, size_t len)
 				break;
 			}
 
-			else if(c == 127){ 	//backspace character
-				if (pos > 0) {
-						backspace(&pos, &end, buffer, dev);
-	
-				}
-			}
-
-			else if(c == 126){
-				if(pos < end){
-					outb(dev,buffer[pos++]);
+			else if (c == 127)
+			{ // backspace character
+				if (pos > 0)
+				{
 					backspace(&pos, &end, buffer, dev);
 				}
 			}
 
-			else if(c == 27 ){
-				for(int i =0; i < 100000; i++);
-				if (inb(dev + LSR) & 1){
+			else if (c == 126)
+			{
+				if (pos < end)
+				{
+					outb(dev, buffer[pos++]);
+					backspace(&pos, &end, buffer, dev);
+				}
+			}
+
+			else if (c == 27)
+			{
+				for (int i = 0; i < 100000; i++)
+					;
+				if (inb(dev + LSR) & 1)
+				{
 					char c2 = inb(dev);
-					if (c2 == 91){ 	//checks to see if an arrow key was hit
-						for(int i =0; i < 100000; i++);
-						if (inb(dev + LSR) & 1){
+					if (c2 == 91)
+					{ // checks to see if an arrow key was hit
+						for (int i = 0; i < 100000; i++)
+							;
+						if (inb(dev + LSR) & 1)
+						{
 							char c3 = inb(dev);
-							if (c3 == 68){ 	//left arrow key
-								if (pos > 0){
-									 pos--;
+							if (c3 == 68)
+							{ // left arrow key
+								if (pos > 0)
+								{
+									pos--;
 									outb(dev, '\b');
 								}
 							}
-							if (c3 == 67 && pos < end){  //right arrow key
+							if (c3 == 67 && pos < end)
+							{ // right arrow key
 								outb(dev, buffer[pos++]);
 							}
 						}
 					}
 				}
 			}
-			
-
 
 			else
 			{
-				if (pos < end){
+				if (pos < end)
+				{
 					int posTemp = pos;
 					char temp1 = buffer[pos];
 					char temp2 = buffer[pos + 1];
 					buffer[pos++] = c;
 					outb(dev, c);
-					while(temp2){
+					while (temp2)
+					{
 						buffer[pos++] = temp1;
 						outb(dev, temp1);
 						temp1 = temp2;
@@ -146,15 +158,15 @@ int serial_poll(device dev, char *buffer, size_t len)
 					outb(dev, temp1);
 					end++;
 					pos = ++posTemp;
-				for(int i = end; i > pos; i--) 
-					outb(dev, '\b');
+					for (int i = end; i > pos; i--)
+						outb(dev, '\b');
 				}
-				else{
+				else
+				{
 					buffer[pos++] = c;
 					end++;
 					outb(dev, c);
 				}
-				
 			}
 		}
 	}
@@ -162,27 +174,31 @@ int serial_poll(device dev, char *buffer, size_t len)
 	return (int)pos;
 }
 
-void backspace(int *pos, int* end, char* buffer, device dev){
-	if (*pos > 0){
-		if (*pos < *end){
+void backspace(int *pos, int *end, char *buffer, device dev)
+{
+	if (*pos > 0)
+	{
+		if (*pos < *end)
+		{
 			int posTemp = *pos;
 
-				while(buffer[*pos]){
-					outb(dev, '\b');
-					outb(dev, buffer[*pos]);
-					outb(dev, ' ');
-					buffer[*pos - 1] = buffer[*pos];
-					*pos = *pos + 1;
-				}
+			while (buffer[*pos])
+			{
+				outb(dev, '\b');
+				outb(dev, buffer[*pos]);
+				outb(dev, ' ');
+				buffer[*pos - 1] = buffer[*pos];
+				*pos = *pos + 1;
+			}
 			buffer[*pos - 1] = '\0';
 			*end = *end - 1;
 			*pos = posTemp - 1;
-					
-			for(int i = *end; i > *pos - 1; i--) 
-				outb(dev, '\b');
 
+			for (int i = *end; i > *pos - 1; i--)
+				outb(dev, '\b');
 		}
-		else {
+		else
+		{
 			buffer[--*pos] = '\0';
 			*end = *end - 1;
 			outb(dev, '\b');
@@ -190,292 +206,307 @@ void backspace(int *pos, int* end, char* buffer, device dev){
 			outb(dev, '\b');
 		}
 	}
-	return;	
+	return;
 }
 
-int serial_open(device dev, int baudRate) {
-	if(dev == COM1){
-		if(com1DCB->status == CLOSED){
-			//0 for open 1 for closed
-			com1DCB -> status = OPEN;
-			com1DCB -> op = IDLE;
-			com1DCB -> eFlag = INCOMPLETE; 
-			com1DCB -> ringCount = 0; 
-			com1DCB -> inIndex = 0;
-			com1DCB -> outIndex = 0;
+int serial_open(device dev, int baudRate)
+{
+	if (dev == COM1)
+	{
+		if (com1DCB->status == CLOSED)
+		{
+			// 0 for open 1 for closed
+			com1DCB->status = OPEN;
+			com1DCB->op = IDLE;
+			com1DCB->eFlag = INCOMPLETE;
+			com1DCB->ringCount = 0;
+			com1DCB->inIndex = 0;
+			com1DCB->outIndex = 0;
+			com1DCB->pos = 0;
+			com1DCB->end = 0;
 
 			com1DCB->iocbQ = sys_alloc_mem(sizeof(iocbQueue));
 
-			//Needs vector and pointer to function to call
+			// Needs vector and pointer to function to call
 			idt_install(0x24, serial_isr);
 
-			//Compute baud rate divisor
-			int baudRateDiv = 115200 / (long)baudRate; //find baud rate
-    		// int remainder = 115200 % (long)baudRate;
+			// Compute baud rate divisor
+			int baudRateDiv = 115200 / (long)baudRate; // find baud rate
+			// int remainder = 115200 % (long)baudRate;
 
-			//disabel interupts
+			// disabel interupts
 			outb(dev + IER, 0x00);
 
-			//store 0x80 in line control register
+			// store 0x80 in line control register
 			outb(dev + LCR, 0x80);
 
-			//store baud rate div high bits in MSB
+			// store baud rate div high bits in MSB
 			outb(dev + DLL, (int)baudRateDiv & 0x00FF);
-			outb(dev + DLM, ((int)baudRateDiv & 0xFF00)>>8);
+			outb(dev + DLM, ((int)baudRateDiv & 0xFF00) >> 8);
 
-			//store 0x03 in line control register
+			// store 0x03 in line control register
 			outb(dev + LCR, 0x03);
 
 			// outb(dev + FCR, 0xC7);
 
-			//set pic mask register ????????????
+			// set pic mask register ????????????
 			cli();
 			int mask = inb(0x21);
 			mask &= ~0x10;
 			outb(0x21, mask);
 			sti();
 			outb(dev + MCR, 0x08);
-			//enable overall serial port interrupts
-			outb(dev+ IER, 0x01);
+			// enable overall serial port interrupts
+			outb(dev + IER, 0x01);
 			inb(COM1);
-			
-
 		}
-	} 
+	}
 	return 0;
-
 }
 
-int serial_close(device dev) {
-	
-	if(dev == COM1){
-		if(com1DCB -> status == CLOSED){
+int serial_close(device dev)
+{
+
+	if (dev == COM1)
+	{
+		if (com1DCB->status == CLOSED)
+		{
 			return 201;
 		}
-		com1DCB -> status = CLOSED;
+		com1DCB->status = CLOSED;
 
-		//Disable pic
+		// Disable pic
 		cli();
 		int mask = inb(0x21);
 		mask |= (0x10);
 		outb(0x21, mask);
 		sti();
 
-		//Disble interupts
+		// Disble interupts
 		outb(dev + MSR, 0x00);
 		outb(dev + IER, 0x00);
 	}
 
 	return 0;
-
-
 }
 
-int serial_read(device dev, char* buf, size_t len){
+int serial_read(device dev, char *buf, size_t len)
+{
 
-	if(dev == COM1){
-		if(com1DCB -> status == CLOSED){
+	if (dev == COM1)
+	{
+		if (com1DCB->status == CLOSED)
+		{
 			return 301;
 		}
-		if(buf == NULL){
+		if (buf == NULL)
+		{
 			return 302;
 		}
 		// CHECK FOR INVALID COUNT ADDRESS OR COUNT VALUE?? PAGE 14/15 OF DOCUMENT
 
-		com1DCB -> count = 0;
-		com1DCB -> op = READ;
-		com1DCB -> eFlag = INCOMPLETE;
+		com1DCB->count = 0;
+		com1DCB->op = READ;
+		com1DCB->eFlag = INCOMPLETE;
 		cli();
 
-		//Copy contents of ring buffer to requestors buffer
-		while(com1DCB-> inIndex != com1DCB-> outIndex){
+		// Copy contents of ring buffer to requestors buffer
+		while (com1DCB->inIndex != com1DCB->outIndex)
+		{
 
-			if(com1DCB->ringBuffer[com1DCB->outIndex] == '\n' || com1DCB->ringBuffer[com1DCB->outIndex] == '\r'){
+			if (com1DCB->ringBuffer[com1DCB->outIndex] == '\n' || com1DCB->ringBuffer[com1DCB->outIndex] == '\r')
+			{
 				com1DCB->count++;
 				com1DCB->outIndex++;
-				com1DCB->outIndex %= sizeof(com1DCB -> ringBuffer);
+				com1DCB->outIndex %= sizeof(com1DCB->ringBuffer);
 				com1DCB->ringCount++;
-				com1DCB -> op = IDLE;
-				com1DCB -> eFlag = COMPLETE;
+				com1DCB->op = IDLE;
+				com1DCB->eFlag = COMPLETE;
 				break;
 			}
-			if(com1DCB->ringCount == len){
-				com1DCB -> op = IDLE;
-				com1DCB -> eFlag = COMPLETE;
+			if (com1DCB->ringCount == len)
+			{
+				com1DCB->op = IDLE;
+				com1DCB->eFlag = COMPLETE;
 				break;
 			}
 			com1DCB->count++;
-			*buf = com1DCB ->ringBuffer[com1DCB->outIndex];
+			*buf = com1DCB->ringBuffer[com1DCB->outIndex];
 			com1DCB->outIndex++;
-			com1DCB->outIndex %= sizeof(com1DCB -> ringBuffer);
+			com1DCB->outIndex %= sizeof(com1DCB->ringBuffer);
 			com1DCB->ringCount++;
 			buf++;
 		}
-		
+
 		sti();
 
 		return 0;
 	}
 
 	return 0;
-
 }
 
-int serial_write(device dev, char* buf, size_t len){
-	
-	if(dev == COM1){
-		if(com1DCB  -> status == CLOSED){
+int serial_write(device dev, char *buf, size_t len)
+{
+
+	if (dev == COM1)
+	{
+		if (com1DCB->status == CLOSED)
+		{
 			return 401;
 		}
-		if(buf == NULL){
+		if (buf == NULL)
+		{
 			return 402;
 		}
 		// CHECK FOR INVALID COUNT ADDRESS OR COUNT VALUE?? PAGE 14/15 OF DOCUMENT
 		// if(com1DCB -> op != IDLE){
 		// 	return 404;
 		// }
-		com1DCB -> op = WRITE;
-		com1DCB -> buffer = buf;
-		com1DCB -> count = len;
+		com1DCB->op = WRITE;
+		com1DCB->buffer = buf;
+		com1DCB->count = len;
 		com1DCB->eFlag = INCOMPLETE;
 
-   		while((inb(dev + LSR) & (1 << 5)) == 0);
+		while ((inb(dev + LSR) & (1 << 5)) == 0)
+			;
 
-		outb(COM1, *com1DCB-> buffer);
+		outb(COM1, *com1DCB->buffer);
 
 		cli();
 		unsigned char mask = inb(dev + IER);
 		mask |= (0x02);
 		outb(dev + IER, mask);
 		sti();
-
 	}
 
 	return 1;
-
 }
 
+void serial_interrupt(void)
+{
 
-void serial_interrupt(void){
-	
-		// serial_out(COM1,"hi from the interrrupt handler",31);
-		int mask = inb(COM1 + IIR);
-		if(com1DCB->status == CLOSED){
-			// serial_out(COM1, "a",1);
-			return;
-		}
-		else {
-			if ((mask & 0x06) == 0x00){
-				// serial_out(COM1, "1",1);
-				//ask nate
-				inb(COM1 + MSR);
-			}
-			else if((mask & 0x06) == 0x02){
-				// serial_out(COM1, "2",1);
-				serial_output_interrupt(com1DCB);
-			}
-			else if((mask & 0x06) == 0x04){
-				// serial_out(COM1, "3",1);
-				serial_input_interrupt(com1DCB);
-			}
-			else if((mask & 0x06) == 0x06){
-				// serial_out(COM1, "4",1);
-				//also ask nate
-				inb(COM1 + LSR);
-			}
-			else{
-				// serial_out(COM1, "5",1);
-			}
-			outb(0x20, 0x20);
-		}
+	int mask = inb(COM1 + IIR);
+	if (com1DCB->status == CLOSED)
+	{
+		// serial_out(COM1, "a",1);
+		return;
 	}
+	else
+	{
+		if ((mask & 0x06) == 0x00)
+		{
+			// serial_out(COM1, "1",1);
+			// ask nate
+			inb(COM1 + MSR);
+		}
+		else if ((mask & 0x06) == 0x02)
+		{
+			// serial_out(COM1, "2",1);
+			serial_output_interrupt(com1DCB);
+		}
+		else if ((mask & 0x06) == 0x04)
+		{
+			// serial_out(COM1, "3",1);
+			serial_input_interrupt(com1DCB);
+		}
+		else if ((mask & 0x06) == 0x06)
+		{
+			// serial_out(COM1, "4",1);
+			// also ask nate
+			inb(COM1 + LSR);
+		}
+		else
+		{
+			// serial_out(COM1, "5",1);
+		}
+		outb(0x20, 0x20);
+	}
+}
 
-void serial_input_interrupt(struct dcb *dcb){
-	
+void serial_input_interrupt(struct dcb *dcb)
+{
+
 	char character = inb(COM1);
-	if (dcb -> op != READ){
+	if (dcb->op != READ)
+	{
 
+		if (dcb->ringCount > sizeof(dcb->ringBuffer))
+		{
 
-		if(dcb->ringCount > sizeof(dcb->ringBuffer)){
-		
-			dcb -> ringBuffer[dcb->ringCount] = character;
-
+			dcb->ringBuffer[dcb->ringCount] = character;
 		}
 
 		return;
-
 	}
 
-	if(character == '\r'){
+	if (character == '\r')
+	{
 		outb(COM1, '\r');
 		outb(COM1, '\n');
 		*(dcb->buffer + dcb->count) = '\0';
-	} else{
-
-	*(dcb->buffer + dcb->count) = character;
+	}
+	else
+	{
+		*(dcb->buffer + dcb->count) = character;
 		dcb->count++;
 		outb(COM1, character);
+		com1DCB->pos++;
+		com1DCB->end++;
 	}
-   
 
-
-	if(dcb->count < dcb->buffer_len && character != '\n' && character != '\r'){
-		if(character == 127){
-
+	if (dcb->count < dcb->buffer_len && character != '\n' && character != '\r')
+	{
+		if (character == 127)
+		{
+			backspace(dcb->pos, dcb->end, dcb->buffer, COM1);
 		}
-		else if(character == '\033'){
-			character = inb(COM1);
-			character = inb(COM1);
-		}
-		
-		return;
-	}
-	
-	dcb->op = IDLE;
-	dcb->eFlag = COMPLETE;
 
-	
-
-	//return dcb->count;
-
+	return;
 }
 
+dcb->op = IDLE;
+dcb->eFlag = COMPLETE;
 
+// return dcb->count;
+}
 
-void serial_output_interrupt(struct dcb *dcb){
+void serial_output_interrupt(struct dcb *dcb)
+{
 
 	// serial_out(COM1, "o",1);
-	
-	iocb* iocbPtr = dcb->iocbQ->head;
+
+	iocb *iocbPtr = dcb->iocbQ->head;
 	// serial_out(COM1, "i",1);
-	if (dcb -> op != WRITE){
+	if (dcb->op != WRITE)
+	{
 		// serial_out(COM1, "1",1);
 		return;
 	}
 
-	else{
+	else
+	{
 
 		// serial_out(COM1, "2",1);
-		if (iocbPtr->buffaSize != 0 ){
+		if (iocbPtr->buffaSize != 0)
+		{
 			// serial_out(COM1, "3",1);
 			iocbPtr->buffa++;
-			outb(COM1,*iocbPtr -> buffa);
+			outb(COM1, *iocbPtr->buffa);
 			iocbPtr->buffaSize--;
 			return;
-
 		}
-		else{
+		else
+		{
 			// serial_out(COM1, "4",1);
-			com1DCB ->op = IDLE;
+			com1DCB->op = IDLE;
 			com1DCB->eFlag = COMPLETE;
 
 			int mask = inb(COM1 + IER);
 			mask &= ~(0x02);
 			outb(COM1 + IER, mask);
 
-			//return com1DCB -> count;
+			// return com1DCB -> count;
 		}
 	}
 }
-
-

@@ -20,9 +20,24 @@ extern queue *ready;
 extern queue *blocked;
 extern queue *susReady;
 extern queue *susBlocked;
+int logoFlag = 0;
 
 void comhand()
 {
+    
+    if(logoFlag == 0){
+        logoFlag= 1;
+        printf("\033[94;1;6m                                                                                             \n");
+        printf("                                                                                             \n");
+        printf("   `7MMF'`7MMF'MMP\"\"MM\"\"YMM `7MMF'  `7MMF'`7MMF'   `7MF'`7MM\"\"\"Yp,           .g8\"\"8q.    .M\"\"\"bgd \n");
+        printf("     MM    MM  P'   MM   `7   MM      MM    MM       M    MM    Yb         .dP'    `YM. ,MI    \"Y \n");
+        printf("     MM    MM       MM        MM      MM    MM       M    MM    dP         dM'      `MM `MMb.     \n");
+        printf("     MM    MM       MM        MMmmmmmmMM    MM       M    MM\"\"\"bg.         MM        MM   `YMMNq. \n");
+        printf("     MM    MM       MM        MM      MM    MM       M    MM    `Y         MM.      ,MP .     `MM \n");
+        printf(" 1   MM    MM       MM        MM      MM    YM.     ,M    MM    ,9         `Mb.    ,dP' Mb     dM \n");
+        printf(" `6mm9'  .JMML.   .JMML.    .JMML.  .JMML.   `bmmmmd\"'  .JMMmmmd9            `\"bmmd\"'   \"Ybmmd\"  \n");
+        printf("\033[0m                                                                                            \n");
+    } 
     // infinite loop
     for (;;)
     {
@@ -272,14 +287,15 @@ void comhand()
             printf("\033[0;0m");
         }
         else if (strcmp_ic(buf, "clear") == 0){
-            const char* clearScreen = "\033[H\033[J";
-            sys_req(WRITE, COM1, clearScreen, 12);
+            const char* clearScreen = "\033[H\n\033[J";
+            sys_req(WRITE, COM1, clearScreen, 14);
+            printf("\033[0;0m");
         }
 
         else
         {
             printf("\033[0;31m");
-            printf("Invalid query\n: |%s|", buf);
+            printf("Invalid query \'%s\'\n  ", buf);
             printf("\033[0;0m");
         }
 
