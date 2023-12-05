@@ -305,29 +305,33 @@ void comhand()
 
 void printMenu()
 {
-    printf("\n");
-    printf("Enter one of the following:\n");
-    printf("1. Version\n");
-    printf("2. Get Time\n");
-    printf("3. Set Time\n");
-    printf("4. Get Date\n");
-    printf("5. Set Date\n");
-    printf("6. Delete PCB\n");
-    printf("7. Block PCB\n");
-    printf("8. Unblock PCB\n");
-    printf("9. Suspend PCB\n");
-    printf("10. Resume PCB\n");
-    printf("11. Set PCB Priority\n");
-    printf("12. Show PCB\n");
-    printf("13. Show Ready\n");
-    printf("14. Show Blocked\n");
-    printf("15. Show All\n");
-    printf("16. Load R3\n");
-    printf("17. Alarm\n");
-    printf("18. Help\n");
-    printf("19. Shutdown\n");
-    printf("\n");
-    printf(">> ");
+
+    sys_req(WRITE, COM1, "hi", 2);
+    sys_req(WRITE, COM1, "hi", 2);
+    sys_req(WRITE, COM1, "1234567890", 10);
+    // printf("\n");
+    // printf("Enter one of the following:\n");
+    // printf("1. Version\n");
+    // printf("2. Get Time\n");
+    // printf("3. Set Time\n");
+    // printf("4. Get Date\n");
+    // printf("5. Set Date\n");
+    // printf("6. Delete PCB\n");
+    // printf("7. Block PCB\n");
+    // printf("8. Unblock PCB\n");
+    // printf("9. Suspend PCB\n");
+    // printf("10. Resume PCB\n");
+    // printf("11. Set PCB Priority\n");
+    // printf("12. Show PCB\n");
+    // printf("13. Show Ready\n");
+    // printf("14. Show Blocked\n");
+    // printf("15. Show All\n");
+    // printf("16. Load R3\n");
+    // printf("17. Alarm\n");
+    // printf("18. Help\n");
+    // printf("19. Shutdown\n");
+    // printf("\n");
+    // printf(">> ");
 }
 
 int shutdown()

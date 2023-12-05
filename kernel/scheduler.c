@@ -49,6 +49,7 @@ void ioComplete(dcb* device){
             iocb* temp1 = device->iocbQ->head;
             device->iocbQ->head = device->iocbQ->head->next;
             sys_free_mem(temp1);
+            temp1 = NULL;
         }
     }
 

@@ -90,6 +90,8 @@ void kmain(void)
 	// Page Tables, data structures that describe the logical-to-physical
 	// mapping as well as manage permissions and other metadata.
 	vm_init();
+	initialize_heap(50000);
+	sys_set_heap_functions(allocate_memory, free_memory);
 	klogv(COM1, "Initializing Virtual Memory...");
 
 	// 8) MPX Modules -- *headers vary*

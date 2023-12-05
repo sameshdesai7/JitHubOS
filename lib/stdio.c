@@ -61,4 +61,9 @@ void printf(const char* format, ...){
     }
 
     sys_req(WRITE, COM1, stringBuild, strlen(stringBuild));
+    sys_free_mem(stringBuild);
+    stringBuild = NULL;
+    builder = NULL;
+    argumentPta = NULL;
+    format = NULL;
 }
