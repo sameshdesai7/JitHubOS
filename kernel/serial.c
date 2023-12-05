@@ -337,7 +337,7 @@ int serial_read(device dev, char *buf, size_t len)
 		}
 
 		sti();
-
+		
 		return 0;
 	}
 
@@ -362,14 +362,12 @@ int serial_write(device dev, char *buf, size_t len)
 		// 	return 404;
 		// }
 		com1DCB->op = WRITE;
-		com1DCB->buffer = buf;
 		com1DCB->count = len;
 		com1DCB->eFlag = INCOMPLETE;
 
-		while ((inb(dev + LSR) & (1 << 5)) == 0)
-			;
+		while ((inb(dev + LSR) & (1 << 5)) == 0);
 
-		outb(COM1, *com1DCB->buffer);
+		outb(COM1, *buf);
 
 		cli();
 		unsigned char mask = inb(dev + IER);
@@ -387,37 +385,27 @@ void serial_interrupt(void)
 	int mask = inb(COM1 + IIR);
 	if (com1DCB->status == CLOSED)
 	{
-		// serial_out(COM1, "a",1);
 		return;
 	}
 	else
 	{
 		if ((mask & 0x06) == 0x00)
 		{
-			// serial_out(COM1, "1",1);
-			// ask nate
 			inb(COM1 + MSR);
 		}
 		else if ((mask & 0x06) == 0x02)
 		{
-			// serial_out(COM1, "2",1);
 			serial_output_interrupt(com1DCB);
 		}
 		else if ((mask & 0x06) == 0x04)
 		{
-			// serial_out(COM1, "3",1);
 			serial_input_interrupt(com1DCB);
 		}
 		else if ((mask & 0x06) == 0x06)
 		{
-			// serial_out(COM1, "4",1);
-			// also ask nate
 			inb(COM1 + LSR);
 		}
-		else
-		{
-			// serial_out(COM1, "5",1);
-		}
+		
 		outb(0x20, 0x20);
 	}
 }
@@ -442,7 +430,7 @@ void serial_input_interrupt(struct dcb *dcb)
 	{
 		outb(COM1, '\r');
 		outb(COM1, '\n');
-		*(dcb->buffer + dcb->count) = '\0';
+		dcb->buffer[dcb->count+1] = '\0';
 	}
 	else if(character != 127)
 	{
@@ -475,23 +463,17 @@ dcb->eFlag = COMPLETE;
 void serial_output_interrupt(struct dcb *dcb)
 {
 
-	// serial_out(COM1, "o",1);
-
 	iocb *iocbPtr = dcb->iocbQ->head;
-	// serial_out(COM1, "i",1);
 	if (dcb->op != WRITE)
 	{
-		// serial_out(COM1, "1",1);
 		return;
 	}
 
 	else
 	{
 
-		// serial_out(COM1, "2",1);
 		if (iocbPtr->buffaSize != 0)
 		{
-			// serial_out(COM1, "3",1);
 			iocbPtr->buffa++;
 			outb(COM1, *iocbPtr->buffa);
 			iocbPtr->buffaSize--;
@@ -499,7 +481,6 @@ void serial_output_interrupt(struct dcb *dcb)
 		}
 		else
 		{
-			// serial_out(COM1, "4",1);
 			com1DCB->op = IDLE;
 			com1DCB->eFlag = COMPLETE;
 
@@ -507,7 +488,6 @@ void serial_output_interrupt(struct dcb *dcb)
 			mask &= ~(0x02);
 			outb(COM1 + IER, mask);
 
-			// return com1DCB -> count;
 		}
 	}
 }

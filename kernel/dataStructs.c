@@ -3,6 +3,7 @@
 #include <string.h>
 #include "../include/stdlib.h"
 #include <context.h>
+#include <memory.h>
 
 queue readyQ = {.head = NULL, .tail = NULL, .pFlag = 1};
 queue *ready = &readyQ;

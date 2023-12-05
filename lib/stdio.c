@@ -15,8 +15,11 @@ void puts(const char* s){
 
 
 void printf(const char* format, ...){
-
-    char* stringBuild = (char*)sys_alloc_mem(512);
+    char arr[512] = {0};
+    char* stringBuild = arr;
+    if(stringBuild == NULL){
+        sys_req(WRITE, COM1, "UH OH!!!", 8);
+    }
     char* builder = stringBuild;
     int* argumentPta = (int*)&format;
     argumentPta++;
@@ -60,10 +63,12 @@ void printf(const char* format, ...){
         format++;
     }
 
+    *(builder+1) = '\0';
     sys_req(WRITE, COM1, stringBuild, strlen(stringBuild));
-    sys_free_mem(stringBuild);
+    // sys_free_mem(stringBuild);
     stringBuild = NULL;
     builder = NULL;
     argumentPta = NULL;
     format = NULL;
+    return;
 }

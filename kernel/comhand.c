@@ -11,6 +11,7 @@
 #include <dataStructs.h>
 #include <processes.h>
 #include <alarm.h>
+#include <memory.h>
 
 // compile constants to be used in version to show when the most recent compilation was
 #define COMPILE_DATE __DATE__
@@ -42,11 +43,13 @@ void comhand()
     for (;;)
     {
         // buffer for first input read in
-        char buf[100] = {0};
         // prints the menu that shows all of the choices
         printMenu();
+
+        char buf[100] = {0};
+        
         // reads in the first input
-        sys_req(READ, COM1, buf, sizeof(buf));
+        sys_req(READ, COM1, buf, 100);
 
         // Version Command
         if ((strcmp_ic(buf, "version") == 0) || (strcmp(buf, "1") == 0))
@@ -305,33 +308,29 @@ void comhand()
 
 void printMenu()
 {
-
-    sys_req(WRITE, COM1, "hi", 2);
-    sys_req(WRITE, COM1, "hi", 2);
-    sys_req(WRITE, COM1, "1234567890", 10);
-    // printf("\n");
-    // printf("Enter one of the following:\n");
-    // printf("1. Version\n");
-    // printf("2. Get Time\n");
-    // printf("3. Set Time\n");
-    // printf("4. Get Date\n");
-    // printf("5. Set Date\n");
-    // printf("6. Delete PCB\n");
-    // printf("7. Block PCB\n");
-    // printf("8. Unblock PCB\n");
-    // printf("9. Suspend PCB\n");
-    // printf("10. Resume PCB\n");
-    // printf("11. Set PCB Priority\n");
-    // printf("12. Show PCB\n");
-    // printf("13. Show Ready\n");
-    // printf("14. Show Blocked\n");
-    // printf("15. Show All\n");
-    // printf("16. Load R3\n");
-    // printf("17. Alarm\n");
-    // printf("18. Help\n");
-    // printf("19. Shutdown\n");
-    // printf("\n");
-    // printf(">> ");
+    printf("\n");
+    printf("Enter one of the following:\n");
+    printf("1. Version\n");
+    printf("2. Get Time\n");
+    printf("3. Set Time\n");
+    printf("4. Get Date\n");
+    printf("5. Set Date\n");
+    printf("6. Delete PCB\n");
+    printf("7. Block PCB\n");
+    printf("8. Unblock PCB\n");
+    printf("9. Suspend PCB\n");
+    printf("10. Resume PCB\n");
+    printf("11. Set PCB Priority\n");
+    printf("12. Show PCB\n");
+    printf("13. Show Ready\n");
+    printf("14. Show Blocked\n");
+    printf("15. Show All\n");
+    printf("16. Load R3\n");
+    printf("17. Alarm\n");
+    printf("18. Help\n");
+    printf("19. Shutdown\n");
+    printf("\n");
+    printf(">> ");
 }
 
 int shutdown()

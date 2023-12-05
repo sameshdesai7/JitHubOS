@@ -45,9 +45,7 @@ void ioComplete(dcb* device){
             temp -> state = "ready";
             enqueue(ready, temp);
             ((context*)(device->iocbQ->head->pcb->stack_ptr))->EAX = device->count;
-
-            iocb* temp1 = device->iocbQ->head;
-            device->iocbQ->head = device->iocbQ->head->next;
+            iocb* temp1 = iocbDequeue(device->iocbQ);
             sys_free_mem(temp1);
             temp1 = NULL;
         }

@@ -17,7 +17,6 @@ pcb* cop = NULL;
 context* original_context = NULL;
 
 context* sys_call(context* proc_context) {
-
     int EAX = proc_context->EAX;
     sti();
     do{
