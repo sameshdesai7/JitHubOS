@@ -17,7 +17,7 @@ extern queue *blocked;
 extern queue *susReady;
 extern queue *susBlocked;
 
-dcb com1DCBStatic = {.status = 1, .op = IDLE, .eFlag = 0, .buffer = NULL, .count = 0, .buffer_len = 0, .iocbQ = NULL, .ringCount = 0, .inIndex = 0, .outIndex = 0, .pos = 0, .end = 0};
+dcb com1DCBStatic = {.status = 1, .op = IDLE, .eFlag = 0, .buffer = NULL, .count = 0, .buffer_len = 0, .iocbQ = NULL, .ringCount = 0, .inIndex = 0, .outIndex = 0};
 dcb* com1DCB = &com1DCBStatic;
 
 static void klogv(device dev, const char *msg)

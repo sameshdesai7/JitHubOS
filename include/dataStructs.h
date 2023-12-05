@@ -62,8 +62,6 @@ typedef struct dcb{
     size_t ringCount;
     int inIndex;
     int outIndex;
-    int* pos;
-    int* end;
 } dcb;
 
 typedef struct iocb{

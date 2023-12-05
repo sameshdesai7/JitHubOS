@@ -222,8 +222,6 @@ int serial_open(device dev, int baudRate)
 			com1DCB->ringCount = 0;
 			com1DCB->inIndex = 0;
 			com1DCB->outIndex = 0;
-			com1DCB->pos = 0;
-			com1DCB->end = 0;
 
 			com1DCB->iocbQ = sys_alloc_mem(sizeof(iocbQueue));
 
@@ -451,15 +449,18 @@ void serial_input_interrupt(struct dcb *dcb)
 		*(dcb->buffer + dcb->count) = character;
 		dcb->count++;
 		outb(COM1, character);
-		com1DCB->pos++;
-		com1DCB->end++;
 	}
 
 	if (dcb->count < dcb->buffer_len && character != '\n' && character != '\r')
 	{
 		if (character == 127)
 		{
-			backspace(dcb->pos, dcb->end, dcb->buffer, COM1);
+				if(com1DCB->count>0){
+                    com1DCB->buffer[--(com1DCB->count)] = ' ';
+                    outb(COM1,'\b');
+                }
+                outb(COM1,' ');
+                outb(COM1,'\b');
 		}
 
 	return;
