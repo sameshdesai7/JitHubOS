@@ -1,0 +1,104 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Data Structure Index}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Data Structures}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}File Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}File List}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Data Structure Documentation}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}alarm Struct Reference}{5}{section.3.1}%
+\contentsline {section}{\numberline {3.2}context Struct Reference}{5}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Detailed Description}{6}{subsection.3.2.1}%
+\contentsline {section}{\numberline {3.3}dcb Struct Reference}{6}{section.3.3}%
+\contentsline {section}{\numberline {3.4}iocb Struct Reference}{6}{section.3.4}%
+\contentsline {section}{\numberline {3.5}iocb\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Queue Struct Reference}{7}{section.3.5}%
+\contentsline {section}{\numberline {3.6}pcb Struct Reference}{7}{section.3.6}%
+\contentsline {section}{\numberline {3.7}queue Struct Reference}{7}{section.3.7}%
+\contentsline {chapter}{\numberline {4}File Documentation}{9}{chapter.4}%
+\contentsline {section}{\numberline {4.1}include/alarm.h File Reference}{9}{section.4.1}%
+\contentsline {section}{\numberline {4.2}include/comhand.h File Reference}{9}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{10}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Function Documentation}{10}{subsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.1}alarm()}{11}{subsubsection.4.2.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2.2}blockPCB()}{11}{subsubsection.4.2.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.3}comhand()}{11}{subsubsection.4.2.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.2.4}createPCB()}{12}{subsubsection.4.2.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.2.5}deletePCB()}{12}{subsubsection.4.2.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.2.6}getDate()}{13}{subsubsection.4.2.2.6}%
+\contentsline {subsubsection}{\numberline {4.2.2.7}getTime()}{13}{subsubsection.4.2.2.7}%
+\contentsline {subsubsection}{\numberline {4.2.2.8}help()}{14}{subsubsection.4.2.2.8}%
+\contentsline {subsubsection}{\numberline {4.2.2.9}loadR3()}{14}{subsubsection.4.2.2.9}%
+\contentsline {subsubsection}{\numberline {4.2.2.10}printMenu()}{14}{subsubsection.4.2.2.10}%
+\contentsline {subsubsection}{\numberline {4.2.2.11}resumePCB()}{15}{subsubsection.4.2.2.11}%
+\contentsline {subsubsection}{\numberline {4.2.2.12}setDate()}{15}{subsubsection.4.2.2.12}%
+\contentsline {subsubsection}{\numberline {4.2.2.13}setPCBPriority()}{16}{subsubsection.4.2.2.13}%
+\contentsline {subsubsection}{\numberline {4.2.2.14}setTime()}{16}{subsubsection.4.2.2.14}%
+\contentsline {subsubsection}{\numberline {4.2.2.15}showAll()}{17}{subsubsection.4.2.2.15}%
+\contentsline {subsubsection}{\numberline {4.2.2.16}showBlocked()}{17}{subsubsection.4.2.2.16}%
+\contentsline {subsubsection}{\numberline {4.2.2.17}showPCB()}{18}{subsubsection.4.2.2.17}%
+\contentsline {subsubsection}{\numberline {4.2.2.18}showReady()}{18}{subsubsection.4.2.2.18}%
+\contentsline {subsubsection}{\numberline {4.2.2.19}shutdown()}{19}{subsubsection.4.2.2.19}%
+\contentsline {subsubsection}{\numberline {4.2.2.20}suspendPCB()}{19}{subsubsection.4.2.2.20}%
+\contentsline {subsubsection}{\numberline {4.2.2.21}unblockPCB()}{19}{subsubsection.4.2.2.21}%
+\contentsline {subsubsection}{\numberline {4.2.2.22}version()}{20}{subsubsection.4.2.2.22}%
+\contentsline {subsubsection}{\numberline {4.2.2.23}yield()}{20}{subsubsection.4.2.2.23}%
+\contentsline {section}{\numberline {4.3}include/context.h File Reference}{21}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{21}{subsection.4.3.1}%
+\contentsline {section}{\numberline {4.4}include/ctype.h File Reference}{21}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{21}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Function Documentation}{21}{subsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.2.1}isspace()}{21}{subsubsection.4.4.2.1}%
+\contentsline {section}{\numberline {4.5}include/data\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Structs.h File Reference}{22}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{23}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Function Documentation}{23}{subsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.2.1}dequeue()}{23}{subsubsection.4.5.2.1}%
+\contentsline {subsubsection}{\numberline {4.5.2.2}enqueue()}{24}{subsubsection.4.5.2.2}%
+\contentsline {subsubsection}{\numberline {4.5.2.3}iocbDequeue()}{24}{subsubsection.4.5.2.3}%
+\contentsline {subsubsection}{\numberline {4.5.2.4}iocbEnqueue()}{25}{subsubsection.4.5.2.4}%
+\contentsline {subsubsection}{\numberline {4.5.2.5}pcb\_allocate()}{25}{subsubsection.4.5.2.5}%
+\contentsline {subsubsection}{\numberline {4.5.2.6}pcb\_find()}{26}{subsubsection.4.5.2.6}%
+\contentsline {subsubsection}{\numberline {4.5.2.7}pcb\_free()}{26}{subsubsection.4.5.2.7}%
+\contentsline {subsubsection}{\numberline {4.5.2.8}pcb\_insert()}{27}{subsubsection.4.5.2.8}%
+\contentsline {subsubsection}{\numberline {4.5.2.9}pcb\_remove()}{27}{subsubsection.4.5.2.9}%
+\contentsline {subsubsection}{\numberline {4.5.2.10}pcb\_setup()}{28}{subsubsection.4.5.2.10}%
+\contentsline {subsubsection}{\numberline {4.5.2.11}printq()}{28}{subsubsection.4.5.2.11}%
+\contentsline {section}{\numberline {4.6}include/mpx/io.h File Reference}{29}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Detailed Description}{29}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Macro Definition Documentation}{29}{subsection.4.6.2}%
+\contentsline {subsubsection}{\numberline {4.6.2.1}inb}{29}{subsubsection.4.6.2.1}%
+\contentsline {subsubsection}{\numberline {4.6.2.2}outb}{30}{subsubsection.4.6.2.2}%
+\contentsline {section}{\numberline {4.7}include/mpx/serial.h File Reference}{30}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Detailed Description}{31}{subsection.4.7.1}%
+\contentsline {subsection}{\numberline {4.7.2}Function Documentation}{31}{subsection.4.7.2}%
+\contentsline {subsubsection}{\numberline {4.7.2.1}backspace()}{31}{subsubsection.4.7.2.1}%
+\contentsline {subsubsection}{\numberline {4.7.2.2}serial\_close()}{31}{subsubsection.4.7.2.2}%
+\contentsline {subsubsection}{\numberline {4.7.2.3}serial\_init()}{32}{subsubsection.4.7.2.3}%
+\contentsline {subsubsection}{\numberline {4.7.2.4}serial\_input\_interrupt()}{32}{subsubsection.4.7.2.4}%
+\contentsline {subsubsection}{\numberline {4.7.2.5}serial\_interrupt()}{33}{subsubsection.4.7.2.5}%
+\contentsline {subsubsection}{\numberline {4.7.2.6}serial\_open()}{33}{subsubsection.4.7.2.6}%
+\contentsline {subsubsection}{\numberline {4.7.2.7}serial\_out()}{34}{subsubsection.4.7.2.7}%
+\contentsline {subsubsection}{\numberline {4.7.2.8}serial\_output\_interrupt()}{34}{subsubsection.4.7.2.8}%
+\contentsline {subsubsection}{\numberline {4.7.2.9}serial\_poll()}{35}{subsubsection.4.7.2.9}%
+\contentsline {subsubsection}{\numberline {4.7.2.10}serial\_read()}{35}{subsubsection.4.7.2.10}%
+\contentsline {subsubsection}{\numberline {4.7.2.11}serial\_write()}{36}{subsubsection.4.7.2.11}%
+\contentsline {section}{\numberline {4.8}include/scheduler.h File Reference}{36}{section.4.8}%
+\contentsline {subsection}{\numberline {4.8.1}Detailed Description}{37}{subsection.4.8.1}%
+\contentsline {subsection}{\numberline {4.8.2}Function Documentation}{37}{subsection.4.8.2}%
+\contentsline {subsubsection}{\numberline {4.8.2.1}ioComplete()}{37}{subsubsection.4.8.2.1}%
+\contentsline {subsubsection}{\numberline {4.8.2.2}ioSchedule()}{37}{subsubsection.4.8.2.2}%
+\contentsline {section}{\numberline {4.9}include/stdio.h File Reference}{38}{section.4.9}%
+\contentsline {subsection}{\numberline {4.9.1}Detailed Description}{38}{subsection.4.9.1}%
+\contentsline {subsection}{\numberline {4.9.2}Function Documentation}{38}{subsection.4.9.2}%
+\contentsline {subsubsection}{\numberline {4.9.2.1}printf()}{39}{subsubsection.4.9.2.1}%
+\contentsline {subsubsection}{\numberline {4.9.2.2}putc()}{39}{subsubsection.4.9.2.2}%
+\contentsline {subsubsection}{\numberline {4.9.2.3}puts()}{39}{subsubsection.4.9.2.3}%
+\contentsline {section}{\numberline {4.10}include/stdlib.h File Reference}{40}{section.4.10}%
+\contentsline {subsection}{\numberline {4.10.1}Detailed Description}{40}{subsection.4.10.1}%
+\contentsline {subsection}{\numberline {4.10.2}Function Documentation}{40}{subsection.4.10.2}%
+\contentsline {subsubsection}{\numberline {4.10.2.1}atoi()}{40}{subsubsection.4.10.2.1}%
+\contentsline {subsubsection}{\numberline {4.10.2.2}fromBCD()}{41}{subsubsection.4.10.2.2}%
+\contentsline {subsubsection}{\numberline {4.10.2.3}htoi()}{41}{subsubsection.4.10.2.3}%
+\contentsline {subsubsection}{\numberline {4.10.2.4}itoa()}{42}{subsubsection.4.10.2.4}%
+\contentsline {subsubsection}{\numberline {4.10.2.5}toBCD()}{42}{subsubsection.4.10.2.5}%
+\contentsline {section}{\numberline {4.11}include/sys\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}call.h File Reference}{43}{section.4.11}%
+\contentsline {subsection}{\numberline {4.11.1}Detailed Description}{43}{subsection.4.11.1}%
+\contentsline {subsection}{\numberline {4.11.2}Function Documentation}{43}{subsection.4.11.2}%
+\contentsline {subsubsection}{\numberline {4.11.2.1}sys\_call()}{43}{subsubsection.4.11.2.1}%

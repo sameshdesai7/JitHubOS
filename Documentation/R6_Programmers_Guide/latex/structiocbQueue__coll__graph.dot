@@ -1,0 +1,18 @@
+digraph "iocbQueue"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="iocbQueue",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" head\ntail" ];
+  Node2 [label="iocb",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structiocb.html",tooltip=" "];
+  Node2 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" next" ];
+  Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" pcb" ];
+  Node3 [label="pcb",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structpcb.html",tooltip=" "];
+  Node3 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" next" ];
+  Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" alarm_ptr" ];
+  Node4 [label="alarm",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalarm.html",tooltip=" "];
+  Node5 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" dcb" ];
+  Node5 [label="dcb",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structdcb.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" iocbQ" ];
+}

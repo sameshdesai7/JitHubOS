@@ -1,0 +1,145 @@
+\hypertarget{stdlib_8h}{}\doxysection{include/stdlib.h File Reference}
+\label{stdlib_8h}\index{include/stdlib.h@{include/stdlib.h}}
+
+
+A subset of standard C library functions.  
+
+
+This graph shows which files directly or indirectly include this file\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{stdlib_8h_a30670a60464f77af17dfb353353d6df8}{atoi}} (const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Convert an A\+S\+C\+II string to an integer. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{stdlib_8h_a15ca34a94485b37b1f9c93da06e12a66}{itoa}} (int i, char $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em Converts a valid integer to a string and stores it in buffer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{stdlib_8h_aa5f58352f80f381ab3d0a55b15a5b881}{htoi}} (const char $\ast$hex)
+\begin{DoxyCompactList}\small\item\em Checks if the provided character is a digit. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{stdlib_8h_ac6490d3a2bd188997a8d367be0d92c3e}\label{stdlib_8h_ac6490d3a2bd188997a8d367be0d92c3e}} 
+int {\bfseries isdigit} (char c)
+\item 
+int \mbox{\hyperlink{stdlib_8h_a1189992d811dcccd69632e25a2a0ab9f}{to\+B\+CD}} (int num)
+\begin{DoxyCompactList}\small\item\em Converts a string to a binary-\/coded decimal (bcd) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{stdlib_8h_a6e80871581862fd9af426c8c916f3b26}{from\+B\+CD}} (int bcd)
+\begin{DoxyCompactList}\small\item\em Converts a binary-\/coded decimal to an int. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A subset of standard C library functions. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{stdlib_8h_a30670a60464f77af17dfb353353d6df8}\label{stdlib_8h_a30670a60464f77af17dfb353353d6df8}} 
+\index{stdlib.h@{stdlib.h}!atoi@{atoi}}
+\index{atoi@{atoi}!stdlib.h@{stdlib.h}}
+\doxysubsubsection{\texorpdfstring{atoi()}{atoi()}}
+{\footnotesize\ttfamily int atoi (\begin{DoxyParamCaption}\item[{const char $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Convert an A\+S\+C\+II string to an integer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & A N\+U\+L-\/terminated string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the string converted to an integer 
+\end{DoxyReturn}
+\mbox{\Hypertarget{stdlib_8h_a6e80871581862fd9af426c8c916f3b26}\label{stdlib_8h_a6e80871581862fd9af426c8c916f3b26}} 
+\index{stdlib.h@{stdlib.h}!fromBCD@{fromBCD}}
+\index{fromBCD@{fromBCD}!stdlib.h@{stdlib.h}}
+\doxysubsubsection{\texorpdfstring{fromBCD()}{fromBCD()}}
+{\footnotesize\ttfamily int from\+B\+CD (\begin{DoxyParamCaption}\item[{int}]{bcd }\end{DoxyParamCaption})}
+
+
+
+Converts a binary-\/coded decimal to an int. 
+
+\begin{DoxyAuthor}{Author}
+Sam Desai 
+
+Jackson Monk
+\end{DoxyAuthor}
+This function starts by getting the 10s place by anding the input value with 0x70 (1111 0000). Then it gets the ones place by anding with 0x0F (0000 1111). It gets the final value by adding these two values. 
+\begin{DoxyParams}{Parameters}
+{\em c} & The B\+CD value to convert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The integer representation of the integer 
+\end{DoxyReturn}
+\mbox{\Hypertarget{stdlib_8h_aa5f58352f80f381ab3d0a55b15a5b881}\label{stdlib_8h_aa5f58352f80f381ab3d0a55b15a5b881}} 
+\index{stdlib.h@{stdlib.h}!htoi@{htoi}}
+\index{htoi@{htoi}!stdlib.h@{stdlib.h}}
+\doxysubsubsection{\texorpdfstring{htoi()}{htoi()}}
+{\footnotesize\ttfamily int htoi (\begin{DoxyParamCaption}\item[{const char $\ast$}]{hex }\end{DoxyParamCaption})}
+
+
+
+Checks if the provided character is a digit. 
+
+\begin{DoxyAuthor}{Author}
+Jackson Monk
+\end{DoxyAuthor}
+This function checks if the character is equal to 0-\/9. If true it returns 1, if not, it returns 0 
+\begin{DoxyParams}{Parameters}
+{\em c} & The character to compare to a digit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An integer indicating whether or not the character is a digit. Non-\/zero if true, 0 if false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{stdlib_8h_a15ca34a94485b37b1f9c93da06e12a66}\label{stdlib_8h_a15ca34a94485b37b1f9c93da06e12a66}} 
+\index{stdlib.h@{stdlib.h}!itoa@{itoa}}
+\index{itoa@{itoa}!stdlib.h@{stdlib.h}}
+\doxysubsubsection{\texorpdfstring{itoa()}{itoa()}}
+{\footnotesize\ttfamily char$\ast$ itoa (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{char $\ast$}]{buffer }\end{DoxyParamCaption})}
+
+
+
+Converts a valid integer to a string and stores it in buffer. 
+
+\begin{DoxyAuthor}{Author}
+Samesh Desai 
+
+Noah Marner 
+
+Jackson Monk 
+
+Blake Wagner
+\end{DoxyAuthor}
+First, this function checks if the number is negative and sets the negative flag according to the result. Next, if the number is 0, we set the buffer to 0, increment position, add a null terminator, and exit. While i != 0, the remainder of i \% 10 is found. The buffer at the current position is then set to the remainder plus the \textquotesingle{}0\textquotesingle{} character to calculate the number character, then i is divided by 10 to go to the digit. After the loop, the number is in reverse order; we add a \textquotesingle{}-\/\textquotesingle{} character to the end if the number is negative. Last, reverse the string and add a null terminator. 
+\begin{DoxyParams}{Parameters}
+{\em i} & The integer to convert to a string \\
+\hline
+{\em buffer} & The destination string for the result \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The same string placed into buffer 
+\end{DoxyReturn}
+\mbox{\Hypertarget{stdlib_8h_a1189992d811dcccd69632e25a2a0ab9f}\label{stdlib_8h_a1189992d811dcccd69632e25a2a0ab9f}} 
+\index{stdlib.h@{stdlib.h}!toBCD@{toBCD}}
+\index{toBCD@{toBCD}!stdlib.h@{stdlib.h}}
+\doxysubsubsection{\texorpdfstring{toBCD()}{toBCD()}}
+{\footnotesize\ttfamily int to\+B\+CD (\begin{DoxyParamCaption}\item[{int}]{num }\end{DoxyParamCaption})}
+
+
+
+Converts a string to a binary-\/coded decimal (bcd) 
+
+\begin{DoxyAuthor}{Author}
+Jackson Monk
+\end{DoxyAuthor}
+Gets the 10s digit by dividing by 10 and the ones digit by modding by 10. We then shift the 10s digit four digits to the right (pad with four zeros). We then or the 10s digit and the ones digit together to get the final result. 
+\begin{DoxyParams}{Parameters}
+{\em c} & The integer to convert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The bcd representation of the integer 
+\end{DoxyReturn}

@@ -1,0 +1,78 @@
+\hypertarget{scheduler_8h}{}\doxysection{include/scheduler.h File Reference}
+\label{scheduler_8h}\index{include/scheduler.h@{include/scheduler.h}}
+
+
+Helper functions to handle scheduling I/O requests.  
+
+
+{\ttfamily \#include $<$data\+Structs.\+h$>$}\newline
+Include dependency graph for scheduler.\+h\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{scheduler_8h_a417c1a443f2f41d61d306e33fbccae47}{io\+Schedule}} (\mbox{\hyperlink{structiocb}{iocb}} $\ast$request, \mbox{\hyperlink{structdcb}{dcb}} $\ast$device)
+\begin{DoxyCompactList}\small\item\em Adds I/O request to I\+O\+CB queue. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{scheduler_8h_a764597daa11bc2ab452ccb2b3b171bf5}{io\+Complete}} (\mbox{\hyperlink{structdcb}{dcb}} $\ast$device)
+\begin{DoxyCompactList}\small\item\em Waits for I/O to complete before processing next request. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Helper functions to handle scheduling I/O requests. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{scheduler_8h_a764597daa11bc2ab452ccb2b3b171bf5}\label{scheduler_8h_a764597daa11bc2ab452ccb2b3b171bf5}} 
+\index{scheduler.h@{scheduler.h}!ioComplete@{ioComplete}}
+\index{ioComplete@{ioComplete}!scheduler.h@{scheduler.h}}
+\doxysubsubsection{\texorpdfstring{ioComplete()}{ioComplete()}}
+{\footnotesize\ttfamily void io\+Complete (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structdcb}{dcb}} $\ast$}]{device }\end{DoxyParamCaption})}
+
+
+
+Waits for I/O to complete before processing next request. 
+
+\begin{DoxyAuthor}{Author}
+Sam Desai 
+
+Blake Wagner 
+
+Noah Marner 
+
+Jackson Monk
+\end{DoxyAuthor}
+If e\+Flag is C\+O\+M\+P\+L\+E\+TE, ensures there is something in the I\+O\+CB queue and moves the associated process from the blocked queue (waiting for I/O) back into the ready queue and then removes the I/O request from the I\+O\+CB queue. 
+\begin{DoxyParams}{Parameters}
+{\em device} & device to run the I/O on \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{scheduler_8h_a417c1a443f2f41d61d306e33fbccae47}\label{scheduler_8h_a417c1a443f2f41d61d306e33fbccae47}} 
+\index{scheduler.h@{scheduler.h}!ioSchedule@{ioSchedule}}
+\index{ioSchedule@{ioSchedule}!scheduler.h@{scheduler.h}}
+\doxysubsubsection{\texorpdfstring{ioSchedule()}{ioSchedule()}}
+{\footnotesize\ttfamily int io\+Schedule (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structiocb}{iocb}} $\ast$}]{request,  }\item[{\mbox{\hyperlink{structdcb}{dcb}} $\ast$}]{device }\end{DoxyParamCaption})}
+
+
+
+Adds I/O request to I\+O\+CB queue. 
+
+\begin{DoxyAuthor}{Author}
+Sam Desai 
+
+Blake Wagner 
+
+Noah Marner 
+
+Jackson Monk
+\end{DoxyAuthor}
+Ensures OP code is read or write. If the queue is empty, D\+CB directly receives I\+O\+CB request. Otherwise, adds IO request to device I\+O\+CB queue. 
+\begin{DoxyParams}{Parameters}
+{\em request} & I\+O\+CB request \\
+\hline
+{\em device} & device to run the I/O on \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int for success checking 
+\end{DoxyReturn}

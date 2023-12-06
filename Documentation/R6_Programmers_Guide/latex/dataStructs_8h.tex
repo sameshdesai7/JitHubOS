@@ -1,0 +1,399 @@
+\hypertarget{dataStructs_8h}{}\doxysection{include/data\+Structs.h File Reference}
+\label{dataStructs_8h}\index{include/dataStructs.h@{include/dataStructs.h}}
+
+
+Data structures associated with processes and the functions to go with them.  
+
+
+{\ttfamily \#include $<$memory.\+h$>$}\newline
+{\ttfamily \#include $<$context.\+h$>$}\newline
+Include dependency graph for data\+Structs.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structalarm}{alarm}}
+\item 
+struct \mbox{\hyperlink{structpcb}{pcb}}
+\item 
+struct \mbox{\hyperlink{structqueue}{queue}}
+\item 
+struct \mbox{\hyperlink{structiocbQueue}{iocb\+Queue}}
+\item 
+struct \mbox{\hyperlink{structdcb}{dcb}}
+\item 
+struct \mbox{\hyperlink{structiocb}{iocb}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{dataStructs_8h_a51110a2b468e9946e9b166632ffcd2fc}\label{dataStructs_8h_a51110a2b468e9946e9b166632ffcd2fc}} 
+typedef struct \mbox{\hyperlink{structalarm}{alarm}} {\bfseries alarm\+\_\+struct}
+\item 
+\mbox{\Hypertarget{dataStructs_8h_a8350cd7e7067eae14cdb160dac06f8e6}\label{dataStructs_8h_a8350cd7e7067eae14cdb160dac06f8e6}} 
+typedef struct \mbox{\hyperlink{structpcb}{pcb}} {\bfseries pcb}
+\item 
+\mbox{\Hypertarget{dataStructs_8h_a092902733e164e20a40f08447ef1705a}\label{dataStructs_8h_a092902733e164e20a40f08447ef1705a}} 
+typedef struct \mbox{\hyperlink{structqueue}{queue}} {\bfseries queue}
+\item 
+\mbox{\Hypertarget{dataStructs_8h_aa754026b253ae613a49d66699b80225c}\label{dataStructs_8h_aa754026b253ae613a49d66699b80225c}} 
+typedef struct \mbox{\hyperlink{structiocbQueue}{iocb\+Queue}} {\bfseries iocb\+Queue}
+\item 
+\mbox{\Hypertarget{dataStructs_8h_a9f13420f11076a0617c67cb84c236dcc}\label{dataStructs_8h_a9f13420f11076a0617c67cb84c236dcc}} 
+typedef struct \mbox{\hyperlink{structdcb}{dcb}} {\bfseries dcb}
+\item 
+\mbox{\Hypertarget{dataStructs_8h_aa35e18b1f482eadaaa3a5186223ea2f2}\label{dataStructs_8h_aa35e18b1f482eadaaa3a5186223ea2f2}} 
+typedef struct \mbox{\hyperlink{structiocb}{iocb}} {\bfseries iocb}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{dataStructs_8h_a015eb90e0de9f16e87bd149d4b9ce959}\label{dataStructs_8h_a015eb90e0de9f16e87bd149d4b9ce959}} 
+enum {\bfseries status} \{ {\bfseries O\+P\+EN}, 
+{\bfseries C\+L\+O\+S\+ED}
+ \}
+\item 
+\mbox{\Hypertarget{dataStructs_8h_aee84adc8774b423febdd2ac4b0b2a634}\label{dataStructs_8h_aee84adc8774b423febdd2ac4b0b2a634}} 
+enum {\bfseries eflag} \{ {\bfseries I\+N\+C\+O\+M\+P\+L\+E\+TE}, 
+{\bfseries C\+O\+M\+P\+L\+E\+TE}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{dataStructs_8h_a6b7d58425f0a1c747ab3825128ad255e}{enqueue}} (\mbox{\hyperlink{structqueue}{queue}} $\ast$q, \mbox{\hyperlink{structpcb}{pcb}} $\ast$new\+P\+CB)
+\begin{DoxyCompactList}\small\item\em Adds a new P\+CB to the queue. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{dataStructs_8h_a49e9a9de34a2683cee2725f4178fa923}{iocb\+Enqueue}} (\mbox{\hyperlink{structiocbQueue}{iocb\+Queue}} $\ast$q, \mbox{\hyperlink{structiocb}{iocb}} $\ast$new\+I\+O\+CB)
+\begin{DoxyCompactList}\small\item\em Adds a new I\+O\+CB to the queue. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structpcb}{pcb}} $\ast$ \mbox{\hyperlink{dataStructs_8h_a64624cc8e7f9299be0b63303c460cf4f}{dequeue}} (\mbox{\hyperlink{structqueue}{queue}} $\ast$q)
+\begin{DoxyCompactList}\small\item\em Removes a pcb from the front of the queue. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structiocb}{iocb}} $\ast$ \mbox{\hyperlink{dataStructs_8h_a91cc4b81074a1f25dbdc688255930853}{iocb\+Dequeue}} (\mbox{\hyperlink{structiocbQueue}{iocb\+Queue}} $\ast$q)
+\begin{DoxyCompactList}\small\item\em Removes a I\+O\+CB from the front of the queue. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{dataStructs_8h_ae8c35e290b62ef30ae01cebd25556715}{printq}} (\mbox{\hyperlink{structqueue}{queue}} $\ast$q)
+\begin{DoxyCompactList}\small\item\em Prints the contents of the queue. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structpcb}{pcb}} $\ast$ \mbox{\hyperlink{dataStructs_8h_a63c16934c9d95f3583cf09891d18c095}{pcb\+\_\+allocate}} (void)
+\begin{DoxyCompactList}\small\item\em Allocate memory for a P\+CB. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{dataStructs_8h_a1169eb5fd9b017a90dcbf1f29df686d7}{pcb\+\_\+free}} (\mbox{\hyperlink{structpcb}{pcb}} $\ast$\mbox{\hyperlink{structpcb}{pcb}})
+\begin{DoxyCompactList}\small\item\em deallocates the memory associated with a P\+CB \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structpcb}{pcb}} $\ast$ \mbox{\hyperlink{dataStructs_8h_a90ca7260fdc87d4c04b5689c566fcea0}{pcb\+\_\+setup}} (const char $\ast$name, int clas, int priority)
+\begin{DoxyCompactList}\small\item\em Creates a new P\+CB. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structpcb}{pcb}} $\ast$ \mbox{\hyperlink{dataStructs_8h_a32a28272eee57e85fc44b9045f0f0f6e}{pcb\+\_\+find}} (\mbox{\hyperlink{structqueue}{queue}} $\ast$ready, \mbox{\hyperlink{structqueue}{queue}} $\ast$blocked, \mbox{\hyperlink{structqueue}{queue}} $\ast$sus\+Ready, \mbox{\hyperlink{structqueue}{queue}} $\ast$sus\+Blocked, const char $\ast$name)
+\begin{DoxyCompactList}\small\item\em Given a name, returns a pointer to the P\+CB. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{dataStructs_8h_af356fb7356e23ff1064529fb317d52eb}{pcb\+\_\+insert}} (\mbox{\hyperlink{structqueue}{queue}} $\ast$ready, \mbox{\hyperlink{structqueue}{queue}} $\ast$blocked, \mbox{\hyperlink{structqueue}{queue}} $\ast$sus\+Ready, \mbox{\hyperlink{structqueue}{queue}} $\ast$sus\+Blocked, \mbox{\hyperlink{structpcb}{pcb}} $\ast$\mbox{\hyperlink{structpcb}{pcb}})
+\begin{DoxyCompactList}\small\item\em Inserts a P\+CB into the proper queue. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{dataStructs_8h_a688d95412aca3fe3fdfbe4018f71a407}{pcb\+\_\+remove}} (\mbox{\hyperlink{structqueue}{queue}} $\ast$ready, \mbox{\hyperlink{structqueue}{queue}} $\ast$blocked, \mbox{\hyperlink{structqueue}{queue}} $\ast$sus\+Ready, \mbox{\hyperlink{structqueue}{queue}} $\ast$sus\+Blocked, \mbox{\hyperlink{structpcb}{pcb}} $\ast$\mbox{\hyperlink{structpcb}{pcb}})
+\begin{DoxyCompactList}\small\item\em Removes a P\+CB. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Data structures associated with processes and the functions to go with them. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{dataStructs_8h_a64624cc8e7f9299be0b63303c460cf4f}\label{dataStructs_8h_a64624cc8e7f9299be0b63303c460cf4f}} 
+\index{dataStructs.h@{dataStructs.h}!dequeue@{dequeue}}
+\index{dequeue@{dequeue}!dataStructs.h@{dataStructs.h}}
+\doxysubsubsection{\texorpdfstring{dequeue()}{dequeue()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structpcb}{pcb}}$\ast$ dequeue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{q }\end{DoxyParamCaption})}
+
+
+
+Removes a pcb from the front of the queue. 
+
+\begin{DoxyAuthor}{Author}
+Samesh Desai 
+
+Noah Marner 
+
+Jackson Monk 
+
+Blake Wagner 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em q} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the removed P\+CB
+\end{DoxyReturn}
+Checks if the queue is empty (Head is N\+U\+LL). Creates a temp pcb to point to the head. If heads next exists, set head to point to head next and returns the temp pcb which points to the old head. Otherwise the queue only has 1 item so the head and tail are set to N\+U\+LL and we return temp \mbox{\Hypertarget{dataStructs_8h_a6b7d58425f0a1c747ab3825128ad255e}\label{dataStructs_8h_a6b7d58425f0a1c747ab3825128ad255e}} 
+\index{dataStructs.h@{dataStructs.h}!enqueue@{enqueue}}
+\index{enqueue@{enqueue}!dataStructs.h@{dataStructs.h}}
+\doxysubsubsection{\texorpdfstring{enqueue()}{enqueue()}}
+{\footnotesize\ttfamily void enqueue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{q,  }\item[{\mbox{\hyperlink{structpcb}{pcb}} $\ast$}]{new\+P\+CB }\end{DoxyParamCaption})}
+
+
+
+Adds a new P\+CB to the queue. 
+
+\begin{DoxyAuthor}{Author}
+Samesh Desai 
+
+Noah Marner 
+
+Jackson Monk 
+
+Blake Wagner 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em q} & \\
+\hline
+{\em new\+P\+CB} & \\
+\hline
+\end{DoxyParams}
+Receives a new P\+CB and an existing queue. Checks if the queue is empty by checking if the head and tail pointers are null. If so the new P\+CB is the new head and tail. Checks the priortiy of the P\+CB received and itterates through the queue until we find processes with the same priority. Process that have the same priority are first in first out. The last P\+CB with the same priority now has its next pointer looking at the P\+CB we are inserting. The new P\+CB next now looks at the old next of the last P\+CB with the same priority. \mbox{\Hypertarget{dataStructs_8h_a91cc4b81074a1f25dbdc688255930853}\label{dataStructs_8h_a91cc4b81074a1f25dbdc688255930853}} 
+\index{dataStructs.h@{dataStructs.h}!iocbDequeue@{iocbDequeue}}
+\index{iocbDequeue@{iocbDequeue}!dataStructs.h@{dataStructs.h}}
+\doxysubsubsection{\texorpdfstring{iocbDequeue()}{iocbDequeue()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structiocb}{iocb}}$\ast$ iocb\+Dequeue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structiocbQueue}{iocb\+Queue}} $\ast$}]{q }\end{DoxyParamCaption})}
+
+
+
+Removes a I\+O\+CB from the front of the queue. 
+
+\begin{DoxyAuthor}{Author}
+Samesh Desai 
+
+Noah Marner 
+
+Jackson Monk 
+
+Blake Wagner 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em q} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the removed I\+O\+CB
+\end{DoxyReturn}
+Checks if the queue is empty (Head is N\+U\+LL). Creates a temp I\+O\+CB to point to the head. If heads next exists, set head to point to head next and returns the temp I\+O\+CB which points to the old head. Otherwise the queue only has 1 item so the head and tail are set to N\+U\+LL and we return temp \mbox{\Hypertarget{dataStructs_8h_a49e9a9de34a2683cee2725f4178fa923}\label{dataStructs_8h_a49e9a9de34a2683cee2725f4178fa923}} 
+\index{dataStructs.h@{dataStructs.h}!iocbEnqueue@{iocbEnqueue}}
+\index{iocbEnqueue@{iocbEnqueue}!dataStructs.h@{dataStructs.h}}
+\doxysubsubsection{\texorpdfstring{iocbEnqueue()}{iocbEnqueue()}}
+{\footnotesize\ttfamily void iocb\+Enqueue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structiocbQueue}{iocb\+Queue}} $\ast$}]{q,  }\item[{\mbox{\hyperlink{structiocb}{iocb}} $\ast$}]{new\+I\+O\+CB }\end{DoxyParamCaption})}
+
+
+
+Adds a new I\+O\+CB to the queue. 
+
+\begin{DoxyAuthor}{Author}
+Samesh Desai 
+
+Noah Marner 
+
+Jackson Monk 
+
+Blake Wagner 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em q} & \\
+\hline
+{\em new\+I\+O\+CB} & \\
+\hline
+\end{DoxyParams}
+Receives a new I\+O\+CB and an existing queue. Checks if the queue is empty by checking if the head and tail pointers are null. If so the new I\+O\+CB is the new head and tail. Checks the priortiy of the I\+O\+CB received and itterates through the queue until we find processes with the same priority. Process that have the same priority are first in first out. The last I\+O\+CB with the same priority now has its next pointer looking at the I\+O\+CB we are inserting. The new I\+O\+CB next now looks at the old next of the last I\+O\+CB with the same priority. \mbox{\Hypertarget{dataStructs_8h_a63c16934c9d95f3583cf09891d18c095}\label{dataStructs_8h_a63c16934c9d95f3583cf09891d18c095}} 
+\index{dataStructs.h@{dataStructs.h}!pcb\_allocate@{pcb\_allocate}}
+\index{pcb\_allocate@{pcb\_allocate}!dataStructs.h@{dataStructs.h}}
+\doxysubsubsection{\texorpdfstring{pcb\_allocate()}{pcb\_allocate()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structpcb}{pcb}}$\ast$ pcb\+\_\+allocate (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Allocate memory for a P\+CB. 
+
+\begin{DoxyAuthor}{Author}
+Samesh Desai 
+
+Noah Marner 
+
+Jackson Monk 
+
+Blake Wagner 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+P\+CB pointer
+\end{DoxyReturn}
+Uses sysallocmem function to allocate memeory for a pcb based on the size of the P\+CB struct. Then returns a pointer to the newly created P\+CB. If memory fails to allocate returns N\+U\+LL and prints an error message. \mbox{\Hypertarget{dataStructs_8h_a32a28272eee57e85fc44b9045f0f0f6e}\label{dataStructs_8h_a32a28272eee57e85fc44b9045f0f0f6e}} 
+\index{dataStructs.h@{dataStructs.h}!pcb\_find@{pcb\_find}}
+\index{pcb\_find@{pcb\_find}!dataStructs.h@{dataStructs.h}}
+\doxysubsubsection{\texorpdfstring{pcb\_find()}{pcb\_find()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structpcb}{pcb}}$\ast$ pcb\+\_\+find (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{ready,  }\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{blocked,  }\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{sus\+Ready,  }\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{sus\+Blocked,  }\item[{const char $\ast$}]{name }\end{DoxyParamCaption})}
+
+
+
+Given a name, returns a pointer to the P\+CB. 
+
+\begin{DoxyAuthor}{Author}
+Blake Wagner 
+
+Jackson Monk 
+
+Noah Marner 
+
+Samesh Desai 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em ready} & \\
+\hline
+{\em blocked} & \\
+\hline
+{\em sus\+Ready} & \\
+\hline
+{\em sus\+Blocked} & \\
+\hline
+{\em name} & \\
+\hline
+\end{DoxyParams}
+Given a name, iterates through all the queues (ready, blocked, sus\+Ready, sus\+Blocked) by creating a temp P\+CB pointer starting at the head of each queue. If a P\+CB has a name that matches the provided name immediatly returns the temp pointer which is pointing to that P\+CB. \mbox{\Hypertarget{dataStructs_8h_a1169eb5fd9b017a90dcbf1f29df686d7}\label{dataStructs_8h_a1169eb5fd9b017a90dcbf1f29df686d7}} 
+\index{dataStructs.h@{dataStructs.h}!pcb\_free@{pcb\_free}}
+\index{pcb\_free@{pcb\_free}!dataStructs.h@{dataStructs.h}}
+\doxysubsubsection{\texorpdfstring{pcb\_free()}{pcb\_free()}}
+{\footnotesize\ttfamily int pcb\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpcb}{pcb}} $\ast$}]{pcb }\end{DoxyParamCaption})}
+
+
+
+deallocates the memory associated with a P\+CB 
+
+\begin{DoxyAuthor}{Author}
+Samesh Desai 
+
+Noah Marner 
+
+Blake Wagner 
+
+Jackson Monk 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em pcb} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 or -\/1
+\end{DoxyReturn}
+Receives a P\+CB pointer and uses sysmemfree to deallocate the memory associated with the passed in P\+CB. If the memory freeing is sucessful, returns 1. If not returns -\/1 and prints and error message. \mbox{\Hypertarget{dataStructs_8h_af356fb7356e23ff1064529fb317d52eb}\label{dataStructs_8h_af356fb7356e23ff1064529fb317d52eb}} 
+\index{dataStructs.h@{dataStructs.h}!pcb\_insert@{pcb\_insert}}
+\index{pcb\_insert@{pcb\_insert}!dataStructs.h@{dataStructs.h}}
+\doxysubsubsection{\texorpdfstring{pcb\_insert()}{pcb\_insert()}}
+{\footnotesize\ttfamily int pcb\+\_\+insert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{ready,  }\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{blocked,  }\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{sus\+Ready,  }\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{sus\+Blocked,  }\item[{\mbox{\hyperlink{structpcb}{pcb}} $\ast$}]{pcb }\end{DoxyParamCaption})}
+
+
+
+Inserts a P\+CB into the proper queue. 
+
+\begin{DoxyAuthor}{Author}
+Noah Marner 
+
+Jackson Monk 
+
+Blake Wagner 
+
+Samesh Desai 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em ready} & \\
+\hline
+{\em blocked} & \\
+\hline
+{\em sus\+Ready} & \\
+\hline
+{\em sus\+Blocked} & \\
+\hline
+{\em pcb} & \\
+\hline
+\end{DoxyParams}
+Based on the state of the provided P\+CB calls enqueue with the provided P\+CB to add the P\+CB into either the ready, blocked, sus\+Ready, or sus\+Blocked. Returns 0 for a successful insertion and -\/1 if failed. \mbox{\Hypertarget{dataStructs_8h_a688d95412aca3fe3fdfbe4018f71a407}\label{dataStructs_8h_a688d95412aca3fe3fdfbe4018f71a407}} 
+\index{dataStructs.h@{dataStructs.h}!pcb\_remove@{pcb\_remove}}
+\index{pcb\_remove@{pcb\_remove}!dataStructs.h@{dataStructs.h}}
+\doxysubsubsection{\texorpdfstring{pcb\_remove()}{pcb\_remove()}}
+{\footnotesize\ttfamily void pcb\+\_\+remove (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{ready,  }\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{blocked,  }\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{sus\+Ready,  }\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{sus\+Blocked,  }\item[{\mbox{\hyperlink{structpcb}{pcb}} $\ast$}]{pcb }\end{DoxyParamCaption})}
+
+
+
+Removes a P\+CB. 
+
+\begin{DoxyAuthor}{Author}
+Noah Marner 
+
+Jackson Monk 
+
+Blake Wagner 
+
+Samesh Desai 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em ready} & \\
+\hline
+{\em blocked} & \\
+\hline
+{\em sus\+Ready} & \\
+\hline
+{\em sus\+Blocked} & \\
+\hline
+{\em pcb} & \\
+\hline
+\end{DoxyParams}
+Determines the queue the process is in based on the state of the passed in P\+CB. Creates a temp current P\+CB pointer. Iterates through the queue to find the P\+CB to remove. If P\+CB to remove is the head set head to point to next and return temp. Otherwise previous now pointer to current next. This circumvents the P\+CB we wish to remove. Lastly, check if the desired P\+CB is the tail and if so set the new tail to be the previous P\+CB since we are removing the tail. \mbox{\Hypertarget{dataStructs_8h_a90ca7260fdc87d4c04b5689c566fcea0}\label{dataStructs_8h_a90ca7260fdc87d4c04b5689c566fcea0}} 
+\index{dataStructs.h@{dataStructs.h}!pcb\_setup@{pcb\_setup}}
+\index{pcb\_setup@{pcb\_setup}!dataStructs.h@{dataStructs.h}}
+\doxysubsubsection{\texorpdfstring{pcb\_setup()}{pcb\_setup()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structpcb}{pcb}}$\ast$ pcb\+\_\+setup (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{int}]{clas,  }\item[{int}]{priority }\end{DoxyParamCaption})}
+
+
+
+Creates a new P\+CB. 
+
+\begin{DoxyAuthor}{Author}
+Jackson Monk 
+
+Blake Wagner 
+
+Noah Marner 
+
+Samesh Desai 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \\
+\hline
+{\em clas} & \\
+\hline
+{\em priority} & \\
+\hline
+\end{DoxyParams}
+Takes in a char$\ast$ for name, int for clas, and int for prioirty. Calls P\+CB allocate to create a new P\+CB, then assigns the passed in parameters to the data members of the P\+CB struct. When creating a new P\+CB, the defualt state is ready. Calls sysallocatemem for the name and state. Returns a pointer to the newly created P\+CB. \mbox{\Hypertarget{dataStructs_8h_ae8c35e290b62ef30ae01cebd25556715}\label{dataStructs_8h_ae8c35e290b62ef30ae01cebd25556715}} 
+\index{dataStructs.h@{dataStructs.h}!printq@{printq}}
+\index{printq@{printq}!dataStructs.h@{dataStructs.h}}
+\doxysubsubsection{\texorpdfstring{printq()}{printq()}}
+{\footnotesize\ttfamily void printq (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structqueue}{queue}} $\ast$}]{q }\end{DoxyParamCaption})}
+
+
+
+Prints the contents of the queue. 
+
+\begin{DoxyAuthor}{Author}
+Samesh Desai 
+
+Noah Marner 
+
+Jackson Monk 
+
+Blake Wagner 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em q} & \\
+\hline
+\end{DoxyParams}
+Given a queue, creates a temp P\+CB pointer to look at head, prints the contents of that P\+CB, looks at the current P\+C\+Bs next, and prints the conents. The functions keeps iterating through the queue until next points to N\+U\+LL. 

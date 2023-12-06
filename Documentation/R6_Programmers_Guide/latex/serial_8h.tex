@@ -1,0 +1,305 @@
+\hypertarget{serial_8h}{}\doxysection{include/mpx/serial.h File Reference}
+\label{serial_8h}\index{include/mpx/serial.h@{include/mpx/serial.h}}
+
+
+Kernel functions and constants for handling serial I/O.  
+
+
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$mpx/device.\+h$>$}\newline
+{\ttfamily \#include $<$data\+Structs.\+h$>$}\newline
+Include dependency graph for serial.\+h\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{serial_8h_a59d1db7894c07b31b520be0ae0a32896}{serial\+\_\+init}} (device dev)
+\item 
+int \mbox{\hyperlink{serial_8h_a7e049d65b09969503d73dd367775d0f6}{serial\+\_\+out}} (device dev, const char $\ast$buffer, size\+\_\+t len)
+\item 
+int \mbox{\hyperlink{serial_8h_a1e9204d031fa281b2983b1e97859c179}{serial\+\_\+poll}} (device dev, char $\ast$buffer, size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Reads a string from a serial port. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{serial_8h_af543ea6e878d9edde4567b8b375abd83}{backspace}} (int $\ast$pos, int $\ast$end, char $\ast$buffer, device dev)
+\begin{DoxyCompactList}\small\item\em Helper method for serial\+\_\+poll that does the work of a backspace. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{serial_8h_aa5f471c05abad816427f87321fb6c9a1}{serial\+\_\+open}} (device dev, int speed)
+\begin{DoxyCompactList}\small\item\em Initializes serial port to allow I/O. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{serial_8h_a4f14935a08ae18c6acf905ed5afa717e}{serial\+\_\+close}} (device dev)
+\begin{DoxyCompactList}\small\item\em Closes associated serial port. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{serial_8h_af90af90f95b458ea262b31bc33c12bbd}{serial\+\_\+read}} (device dev, char $\ast$buf, size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Starts the read process. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{serial_8h_abeb5f15d77be064b4b5103af02aa4c21}{serial\+\_\+write}} (device dev, char $\ast$buf, size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Starts the write process. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{serial_8h_abf25dba858661de8b55c6a40224627a1}{serial\+\_\+interrupt}} (void)
+\begin{DoxyCompactList}\small\item\em First-\/level interrupt handler to determine which second-\/level interrupt handler to deploy. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{serial_8h_a2902c2c0a8a9bd4bc1d0dc88257f1657}{serial\+\_\+input\+\_\+interrupt}} (struct \mbox{\hyperlink{structdcb}{dcb}} $\ast$\mbox{\hyperlink{structdcb}{dcb}})
+\begin{DoxyCompactList}\small\item\em Interrupt to handle input from device. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{serial_8h_abd1c98e4945071f79a2ea126363030ba}{serial\+\_\+output\+\_\+interrupt}} (struct \mbox{\hyperlink{structdcb}{dcb}} $\ast$\mbox{\hyperlink{structdcb}{dcb}})
+\begin{DoxyCompactList}\small\item\em Interrupt to handle output from device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Kernel functions and constants for handling serial I/O. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{serial_8h_af543ea6e878d9edde4567b8b375abd83}\label{serial_8h_af543ea6e878d9edde4567b8b375abd83}} 
+\index{serial.h@{serial.h}!backspace@{backspace}}
+\index{backspace@{backspace}!serial.h@{serial.h}}
+\doxysubsubsection{\texorpdfstring{backspace()}{backspace()}}
+{\footnotesize\ttfamily void backspace (\begin{DoxyParamCaption}\item[{int $\ast$}]{pos,  }\item[{int $\ast$}]{end,  }\item[{char $\ast$}]{buffer,  }\item[{device}]{dev }\end{DoxyParamCaption})}
+
+
+
+Helper method for serial\+\_\+poll that does the work of a backspace. 
+
+\begin{DoxyAuthor}{Author}
+Noah Marner 
+
+Blake Wagner
+\end{DoxyAuthor}
+This function is used when a backspace or delete character is input. If there is a backspace, the function is simply called. When a delete character is input, the position is set forward one and then the function is called. 
+\begin{DoxyParams}{Parameters}
+{\em pos} & The current position in the buffer \\
+\hline
+{\em end} & The farthest position that has been reached in the buffer \\
+\hline
+{\em buffer} & A buffer that stores the current string \\
+\hline
+{\em dev} & The serial port to read data from \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{serial_8h_a4f14935a08ae18c6acf905ed5afa717e}\label{serial_8h_a4f14935a08ae18c6acf905ed5afa717e}} 
+\index{serial.h@{serial.h}!serial\_close@{serial\_close}}
+\index{serial\_close@{serial\_close}!serial.h@{serial.h}}
+\doxysubsubsection{\texorpdfstring{serial\_close()}{serial\_close()}}
+{\footnotesize\ttfamily int serial\+\_\+close (\begin{DoxyParamCaption}\item[{device}]{dev }\end{DoxyParamCaption})}
+
+
+
+Closes associated serial port. 
+
+\begin{DoxyAuthor}{Author}
+Noah Marner 
+
+Blake Wagner 
+
+Sam Desai 
+
+Jackson Monk
+\end{DoxyAuthor}
+Disables the C\+O\+M1 level in the P\+IC register and disables interrupts by loading 0s into the M\+SR and I\+ER. 
+\begin{DoxyParams}{Parameters}
+{\em dev} & Device to close \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Int to test success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{serial_8h_a59d1db7894c07b31b520be0ae0a32896}\label{serial_8h_a59d1db7894c07b31b520be0ae0a32896}} 
+\index{serial.h@{serial.h}!serial\_init@{serial\_init}}
+\index{serial\_init@{serial\_init}!serial.h@{serial.h}}
+\doxysubsubsection{\texorpdfstring{serial\_init()}{serial\_init()}}
+{\footnotesize\ttfamily int serial\+\_\+init (\begin{DoxyParamCaption}\item[{device}]{dev }\end{DoxyParamCaption})}
+
+Initializes devices for user input and output 
+\begin{DoxyParams}{Parameters}
+{\em device} & A serial port to initialize (C\+O\+M1, C\+O\+M2, C\+O\+M3, or C\+O\+M4) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, non-\/zero on failure 
+\end{DoxyReturn}
+\mbox{\Hypertarget{serial_8h_a2902c2c0a8a9bd4bc1d0dc88257f1657}\label{serial_8h_a2902c2c0a8a9bd4bc1d0dc88257f1657}} 
+\index{serial.h@{serial.h}!serial\_input\_interrupt@{serial\_input\_interrupt}}
+\index{serial\_input\_interrupt@{serial\_input\_interrupt}!serial.h@{serial.h}}
+\doxysubsubsection{\texorpdfstring{serial\_input\_interrupt()}{serial\_input\_interrupt()}}
+{\footnotesize\ttfamily void serial\+\_\+input\+\_\+interrupt (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structdcb}{dcb}} $\ast$}]{dcb }\end{DoxyParamCaption})}
+
+
+
+Interrupt to handle input from device. 
+
+\begin{DoxyAuthor}{Author}
+Noah Marner 
+
+Blake Wagner 
+
+Sam Desai 
+
+Jackson Monk
+\end{DoxyAuthor}
+Gets a character from C\+O\+M1 using I\+NB. If the D\+CB operation is not read (device is writing), add characters to the D\+CB ring buffer and return. If the character is a return carriage, outputs a new line and sets the appropriate character in the D\+CB buffer to a null terminator. If the character is not a backspace or carriage return, sets the buffer to the character and outputs the character. If the count has not been exceeded and we are not writing a new line or return carriage, if the character is a backspace, backspace and remove the last character from the buffer. Set the D\+CB OP to I\+D\+LE and the e\+Flag to C\+O\+M\+P\+L\+E\+TE. \mbox{\Hypertarget{serial_8h_abf25dba858661de8b55c6a40224627a1}\label{serial_8h_abf25dba858661de8b55c6a40224627a1}} 
+\index{serial.h@{serial.h}!serial\_interrupt@{serial\_interrupt}}
+\index{serial\_interrupt@{serial\_interrupt}!serial.h@{serial.h}}
+\doxysubsubsection{\texorpdfstring{serial\_interrupt()}{serial\_interrupt()}}
+{\footnotesize\ttfamily void serial\+\_\+interrupt (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+First-\/level interrupt handler to determine which second-\/level interrupt handler to deploy. 
+
+\begin{DoxyAuthor}{Author}
+Noah Marner 
+
+Blake Wagner 
+
+Sam Desai 
+
+Jackson Monk
+\end{DoxyAuthor}
+First-\/level interrupt handler to determine which second-\/level interrupt handler to deploy. Checks if the status is closed. If so, returns. Otherwise, uses the I\+IR to determine whether the interrupt is an input or output interrupt. Calls the correct handler. \mbox{\Hypertarget{serial_8h_aa5f471c05abad816427f87321fb6c9a1}\label{serial_8h_aa5f471c05abad816427f87321fb6c9a1}} 
+\index{serial.h@{serial.h}!serial\_open@{serial\_open}}
+\index{serial\_open@{serial\_open}!serial.h@{serial.h}}
+\doxysubsubsection{\texorpdfstring{serial\_open()}{serial\_open()}}
+{\footnotesize\ttfamily int serial\+\_\+open (\begin{DoxyParamCaption}\item[{device}]{dev,  }\item[{int}]{speed }\end{DoxyParamCaption})}
+
+
+
+Initializes serial port to allow I/O. 
+
+\begin{DoxyAuthor}{Author}
+Noah Marner 
+
+Blake Wagner 
+
+Sam Desai 
+
+Jackson Monk
+\end{DoxyAuthor}
+Initializes the D\+CB by setting all the struct members and installs the custom interrupt handler to the interrupt vector table. Computes baud rate divisor and stores in L\+CR. Enables interrupts in the P\+IC mask register, enables serial port interrupts, enables input interrupts. 
+\begin{DoxyParams}{Parameters}
+{\em dev} & Device to open \\
+\hline
+{\em speed} & Used to calculate baud rate of device \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int to signal success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{serial_8h_a7e049d65b09969503d73dd367775d0f6}\label{serial_8h_a7e049d65b09969503d73dd367775d0f6}} 
+\index{serial.h@{serial.h}!serial\_out@{serial\_out}}
+\index{serial\_out@{serial\_out}!serial.h@{serial.h}}
+\doxysubsubsection{\texorpdfstring{serial\_out()}{serial\_out()}}
+{\footnotesize\ttfamily int serial\+\_\+out (\begin{DoxyParamCaption}\item[{device}]{dev,  }\item[{const char $\ast$}]{buffer,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+Writes a buffer to a serial port 
+\begin{DoxyParams}{Parameters}
+{\em device} & The serial port to output to \\
+\hline
+{\em buffer} & A pointer to an array of characters to output \\
+\hline
+{\em len} & The number of bytes to write \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of bytes written 
+\end{DoxyReturn}
+\mbox{\Hypertarget{serial_8h_abd1c98e4945071f79a2ea126363030ba}\label{serial_8h_abd1c98e4945071f79a2ea126363030ba}} 
+\index{serial.h@{serial.h}!serial\_output\_interrupt@{serial\_output\_interrupt}}
+\index{serial\_output\_interrupt@{serial\_output\_interrupt}!serial.h@{serial.h}}
+\doxysubsubsection{\texorpdfstring{serial\_output\_interrupt()}{serial\_output\_interrupt()}}
+{\footnotesize\ttfamily void serial\+\_\+output\+\_\+interrupt (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structdcb}{dcb}} $\ast$}]{dcb }\end{DoxyParamCaption})}
+
+
+
+Interrupt to handle output from device. 
+
+\begin{DoxyAuthor}{Author}
+Noah Marner 
+
+Blake Wagner 
+
+Sam Desai 
+
+Jackson Monk
+\end{DoxyAuthor}
+Creates an I\+O\+CB pointer to look at the D\+CB\textquotesingle{}s I\+O\+C\+BQ\textquotesingle{}s head. If the OP is not W\+R\+I\+TE, return. If there is something to write, increment buffer since the first character was printed by serial\+\_\+write. O\+U\+TB the current character, decrement the buffer size variable, and return. Otherwise, there is nothing left to write. Set the D\+CB OP to I\+D\+LE, the e\+Flag to C\+O\+M\+P\+L\+E\+TE, and disable output interrupts. \mbox{\Hypertarget{serial_8h_a1e9204d031fa281b2983b1e97859c179}\label{serial_8h_a1e9204d031fa281b2983b1e97859c179}} 
+\index{serial.h@{serial.h}!serial\_poll@{serial\_poll}}
+\index{serial\_poll@{serial\_poll}!serial.h@{serial.h}}
+\doxysubsubsection{\texorpdfstring{serial\_poll()}{serial\_poll()}}
+{\footnotesize\ttfamily int serial\+\_\+poll (\begin{DoxyParamCaption}\item[{device}]{dev,  }\item[{char $\ast$}]{buffer,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+
+
+Reads a string from a serial port. 
+
+\begin{DoxyAuthor}{Author}
+Noah Marner 
+
+Blake Wagner
+\end{DoxyAuthor}
+This function is used to read in data from the console. It reads characters until either the length limit is reached or an enter key is read in. Special characters such as backspace, delete and arrow keys are also handled in this function. 
+\begin{DoxyParams}{Parameters}
+{\em device} & The serial port to read data from \\
+\hline
+{\em buffer} & A buffer to write data into as it is read from the serial port \\
+\hline
+{\em count} & The maximum number of bytes to read \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of bytes read on success, a negative number on failure 
+\end{DoxyReturn}
+\mbox{\Hypertarget{serial_8h_af90af90f95b458ea262b31bc33c12bbd}\label{serial_8h_af90af90f95b458ea262b31bc33c12bbd}} 
+\index{serial.h@{serial.h}!serial\_read@{serial\_read}}
+\index{serial\_read@{serial\_read}!serial.h@{serial.h}}
+\doxysubsubsection{\texorpdfstring{serial\_read()}{serial\_read()}}
+{\footnotesize\ttfamily int serial\+\_\+read (\begin{DoxyParamCaption}\item[{device}]{dev,  }\item[{char $\ast$}]{buf,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+
+
+Starts the read process. 
+
+\begin{DoxyAuthor}{Author}
+Noah Marner 
+
+Blake Wagner 
+
+Sam Desai 
+
+Jackson Monk
+\end{DoxyAuthor}
+Initializes D\+CB count, sets op code to R\+E\+AD and e\+Flag to I\+N\+C\+O\+M\+P\+L\+E\+TE to signal incomplete IO. Copies contents of ring buffer to requesters buffer, if the character is a new line or a return carriage, or if the ring buffer is filled, returns. Enables global interrupts with sti. 
+\begin{DoxyParams}{Parameters}
+{\em dev} & Device to read from \\
+\hline
+{\em buf} & The buffer to fill \\
+\hline
+{\em len} & The number of characters to read \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Int to test success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{serial_8h_abeb5f15d77be064b4b5103af02aa4c21}\label{serial_8h_abeb5f15d77be064b4b5103af02aa4c21}} 
+\index{serial.h@{serial.h}!serial\_write@{serial\_write}}
+\index{serial\_write@{serial\_write}!serial.h@{serial.h}}
+\doxysubsubsection{\texorpdfstring{serial\_write()}{serial\_write()}}
+{\footnotesize\ttfamily int serial\+\_\+write (\begin{DoxyParamCaption}\item[{device}]{dev,  }\item[{char $\ast$}]{buf,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+
+
+Starts the write process. 
+
+\begin{DoxyAuthor}{Author}
+Noah Marner 
+
+Blake Wagner 
+
+Sam Desai 
+
+Jackson Monk
+\end{DoxyAuthor}
+Verifies parameters, sets D\+CB op code to W\+R\+I\+TE, buffer to the requesters buffer, count to input length and e\+Flag to I\+N\+C\+O\+M\+P\+L\+E\+TE to indiciate IO incomplete. Writes the first character, enables interrupts to handle the rest of the output. 
+\begin{DoxyParams}{Parameters}
+{\em dev} & Device to write to \\
+\hline
+{\em buf} & Buffer to write from \\
+\hline
+{\em len} & Amount of characters to write \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Int to test success 
+\end{DoxyReturn}

@@ -1,0 +1,44 @@
+\hypertarget{alarm_8h}{}\doxysection{include/alarm.h File Reference}
+\label{alarm_8h}\index{include/alarm.h@{include/alarm.h}}
+
+
+Header file for the process that executes the alarm.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+Include dependency graph for alarm.\+h\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{alarm_8h_ad6072fa4d0dd7bc325ec0dead4487e06}{alarm\+Execution}} ()
+\begin{DoxyCompactList}\small\item\em The process that executes the alarm. This will trigger when the \char`\"{}time\char`\"{} parameter is greater than or equal to the current time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file for the process that executes the alarm. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{alarm_8h_ad6072fa4d0dd7bc325ec0dead4487e06}\label{alarm_8h_ad6072fa4d0dd7bc325ec0dead4487e06}} 
+\index{alarm.h@{alarm.h}!alarmExecution@{alarmExecution}}
+\index{alarmExecution@{alarmExecution}!alarm.h@{alarm.h}}
+\doxysubsubsection{\texorpdfstring{alarmExecution()}{alarmExecution()}}
+{\footnotesize\ttfamily void alarm\+Execution (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The process that executes the alarm. This will trigger when the \char`\"{}time\char`\"{} parameter is greater than or equal to the current time. 
+
+\begin{DoxyAuthor}{Author}
+Jackson Monk 
+
+Noah Marner 
+
+Sam Desai 
+
+Blake Wagner
+\end{DoxyAuthor}
+When function is called, gets and formats system time and gets the alarm time from the currently operating processes alarm struct. If the alarm time is $<$= the system time, the alarm will trigger and display the message. Otherwise, calls sys\+\_\+req(idle) to idle the process. 
