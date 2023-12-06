@@ -29,19 +29,20 @@ void alarmExecution() {
     int seconds = inb(0x71);
     int formattedSeconds = fromBCD(seconds);
 
+    printf("");
+
     //Checking to see if the timer has gone off
     //If it has, we display the message and exit the process
-
     if(formattedHours > cop->alarm_ptr->hours){
-        printf(cop->alarm_ptr->message);
+        printf("\n%s\n", cop->alarm_ptr->message);
         sys_req(EXIT);
     }
     else if(formattedHours == cop->alarm_ptr->hours && formattedMinutes > cop->alarm_ptr->minutes){
-        printf(cop->alarm_ptr->message);
+        printf("\n%s\n", cop->alarm_ptr->message);
         sys_req(EXIT);
     }
     else if(formattedHours >= cop->alarm_ptr->hours && formattedMinutes >= cop->alarm_ptr->minutes && formattedSeconds>=cop->alarm_ptr->seconds){
-        printf(cop->alarm_ptr->message);
+        printf("\n%s\n", cop->alarm_ptr->message);
         sys_req(EXIT);
     }
 
