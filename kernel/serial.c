@@ -366,9 +366,6 @@ int serial_write(device dev, char *buf, size_t len)
 		com1DCB->count = len;
 		com1DCB->eFlag = INCOMPLETE;
 
-		while ((inb(dev + LSR) & (1 << 5)) == 0)
-			;
-
 		outb(COM1, *com1DCB->buffer);
 
 		cli();

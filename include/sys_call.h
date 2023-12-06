@@ -22,8 +22,10 @@
  * context pointer to the currently operating process's stack pointer. If ready queue is empty, return the process's context.
  * If opcode is exit, dequeue from the ready queue. If there is nothing in the ready queue, return to original context and
  * refresh original context variable to NULL. Otherwise, free the currently operating process from memory and return the pointer to
- * the current operating process's stack. Otherwise, if performing a read/write, set the EAX to -1 and return the 
- * process's context.
+ * the current operating process's stack. Otherwise, if performing a read/write, initializes a new IOCB, sets context to return to,
+ * saves context of current process and blocks it, calls IOSchedule to queue new IOCB request. If current OP code in
+ * DCB is write, calls serial_write, if read, calls serial_read. Dequeue from the ready queue. If nothing in the ready queue,
+ * return to the original context. Otherwise, process the next request in the ready queue.
  */
 context* sys_call(context* proc_context);
 

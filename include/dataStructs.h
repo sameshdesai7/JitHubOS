@@ -90,6 +90,20 @@ typedef struct iocb{
 */
 void enqueue(queue* q, pcb* newPCB);
 
+/**
+ * @author Samesh Desai
+ * @author Noah Marner
+ * @author Jackson Monk
+ * @author Blake Wagner
+ * @param q
+ * @param newIOCB
+ * @brief Adds a new IOCB to the queue.
+ * @details Receives a new IOCB and an existing queue. Checks if the queue is empty by checking if the head and tail pointers are null. 
+ * If so the new IOCB is the new head and tail. Checks the priortiy of the IOCB received and itterates through the queue 
+ * until we find processes with the same priority. Process that have the same priority are first in first out. The last IOCB with 
+ * the same priority now has its next pointer looking at the IOCB we are inserting. The new IOCB next now looks at the old next of 
+ * the last IOCB with the same priority.
+*/
 void iocbEnqueue(iocbQueue* q, iocb* newIOCB);
  
 /**
@@ -107,6 +121,19 @@ void iocbEnqueue(iocbQueue* q, iocb* newIOCB);
 */
 pcb* dequeue(queue* q);
 
+/**
+ * @author Samesh Desai
+ * @author Noah Marner
+ * @author Jackson Monk
+ * @author Blake Wagner
+ * @param q
+ * @return Returns the removed IOCB
+ * @brief Removes a IOCB from the front of the queue.
+ * @details Checks if the queue is empty (Head is NULL). Creates a temp IOCB to point to the head. If heads next 
+ * exists, set head to point to head next and returns the temp IOCB which points to the old head. Otherwise the queue 
+ * only has 1 item so the head and tail are set to NULL and we return temp
+ * 
+*/
 iocb* iocbDequeue(iocbQueue* q);
 
 /**

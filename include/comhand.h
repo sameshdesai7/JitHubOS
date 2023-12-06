@@ -2,7 +2,7 @@
 #define COMHAND_H
 #include <dataStructs.h>
 
-#define VERSION 4
+#define VERSION 6
 /**
  * @file comhand.h
  * @brief A set of functions that allow users to interact with the OS

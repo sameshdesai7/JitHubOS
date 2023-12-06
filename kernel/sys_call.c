@@ -22,8 +22,7 @@ context* sys_call(context* proc_context) {
     sti();
     do{
             ioComplete(com1DCB);
-            
-        } while(!ready->head);
+        } while(!ready->head && proc_context->EAX != EXIT);
         
     cli();
 

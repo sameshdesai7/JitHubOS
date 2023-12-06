@@ -102,29 +102,18 @@ void kmain(void)
 	// Pass execution to your command handler so the user can interact with
 	// the system.
 	
-	// com1DCB -> status = 0;
-	// com1DCB -> op = IDLE;
-	// com1DCB -> eFlag = 0;
-	// com1DCB -> buffer = NULL;
-	// com1DCB -> count = 0;
-	// com1DCB -> buffer_len = 0;
-	// com1DCB -> iocbQ = sys_alloc_mem(sizeof(iocbQueue));
-	// com1DCB -> ringCount = 0;
-	// com1DCB -> inIndex = 0;
-	// com1DCB -> outIndex = 0; 
-
-	// Adjusting time back 4 hours to account for system time
 	serial_open(COM1, 19200);
+	// Adjusting time back 4 hours to account for system time
 	
 	// This technically should adjust the month back if hours < 4 and day is = 1, and then year...
 	outb(0x70, 0x04);
     int hours = inb(0x71);
     int formattedHours = fromBCD(hours);
 	int adjustedHours;
-	if(formattedHours > 4)
-		adjustedHours = formattedHours - 4;
+	if(formattedHours > 5)
+		adjustedHours = formattedHours - 5;
 	else {
-		adjustedHours = 24 - (4 - formattedHours);
+		adjustedHours = 24 - (5 - formattedHours);
 		outb(0x70, 0x07);
 		int day = inb(0x71);
 		int formattedDay = fromBCD(day);
@@ -189,6 +178,7 @@ void kmain(void)
 	// After your command handler returns, take care of any clean up that
 	// is necessary.
 	klogv(COM1, "Starting system shutdown procedure...");
+	serial_close(COM1);
 
 	// 11) Halt CPU -- *no headers necessary, no changes necessary*
 	// Execution of kmain() will complete and return to where it was called
